@@ -4,7 +4,7 @@ import org.antogautjean.model.Stock;
 
 import java.io.IOException;
 
-public class App {
+public class TerminalApp {
 
 	public static void main(String[] args) throws IOException {
 
