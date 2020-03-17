@@ -13,7 +13,7 @@ public class GUIApp {
     }
 
     public static void main(String[] args){
-        JFrame frame = new JFrame("home");
+        JFrame frame = new JFrame("Factory");
         frame.setContentPane(new GUIApp().Home);
         frame.setSize(1280, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
