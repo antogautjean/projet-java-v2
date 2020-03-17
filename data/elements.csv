@@ -1,0 +1,52 @@
+Code;Nom;Quantite;unite
+E001;Sucre;500;kg
+E002;farine;1500;kg
+E003;farine complete;0;kg
+E004;blanc oeuf;200;litre
+E005;jaune oeuf;400;litre
+E006;beurre;2500;kg
+E007;margarine;0;kg
+E008;huile palme;5000;litre
+E009;huile colza;1500;litre
+E010;poudre a lever;50;kg
+E011;beurre cacao;800;kg
+E012;pate cacao;150;kg
+E013;proteine de lait;0;kg
+E014;lait en poudre;500;kg
+E015;emulsifiant;10;litre
+E016;levure;89;unite
+E017;confiture abricot;50;litre
+E018;noix;50;kg
+E019;Chocolat 30 %;20;litre
+E020;Chocolat 40 %;12;litre
+E021;Chocolat 50 %;30;litre
+E022;Pate biscuit Q1;0;litre
+E023;Pate biscuit Q2;0;litre
+E024;Pate biscuit Q3;0;litre
+E025;Gateau marque A;0;carton
+E026;Gateau marque B;0;carton
+E027;Gateau marque C;0;carton
+E028;Pate levée huile;0;kg
+E029;Pate levée beurre;0;kg
+E030;Brioche;10;carton
+E031;Brioche beurre;0;carton
+E032;Pain chocolat A;0;carton
+E033;Pain chocolat B;0;carton
+E034;Biscuit marque A;0;carton
+E035;Biscuit marque B et C;0;carton
+E036;Pate crepes;25;litre
+E037;Crepes natures;0;carton
+E038;Crepes fourrees choc;0;carton
+E039;Crepes fourres abricot;0;carton
+E040;Brownies marque A;0;carton
+E041;Brownies marque B;0;carton
+E042;Cookies Choc marque A;0;carton
+E043;Cookies Choc marque B;0;carton
+E044;Cookies Choc/Noix marque A;0;carton
+E045;Cookies Choc/Noix marque B;0;carton
+E046;Pate Madeleines Q1;0;litre
+E047;Pate Madeleines Q2;0;litre
+E048;Madeleines marque A;0;carton
+E049;Madeleines marque B;0;carton
+E050;Madeleines Choc;0;carton
+E051;Poudre a lever;28;kg
