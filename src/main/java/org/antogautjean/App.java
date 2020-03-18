@@ -10,7 +10,10 @@ public class App {
 
 	public static Logger LOGGER;
 
-	private static void termMain(String[] args) throws IOException {
+	public static boolean gui = false;
+	public static boolean log = false;
+
+	private static void termMain() throws IOException {
 
 		Stock stock = new Stock("Principal");
 
@@ -33,25 +36,28 @@ public class App {
 		}
 	}
 
-	private static Logger logger(boolean USE){
+	private static void logger(boolean USE){
 
-		if (USE){
-			return new Logger(".", USE);
-		}
-		else{
-			System.out.println("Running without LOG");
-			return null;
-		}
+		App.LOGGER = new Logger(".", USE);
 	}
 	
 	public static void main(String[] args) throws IOException {
 
-		App.LOGGER = logger(true);
+		for(String s : args){
+			switch(s){
+				case "--gui":
+					App.gui = true;
+					break;
+				case "--log":
+					App.log = true;
+			}
+		}
+
+
+		logger(App.log);
 
 		App.LOGGER.log(0, "App", "starting", "OK");
-
-		guiMain(args[0].equals("--gui"));
-
-		termMain(args);
+		guiMain(App.gui);
+		termMain();
 	}
 }

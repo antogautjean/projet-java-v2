@@ -9,6 +9,7 @@ public class HomeView {
 
     private JPanel homePanel;
     private JTabbedPane Dashboard;
+    private JProgressBar progressBar1;
 
     public HomeView(){
 
