@@ -11,7 +11,8 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 		// init depending of args
-		boolean isUIVisible = false;
+		boolean isUIVisible = true;
+
 		for (String s : args) {
 			if (s.equals("--no-ui")) {
 				isUIVisible = false;
