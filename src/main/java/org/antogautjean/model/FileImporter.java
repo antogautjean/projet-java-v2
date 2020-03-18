@@ -1,5 +1,6 @@
-package org.antogautjean;
+package org.antogautjean.model;
 
+import org.antogautjean.App;
 import org.antogautjean.model.FactoryModel;
 import org.antogautjean.model.Product;
 import org.antogautjean.model.Stock;
@@ -11,8 +12,8 @@ public class FileImporter {
 
     public FileImporter(String productFilePath, String priceFilePath, Stock stock) throws IOException {
 
-        System.out.println( "Reading CSV file" );
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        App.LOGGER.log(0, "App", "FileImporter", "Reading CSV Stock file");
+
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(productFilePath));
 
         String row;
@@ -62,8 +63,8 @@ public class FileImporter {
 
     public FileImporter(String lineFilePath, FactoryModel factory) throws IOException {
 
-        System.out.println( "Reading CSV file" );
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        App.LOGGER.log(0, "App", "FileImporter", "Reading CSV file");
+
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;
@@ -79,8 +80,6 @@ public class FileImporter {
             String duration = line[4];
             String qualified = line[5];
             String unqualified = line[6];
-
-
 
             System.out.println(input);
 

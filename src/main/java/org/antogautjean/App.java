@@ -1,6 +1,7 @@
 package org.antogautjean;
 
-import org.antogautjean.controller.Logger;
+import org.antogautjean.model.FileImporter;
+import org.antogautjean.view.Logger;
 import org.antogautjean.model.Stock;
 import org.antogautjean.view.HomeView;
 
@@ -23,7 +24,7 @@ public class App {
 				stock);
 
 		// pour vérifier des trucs
-		System.out.println(stock.getProduct("E002").toString());
+		App.LOGGER.log(0, "App", "stock.getProduct(\"E002\")", stock.getProduct("E002").toString());
 	}
 
 	private static void guiMain(boolean DISPLAY){

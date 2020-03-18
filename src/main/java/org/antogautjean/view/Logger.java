@@ -1,4 +1,4 @@
-package org.antogautjean.controller;
+package org.antogautjean.view;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,11 +24,11 @@ public class Logger {
     // "GUI - - [18/03/2020 12:55:47] Factory controler::addToStock";
 
     private void err_log(Integer code, String who, String what, String info){
-        System.out.println(who + " - - [" + dateFormat.format(date) + "] " + what + " ( " + info + " )");
+        System.err.println(who + " - - [" + dateFormat.format(date) + "] " + what + " ( " + info + " )");
     }
 
     private void norm_log(Integer code, String who, String what, String info){
-        System.err.println(who + " - - [" + dateFormat.format(date) + "] " + what + " ( " + info + " )");
+        System.out.println(who + " - - [" + dateFormat.format(date) + "] " + what + " ( " + info + " )");
     }
 
     private void action_log(String who, String what, String info){

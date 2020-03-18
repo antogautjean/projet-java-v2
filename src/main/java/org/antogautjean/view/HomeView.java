@@ -18,7 +18,7 @@ public class HomeView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this.getHomePanel());
 
-        frame.setVisible(true);;
+        frame.setVisible(true);
     }
 
     private JPanel getHomePanel() {
