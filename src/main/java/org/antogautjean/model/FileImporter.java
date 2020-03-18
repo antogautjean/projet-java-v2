@@ -5,7 +5,7 @@ import org.antogautjean.Controller.StockController;
 import java.io.*;
 
 public class FileImporter {
-    public void fileToStock(String productFilePath, String priceFilePath, StockController stock) throws IOException {
+    public static void fileToStock(String productFilePath, String priceFilePath, StockController stock) throws IOException {
         // Products
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(productFilePath));
         String row;
@@ -49,7 +49,7 @@ public class FileImporter {
         csvReader.close();
     }
 
-    public void fileToFactory(String lineFilePath, FactoryModel factory) throws IOException {
+    public static void fileToFactory(String lineFilePath, FactoryModel factory) throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;

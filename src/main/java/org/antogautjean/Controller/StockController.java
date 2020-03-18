@@ -20,7 +20,7 @@ public class StockController {
     }
 
     public boolean addProduct(Product product){
-        //tester si le produit existe deja dans la base de donnée
+        //tester si le produit existe deja dans la base de donnÃ©e
         try {
             this.stock.put(product.getCode(), product);
             return true;
@@ -59,6 +59,6 @@ public class StockController {
     }
 
     public String toString(){
-        return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> €)." ;
+        return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> â‚¬)." ;
     }
 }

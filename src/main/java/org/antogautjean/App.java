@@ -1,6 +1,5 @@
 package org.antogautjean;
 
-import org.antogautjean.Controller.LogController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
@@ -18,23 +17,20 @@ public class App {
 				isUIVisible = false;
 			}
 		}
-		LogController logger = new LogController(".", true); // il n'y a pas de raison de ne pas afficher la console
 
-		logger.log(0, "App", "starting", "OK");
+		System.out.println("starting : OK");
 
 		if (isUIVisible) {
 			new HomeView();
-			logger.log(0, "App", "UI", "Runing with UI");
+			System.out.println("Runing with UI");
 		} else {
-			logger.log(0, "App", "UI", "Runing with NO UI");
+			System.out.println("Runing with NO UI");
 		}
 
 		StockController koalaController = new StockController("koala");
 
-		FileImporter fileImporter = new FileImporter();
-		
-		logger.log(0, "App", "FileImporter", "Reading CSV Stock file");
-		fileImporter.fileToStock("./src/main/java/org/antogautjean/data/elements.csv",
+		System.out.println("FileImporter : Reading CSV Stock file");
+		FileImporter.fileToStock("./src/main/java/org/antogautjean/data/elements.csv",
 				"./src/main/java/org/antogautjean/data/prix.csv", koalaController);
 	}
 }
