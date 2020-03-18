@@ -2,7 +2,6 @@ package org.antogautjean.Controller;
 
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
-import org.antogautjean.view.App;
 
 import java.io.IOException;
 import java.util.HashMap;

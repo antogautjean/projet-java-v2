@@ -1,8 +1,6 @@
 package org.antogautjean.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HomeView {
 
@@ -16,11 +14,11 @@ public class HomeView {
 
     static void guiMain(boolean DISPLAY){
         if (DISPLAY){
-            App.LOGGER.log(0, "App", "GUI", "Runing with GUI");
+            AppRunner.LOGGER.log(0, "App", "GUI", "Runing with GUI");
             new HomeView();
         }
         else{
-            App.LOGGER.log(0, "App", "GUI", "Runing without GUI");
+            AppRunner.LOGGER.log(0, "App", "GUI", "Runing without GUI");
         }
     }
 

@@ -1,12 +1,10 @@
 package org.antogautjean.view;
 
-import org.antogautjean.model.FileImporter;
 import org.antogautjean.Controller.LogController;
-import org.antogautjean.Controller.StockController;
 
 import java.io.IOException;
 
-public class App {
+public class AppRunner {
 
 	public static LogController LOGGER;
 
@@ -19,19 +17,19 @@ public class App {
 		for(String s : args){
 			switch(s){
 				case "--gui":
-					App.gui = true;
+					AppRunner.gui = true;
 					break;
 				case "--log":
-					App.log = true;
+					AppRunner.log = true;
 			}
 		}
 
 
-		LogView.logger(App.log);
+		LogView.logger(AppRunner.log);
 
-		App.LOGGER.log(0, "App", "starting", "OK");
+		AppRunner.LOGGER.log(0, "App", "starting", "OK");
 
-		HomeView.guiMain(App.gui);
+		HomeView.guiMain(AppRunner.gui);
 
 	}
 }
