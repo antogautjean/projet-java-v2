@@ -1,11 +1,11 @@
-package org.antogautjean.view;
+package org.antogautjean.Controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;
 
-public class Logger {
+public class LogController {
 
     private String logPath;
     private DateFormat dateFormat;
@@ -13,7 +13,7 @@ public class Logger {
 
     private boolean ACTIVATED;
 
-    public Logger(String logPath, boolean ACTIVATED){
+    public LogController(String logPath, boolean ACTIVATED){
 
         this.dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         this.date = new Date();
@@ -32,7 +32,7 @@ public class Logger {
     }
 
     private void action_log(String who, String what, String info){
-        //TODO : Interface history
+        //TODO : Event maj interface history
     }
 
     public void log(Integer code, String who, String what, String info){
@@ -52,7 +52,5 @@ public class Logger {
                     break;
             }
         }
-
-
     }
 }

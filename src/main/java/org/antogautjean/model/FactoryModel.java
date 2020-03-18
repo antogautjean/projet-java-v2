@@ -1,24 +1,27 @@
 package org.antogautjean.model;
 
+import org.antogautjean.Controller.LineController;
+import org.antogautjean.Controller.StockController;
+
 import java.util.ArrayList;
 
 public class FactoryModel {
 
     private String factoryName;
 
-    private Stock factoryStock;
+    private StockController factoryStock;
 
-    private ArrayList<Line> factoryLine = new ArrayList<>();
+    private ArrayList<LineController> factoryLine = new ArrayList<>();
 
     public String getFactoryName(){
         return this.factoryName;
     }
 
-    public Stock getFactoryStock(){
+    public StockController getFactoryStock(){
         return this.factoryStock;
     }
 
-    public Line getLine(int lineID){
+    public LineController getLine(int lineID){
         try {
             return this.factoryLine.get(lineID);
         }
@@ -27,7 +30,7 @@ public class FactoryModel {
         }
     }
 
-    public void addLine(Line line){
+    public void addLine(LineController line){
         this.factoryLine.add(line);
     }
 

@@ -1,16 +1,20 @@
-package org.antogautjean.model;
+package org.antogautjean.Controller;
 
+import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
+import org.antogautjean.view.App;
 
+import java.io.IOException;
 import java.util.HashMap;
 
-public class Stock {
+public class StockController {
 
     private String stockName;
 
     private HashMap<String, Product> stock = new HashMap<>(1);
 
-    public Stock(String stockName){
+    public StockController(String stockName) throws IOException {
+
         this.stockName = stockName;
     }
 
@@ -57,8 +61,12 @@ public class Stock {
         }
     }
 
-    public boolean load(String csvFilePath){
-        return false;
+    public void loadProducts(String productFilePath, String priceFilePath) throws IOException {
+
+        new FileImporter(
+                "./src/main/java/org/antogautjean/data/elements.csv",
+                "./src/main/java/org/antogautjean/data/prix.csv",
+                this);
     }
 
     public boolean export(String csvFilePath){

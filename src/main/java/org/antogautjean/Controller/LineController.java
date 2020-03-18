@@ -1,8 +1,10 @@
-package org.antogautjean.model;
+package org.antogautjean.Controller;
+
+import org.antogautjean.model.Product;
 
 import java.util.HashMap;
 
-public class Line {
+public class LineController {
 
     private String code;
 
@@ -20,7 +22,7 @@ public class Line {
 
     private Double executionCost;
 
-    public Line(String code, String name, HashMap<Product, Integer> input, HashMap<Product, Integer> output, int duration){
+    public LineController(String code, String name, HashMap<Product, Integer> input, HashMap<Product, Integer> output, int duration){
 
         this.code = code;
         this.name = name;

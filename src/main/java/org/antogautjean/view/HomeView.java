@@ -1,15 +1,28 @@
 package org.antogautjean.view;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HomeView {
 
     private JPanel homePanel;
     private JTabbedPane Dashboard;
     private JProgressBar progressBar1;
+    private JButton button1;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JButton loadButton;
+
+    static void guiMain(boolean DISPLAY){
+        if (DISPLAY){
+            App.LOGGER.log(0, "App", "GUI", "Runing with GUI");
+            new HomeView();
+        }
+        else{
+            App.LOGGER.log(0, "App", "GUI", "Runing without GUI");
+        }
+    }
 
     public HomeView(){
 
@@ -19,6 +32,7 @@ public class HomeView {
         frame.setContentPane(this.getHomePanel());
 
         frame.setVisible(true);
+
     }
 
     private JPanel getHomePanel() {

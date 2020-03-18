@@ -1,16 +1,13 @@
 package org.antogautjean.model;
 
-import org.antogautjean.App;
-import org.antogautjean.model.FactoryModel;
-import org.antogautjean.model.Product;
-import org.antogautjean.model.Stock;
-import org.antogautjean.model.Unit;
+import org.antogautjean.view.App;
+import org.antogautjean.Controller.StockController;
 
 import java.io.*;
 
 public class FileImporter {
 
-    public FileImporter(String productFilePath, String priceFilePath, Stock stock) throws IOException {
+    public FileImporter(String productFilePath, String priceFilePath, StockController stock) throws IOException {
 
         App.LOGGER.log(0, "App", "FileImporter", "Reading CSV Stock file");
 
