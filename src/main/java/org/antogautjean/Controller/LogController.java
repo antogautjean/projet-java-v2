@@ -21,7 +21,7 @@ public class LogController {
         this.logPath = logPath;
     }
 
-    // "GUI - - [18/03/2020 12:55:47] Factory controler::addToStock";
+    // "UI - - [18/03/2020 12:55:47] Factory controler::addToStock";
 
     private void err_log(Integer code, String who, String what, String info){
         System.err.println(who + " - - [" + dateFormat.format(date) + "] " + what + " ( " + info + " )");

@@ -12,16 +12,6 @@ public class HomeView {
     private JTextField textField2;
     private JButton loadButton;
 
-    static void guiMain(boolean DISPLAY){
-        if (DISPLAY){
-            AppRunner.LOGGER.log(0, "App", "GUI", "Runing with GUI");
-            new HomeView();
-        }
-        else{
-            AppRunner.LOGGER.log(0, "App", "GUI", "Runing without GUI");
-        }
-    }
-
     public HomeView(){
 
         JFrame frame = new JFrame("Factory");

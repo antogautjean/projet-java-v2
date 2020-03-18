@@ -1,6 +1,4 @@
 package org.antogautjean.Controller;
-
-import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
 
 import java.io.IOException;
@@ -22,7 +20,7 @@ public class StockController {
     }
 
     public boolean addProduct(Product product){
-        //tester si le produit existe deja dans la base de donnÃ©e
+        //tester si le produit existe deja dans la base de donnée
         try {
             this.stock.put(product.getCode(), product);
             return true;
@@ -60,19 +58,7 @@ public class StockController {
         }
     }
 
-    public void loadProducts(String productFilePath, String priceFilePath) throws IOException {
-
-        new FileImporter(
-                "./src/main/java/org/antogautjean/data/elements.csv",
-                "./src/main/java/org/antogautjean/data/prix.csv",
-                this);
-    }
-
-    public boolean export(String csvFilePath){
-        return false;
-    }
-
     public String toString(){
-        return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> â‚¬)." ;
+        return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> €)." ;
     }
 }

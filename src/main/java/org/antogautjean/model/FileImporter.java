@@ -1,25 +1,17 @@
 package org.antogautjean.model;
 
-import org.antogautjean.view.AppRunner;
 import org.antogautjean.Controller.StockController;
 
 import java.io.*;
 
 public class FileImporter {
-
-    public FileImporter(String productFilePath, String priceFilePath, StockController stock) throws IOException {
-
-        AppRunner.LOGGER.log(0, "App", "FileImporter", "Reading CSV Stock file");
-
+    public void fileToStock(String productFilePath, String priceFilePath, StockController stock) throws IOException {
+        // Products
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(productFilePath));
-
         String row;
         csvReader.readLine();
-
         while ((row = csvReader.readLine()) != null) {
-
             try {
-
                 String[] line = row.split(";");
 
                 String code = line[0];
@@ -30,38 +22,34 @@ public class FileImporter {
 
                 Product current = new Product(code, name, quantity, unit);
                 stock.addProduct(current);
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.getMessage();
             }
         }
-
-        csvReader = new BufferedReader(new java.io.FileReader(priceFilePath));
-        csvReader.readLine();
-
-        while ((row = csvReader.readLine()) != null) {
-
-            String[] line = row.split(";");
-
-            if (stock.getProduct(line[0]) != null){
-
-                if (!line[1].equals("NA"))
-                    stock.getProduct(line[0]).setBuyPrice((double) Integer.parseInt(line[1]));
-                if (!line[2].equals("NA"))
-                    stock.getProduct(line[0]).setSellPrice((double) Integer.parseInt(line[2]));
-
-                stock.getProduct(line[0]).setDemand((double) Integer.parseInt(line[3]));
-            }
-        }
-
         csvReader.close();
 
+        // Prices
+        csvReader = new BufferedReader(new java.io.FileReader(priceFilePath));
+        csvReader.readLine();
+        while ((row = csvReader.readLine()) != null) {
+            String[] line = row.split(";");
+
+            if (stock.getProduct(line[0]) != null) {
+                Product currentProduct = stock.getProduct(line[0]);
+
+                if (!line[1].equals("NA"))
+                    currentProduct.setBuyPrice((double) Integer.parseInt(line[1]));
+
+                if (!line[2].equals("NA"))
+                    currentProduct.setSellPrice((double) Integer.parseInt(line[2]));
+
+                currentProduct.setDemand((double) Integer.parseInt(line[3]));
+            }
+        }
+        csvReader.close();
     }
 
-    public FileImporter(String lineFilePath, FactoryModel factory) throws IOException {
-
-        AppRunner.LOGGER.log(0, "App", "FileImporter", "Reading CSV file");
-
+    public void fileToFactory(String lineFilePath, FactoryModel factory) throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;
@@ -87,7 +75,6 @@ public class FileImporter {
             break;
         }
         csvReader.close();
-
     }
 
 }
