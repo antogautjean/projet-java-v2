@@ -18,6 +18,7 @@ public class HomeView extends JPanel {
     private JButton loadButton;
     private JTable stockTable;
     private StockController stock;
+    private JScrollPane stockScroll;
 
     private int increment = 0;
 
