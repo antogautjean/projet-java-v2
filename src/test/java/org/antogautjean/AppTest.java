@@ -2,46 +2,112 @@ package org.antogautjean;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
+import javax.swing.table.*;
 
-class JListSimple extends JPanel
-{
-    // Le contenu de la JList
-    String label[] = { "Mars","Vénus","Mercure","Jupiter","Saturne","Uranus","Six",
-            "Neptune" };
-    JList list;
-
-    public JListSimple( ) {
-        this.setLayout(new BorderLayout( ));
-        list = new JList(label);
-        // Ajouter la JList dans le JScrolPane
-        JScrollPane pane = new JScrollPane(list);
-        JButton btnPrint = new JButton("Afficher");
-        btnPrint.addActionListener(new PrintListener( ));
-
-        add(pane, BorderLayout.CENTER);
-        add(btnPrint, BorderLayout.SOUTH);
-    }
-
-    public static void main(String s[]) {
-        JFrame frame = new JFrame("Exemple de JList");
+class JSpinnerInTables {
+    static String[] columnNames = {
+            "Name","Value"
+    };
+    static Object[][] data = {
+            {"one",1.0},
+            {"two",2.0}
+    };
+    public static void main( String[] args ) {
+        JFrame frame = new JFrame();
+        JTable table = new JTable(data,columnNames);
+        //table.setSurrendersFocusOnKeystroke(true);
+        TableColumnModel tcm = table.getColumnModel();
+        TableColumn tc = tcm.getColumn(1);
+        tc.setCellEditor(new SpinnerEditor());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new JListSimple( ));
-        frame.setSize(250, 200);
+        frame.add(table);
+        frame.pack();
         frame.setVisible(true);
     }
-    // Afficher le éléments sélectionnés de la JList
-    class PrintListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            int selected[] = list.getSelectedIndices( );
-            System.out.println("Selected Elements:  ");
+    public static class SpinnerEditor extends DefaultCellEditor
+    {
+        JSpinner spinner;
+        JSpinner.DefaultEditor editor;
+        JTextField textField;
+        boolean valueSet;
 
-            for (int i=0; i < selected.length; i++) {
-                String element =
-                        (String)list.getModel( ).getElementAt(selected[i]);
-                System.out.println("  " + element);
-                JOptionPane.showMessageDialog(null, element);
+        // Initializes the spinner.
+        public SpinnerEditor() {
+            super(new JTextField());
+            spinner = new JSpinner();
+            editor = ((JSpinner.DefaultEditor)spinner.getEditor());
+            textField = editor.getTextField();
+            textField.addFocusListener( new FocusListener() {
+                public void focusGained( FocusEvent fe ) {
+                    System.err.println("Got focus");
+                    //textField.setSelectionStart(0);
+                    //textField.setSelectionEnd(1);
+                    SwingUtilities.invokeLater( new Runnable() {
+                        public void run() {
+                            if ( valueSet ) {
+                                textField.setCaretPosition(1);
+                            }
+                        }
+                    });
+                }
+                public void focusLost( FocusEvent fe ) {
+                }
+            });
+            textField.addActionListener( new ActionListener() {
+                public void actionPerformed( ActionEvent ae ) {
+                    stopCellEditing();
+                }
+            });
+        }
+
+        // Prepares the spinner component and returns it.
+        public Component getTableCellEditorComponent(
+                JTable table, Object value, boolean isSelected, int row, int column
+        ) {
+            if ( !valueSet ) {
+                spinner.setValue(value);
             }
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() {
+                    textField.requestFocus();
+                }
+            });
+            return spinner;
+        }
+
+        public boolean isCellEditable( EventObject eo ) {
+            System.err.println("isCellEditable");
+            if ( eo instanceof KeyEvent ) {
+                KeyEvent ke = (KeyEvent)eo;
+                System.err.println("key event: "+ke.getKeyChar());
+                textField.setText(String.valueOf(ke.getKeyChar()));
+                //textField.select(1,1);
+                //textField.setCaretPosition(1);
+                //textField.moveCaretPosition(1);
+                valueSet = true;
+            } else {
+                valueSet = false;
+            }
+            return true;
+        }
+
+        // Returns the spinners current value.
+        public Object getCellEditorValue() {
+            return spinner.getValue();
+        }
+
+        public boolean stopCellEditing() {
+            System.err.println("Stopping edit");
+            try {
+                editor.commitEdit();
+                spinner.commitEdit();
+            } catch ( java.text.ParseException e ) {
+                JOptionPane.showMessageDialog(null,
+                        "Invalid value, discarding.");
+            }
+            return super.stopCellEditing();
         }
     }
 }

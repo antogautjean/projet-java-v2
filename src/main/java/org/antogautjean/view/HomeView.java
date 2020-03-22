@@ -56,6 +56,8 @@ public class HomeView extends JPanel {
         columnModel.getColumn(1).setPreferredWidth(500);
         columnModel.getColumn(2).setHeaderValue("Quantité");
         columnModel.getColumn(2).setPreferredWidth(60);
+        columnModel.getColumn(2).setCellEditor(new SpinnerEditor());
+
         header.repaint();
 
         stockTable.setAutoCreateRowSorter(true);
