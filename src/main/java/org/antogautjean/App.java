@@ -22,7 +22,7 @@ public class App {
 
         System.out.println("starting : OK");
 
-        StockController stockController = new StockController("koala");
+        StockController stockController = new StockController("Principal");
 
         System.out.println("FileImporter : Reading CSV Stock file");
         FileImporter.fileToStock("./src/main/java/org/antogautjean/data/elements.csv",
