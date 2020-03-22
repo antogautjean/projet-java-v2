@@ -20,6 +20,7 @@ public class HomeView extends JPanel {
     private JButton loadButton;
     private JTable stockTable;
     private JScrollPane stockScroll;
+    private StockController stock;
 
     private int increment = 0;
 
@@ -30,7 +31,9 @@ public class HomeView extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this.homePanel);
         frame.setVisible(true);
-        createUIComponents(stock);
+        this.stock = stock;
+
+        createUIComponents();
     }
 
     private void stockListConfig(int size) {
@@ -51,23 +54,23 @@ public class HomeView extends JPanel {
         stockTable.setAutoCreateRowSorter(true);
     }
 
-    private void addRow() {
+    public void updateStock(){
 
     }
 
-    private void createUIComponents(StockController stock) {
+    private void createUIComponents() {
 
-        stockListConfig(stock.getStock().size());
+        stockListConfig(this.stock.getStock().size());
 
         this.increment = 0;
 
-        stock.getStock().forEach((code, product) -> {
+        this.stock.getStock().forEach((code, product) -> {
 
             try {
                 System.out.println(code + product.getName() + product.getQuantity());
-                stockTable.setValueAt(code, this.increment, 0);
-                stockTable.setValueAt(product.getName(), this.increment, 1);
-                stockTable.setValueAt(product.getQuantity(), this.increment, 2);
+                this.stockTable.setValueAt(code, this.increment, 0);
+                this.stockTable.setValueAt(product.getName(), this.increment, 1);
+                this.stockTable.setValueAt(product.getQuantity(), this.increment, 2);
                 this.increment++;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
