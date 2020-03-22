@@ -64,11 +64,15 @@
                   <component id="fdfed" class="javax.swing.JTable" binding="stockTable">
                     <constraints/>
                     <properties>
-                      <autoCreateRowSorter value="true"/>
+                      <autoCreateRowSorter value="false"/>
+                      <autoResizeMode value="0"/>
                       <cellSelectionEnabled value="false"/>
                       <editingColumn value="0"/>
                       <editingRow value="0"/>
                       <enabled value="false"/>
+                      <font name="Courier New" size="14" style="0"/>
+                      <intercellSpacing width="2" height="2"/>
+                      <updateSelectionOnSort value="true"/>
                     </properties>
                   </component>
                 </children>

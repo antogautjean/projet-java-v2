@@ -4,7 +4,8 @@ public enum Unit {
 
     KG("kg"),
     LITER("litre"),
-    BOX("carton");
+    BOX("carton"),
+    UNIT("unite");
 
     private final String unitType;
 
@@ -24,8 +25,10 @@ public enum Unit {
                     return KG;
                 case "litre":
                     return LITER;
-                case "carton":
+                case "unite":
                     return BOX;
+                case "carton":
+                    return UNIT;
                 default:
                     throw new Exception("Unit " + unit + " does not exists");
             }

@@ -58,6 +58,11 @@ public class StockController {
         }
     }
 
+    public HashMap<String, Product> getStock(){
+
+        return this.stock;
+    }
+
     public String toString(){
         return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> €)." ;
     }
