@@ -2,12 +2,10 @@ package org.antogautjean.view;
 
 import org.antogautjean.Controller.LineController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.model.Product;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class HomeView extends JPanel {
@@ -19,11 +17,15 @@ public class HomeView extends JPanel {
     private JTextField textField2;
     private JButton loadButton;
     private JTable stockTable;
-    private JScrollPane stockScroll;
     private StockController stock;
 
     private int increment = 0;
 
+    /**
+     *
+     * @param stock
+     * @param line
+     */
     public HomeView(StockController stock, LineController line) {
 
         JFrame frame = new JFrame("Factory");
@@ -36,8 +38,12 @@ public class HomeView extends JPanel {
         createUIComponents();
     }
 
-    private void stockListConfig(int size) {
-        DefaultTableModel tableModel = new DefaultTableModel(size, 3);
+    /**
+     *
+     */
+    private void configStockList() {
+
+        DefaultTableModel tableModel = new DefaultTableModel(this.stock.getStock().size(), 3);
         stockTable.setModel(tableModel);
 
         JTableHeader header = stockTable.getTableHeader();
@@ -54,18 +60,14 @@ public class HomeView extends JPanel {
         stockTable.setAutoCreateRowSorter(true);
     }
 
-    public void updateStock(){
-
-    }
-
-    private void createUIComponents() {
-
-        stockListConfig(this.stock.getStock().size());
+    /**
+     *
+     */
+    public void loadStock(){
 
         this.increment = 0;
 
         this.stock.getStock().forEach((code, product) -> {
-
             try {
                 System.out.println(code + product.getName() + product.getQuantity());
                 this.stockTable.setValueAt(code, this.increment, 0);
@@ -76,7 +78,17 @@ public class HomeView extends JPanel {
                 System.out.println(e.getMessage());
                 System.exit(0);
             }
-
         });
+    }
+
+    /**
+     * Génére la première interface
+     */
+    private void createUIComponents() {
+
+        configStockList();
+
+        loadStock();
+
     }
 }
