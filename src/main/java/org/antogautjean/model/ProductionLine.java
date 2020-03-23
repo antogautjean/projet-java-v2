@@ -1,10 +1,8 @@
 package org.antogautjean.model;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StockController;
 
 public class ProductionLine {
     // attributs CSV
@@ -25,7 +23,6 @@ public class ProductionLine {
 
     public ProductionLine(String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
             Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified, Integer verificationOrder) {
-        this.factory = factory;
         this.code = code;
         this.name = name;
         this.inputs = inputs;
@@ -35,7 +32,7 @@ public class ProductionLine {
         this.staffAmountQualified = staffAmountQualified;
         this.verificationOrder = verificationOrder;
 
-        this.activationLevel = 0;
+        this.activationLevel = 1;
     }
 
     // Getters standards

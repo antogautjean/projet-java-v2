@@ -1,7 +1,6 @@
 package org.antogautjean.Controller;
 import org.antogautjean.model.Product;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class StockController {
@@ -60,5 +59,25 @@ public class StockController {
             s.addProduct(product.clone());
         }
         return s;
+    }
+
+    public Double getSellValue() {
+        Double output = 0.0;
+        for (Product product : this.stock.values()) {
+            if (product.getSellPrice() != null) {
+                output += product.getSellPrice() * product.getQuantity();
+            }
+        }
+        return output;
+    }
+    
+    public Double getToBuyValue() {
+        Double output = 0.0;
+        for (Product product : this.stock.values()) {
+            if (product.getBuyPrice() != null) {
+                output += product.getBuyPrice() * product.getQuantityToBuy();
+            }
+        }
+        return output;
     }
 }

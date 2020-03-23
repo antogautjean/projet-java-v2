@@ -2,28 +2,26 @@ package org.antogautjean.view;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.model.ProductionLine;
-import org.antogautjean.model.ProductionLineState;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.ComponentAdapter;
-import java.util.HashMap;
 
 public class HomeView extends JPanel {
 
     private JPanel homePanel;
     private JTabbedPane Dashboard;
+    private JButton chargerCeFichierButton;
     private JButton chargerCeFichierButton1;
+    private JButton chargerCeFichierButton2;
     private JTextField srcMainJavaOrgTextField;
     private JTextField srcMainJavaOrgTextField1;
-    private JButton chargerCeFichierButton2;
+    private JTextField srcMainJavaOrgTextField2;
     protected JTable stockTable;
     protected JTable factoryTable;
-    private JButton chargerCeFichierButton;
-    private JTextField srcMainJavaOrgTextField2;
+    private JLabel indicValeur;
+    private JLabel indicCommande;
 
     private int increment = 0;
     protected StockController stockList;
@@ -43,15 +41,26 @@ public class HomeView extends JPanel {
         createUIComponents();
     }
 
-    public void updateLine(){
+    private void createUIComponents() {
+        // indicValeur.setText();
+        indicCommande.setText((stockList.getSellValue() - stockList.getToBuyValue()) + " €");
+
+        configStockTable();
+        configFactoryTable();
+
+        loadStock();
+        loadFactory();
+    }
+
+    public void updateLine() {
 
     }
 
-    public void updateStock(){
+    public void updateStock() {
 
     }
 
-    private void configStockTable(){
+    private void configStockTable() {
 
         DefaultTableModel tableModel = new DefaultTableModel(this.stockList.getStock().size(), 7);
         this.stockTable.setModel(tableModel);
@@ -78,8 +87,8 @@ public class HomeView extends JPanel {
         this.stockTable.setAutoCreateRowSorter(true);
     }
 
-    private void configFactoryTable(){
-        //HashMap<Integer, ProductionLine> p = linesList.getProductionLines();
+    private void configFactoryTable() {
+        // HashMap<Integer, ProductionLine> p = linesList.getProductionLines();
 
         DefaultTableModel tableModel = new DefaultTableModel(this.factoryList.getProductionLines().size(), 7);
         this.factoryTable.setModel(tableModel);
@@ -89,17 +98,17 @@ public class HomeView extends JPanel {
         TableColumnModel columnModel = header.getColumnModel();
 
         columnModel.getColumn(0).setHeaderValue("Ordre");
-        columnModel.getColumn(0).setPreferredWidth(20);
+        columnModel.getColumn(0).setPreferredWidth(5);
         columnModel.getColumn(1).setHeaderValue("Code");
-        columnModel.getColumn(1).setPreferredWidth(40);
+        columnModel.getColumn(1).setPreferredWidth(35);
         columnModel.getColumn(2).setHeaderValue("Nom");
-        columnModel.getColumn(2).setPreferredWidth(150);
+        columnModel.getColumn(2).setPreferredWidth(170);
         columnModel.getColumn(3).setHeaderValue("Code éléments en sortie");
-        columnModel.getColumn(3).setPreferredWidth(60);
+        columnModel.getColumn(3).setPreferredWidth(30);
         columnModel.getColumn(4).setHeaderValue("Niveau d'activation");
-        columnModel.getColumn(4).setPreferredWidth(100);
+        columnModel.getColumn(4).setPreferredWidth(115);
         columnModel.getColumn(5).setHeaderValue("Etat de la chaine");
-        columnModel.getColumn(5).setPreferredWidth(60);
+        columnModel.getColumn(5).setPreferredWidth(75);
         columnModel.getColumn(6).setHeaderValue("Quantité produite / demandée");
         columnModel.getColumn(6).setPreferredWidth(80);
         header.repaint();
@@ -107,24 +116,30 @@ public class HomeView extends JPanel {
         this.factoryTable.setAutoCreateRowSorter(true);
     }
 
-    public void loadStock(){
+    public void loadStock() {
 
         this.increment = 0;
 
         this.stockList.getStock().forEach((code, product) -> {
+            String unit = " " + product.getUnit().toString();
+            int column = 0;
             try {
-                this.stockTable.setValueAt(code, this.increment, 0);
-                this.stockTable.setValueAt(product.getName(), this.increment, 1);
-                this.stockTable.setValueAt(product.getQuantity(), this.increment, 2);
-                this.stockTable.setValueAt(0, this.increment, 3);
+                this.stockTable.setValueAt(code, this.increment, column++);
+                this.stockTable.setValueAt(product.getName(), this.increment, column++);
+                this.stockTable.setValueAt(product.getQuantity() + unit, this.increment, column++);
+                this.stockTable.setValueAt(product.getQuantityToBuy(), this.increment, column++);
 
-                if (product.getBuyPrice() == null)
-                    this.stockTable.setValueAt("N/A", this.increment, 4);
-                else
-                    this.stockTable.setValueAt(product.getBuyPrice() * product.getDemand(), this.increment, 4);
+                if (product.getBuyPrice() == null) {
+                    this.stockTable.setValueAt("N/A", this.increment, column++);
+                    this.stockTable.setValueAt("N/A", this.increment, column++);
+                } else {
+                    this.stockTable.setValueAt((product.getBuyPrice() * product.getQuantityToBuy()) + " € / "
+                            + product.getUnit().toString(), this.increment, column++);
+                    this.stockTable.setValueAt((product.getQuantityToBuy() + product.getQuantity()) + unit,
+                            this.increment, column++);
+                }
 
-                this.stockTable.setValueAt(product.getQuantity() + product.getDemand(), this.increment, 5);
-                this.stockTable.setValueAt(	product.getQuantity() - product.getDemand(), this.increment, 6);
+                this.stockTable.setValueAt("", this.increment, column++); // pas encore prêt
 
                 this.increment++;
             } catch (Exception e) {
@@ -135,7 +150,7 @@ public class HomeView extends JPanel {
         this.stockTable.getRowSorter().toggleSortOrder(0);
     }
 
-    public void loadFactory(){
+    public void loadFactory() {
 
         this.increment = 0;
 
@@ -148,9 +163,27 @@ public class HomeView extends JPanel {
                 this.factoryTable.setValueAt(String.join("\n", productLine.getOutputList()), this.increment, column++);
                 this.factoryTable.setValueAt(productLine.getActivationLevel(), this.increment, column++);
 
+                Integer outputQty = 0;
+                for (Integer qty : productLine.getOutputQuantity().values()) {
+                    outputQty += qty;
+                }
+                Integer outputQtyDemanded = 0;
+                for (Integer qty : productLine.getQuantityDemanded().values()) {
+                    outputQtyDemanded += qty;
+                }
+                String percent = "";
+                if (outputQty >= outputQtyDemanded) {
+                    percent = "100,00%";
+                } else if (outputQtyDemanded == 0) {
+                    percent = "NA";
+                } else {
+                    Double tmp = outputQty * 100. / outputQtyDemanded;
+                    percent = String.format("%.2f", tmp) + "%";
+                    percent = (tmp < 10. ? "00" : "0") + percent;
+                }
                 switch (productLine.getState()) {
                     case IMPOSSIBLE:
-                        this.factoryTable.setValueAt("⚠ Production impossible", this.increment, column++);
+                        this.factoryTable.setValueAt("⚠ Production impossible\n(il manque des ressources)", this.increment, column++);
                         break;
                     case POSSIBLE:
                         this.factoryTable.setValueAt("👍 Production possible", this.increment, column++);
@@ -158,8 +191,8 @@ public class HomeView extends JPanel {
                     default: // NONE
                         this.factoryTable.setValueAt("Aucune production", this.increment, column++);
                 }
-
-                this.factoryTable.setValueAt("42% (42 / 100 kg)", this.increment, column++);
+                this.factoryTable.setValueAt(percent + " (" + outputQty + " / " + outputQtyDemanded + ")",
+                        this.increment, column++);
 
                 this.increment++;
             } catch (Exception e) {
@@ -168,14 +201,5 @@ public class HomeView extends JPanel {
             }
         });
         this.factoryTable.getRowSorter().toggleSortOrder(1);
-    }
-
-    private void createUIComponents() {
-
-        configStockTable();
-        configFactoryTable();
-
-        loadStock();
-        loadFactory();
     }
 }
