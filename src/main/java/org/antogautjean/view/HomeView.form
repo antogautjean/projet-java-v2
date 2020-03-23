@@ -53,7 +53,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="ef2c4" class="javax.swing.JTable" binding="linesTable">
+                  <component id="ef2c4" class="javax.swing.JTable" binding="factoryTable">
                     <constraints/>
                     <properties/>
                   </component>
@@ -191,7 +191,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="4218" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3a3df" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Settings"/>
@@ -199,77 +199,115 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="3978d" class="javax.swing.JButton" binding="button1" default-binding="true">
+              <grid id="4218" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <text value="Load"/>
-                </properties>
-              </component>
-              <hspacer id="9024c">
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <vspacer id="eb143">
+                    <constraints>
+                      <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="b8e7c" class="javax.swing.JButton" binding="chargerCeFichierButton" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Charger ce fichier"/>
+                    </properties>
+                  </component>
+                  <component id="1af9c" class="javax.swing.JTextField" binding="srcMainJavaOrgTextField" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="30"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="./src/main/java/org/antogautjean/data/elements.csv"/>
+                    </properties>
+                  </component>
+                  <component id="cf126" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="16"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="Fichier CSV des éléments de l'usine"/>
+                    </properties>
+                  </component>
+                  <component id="f03e0" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="16"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="Fichier CSV des prix et des demandes"/>
+                    </properties>
+                  </component>
+                  <component id="bf7a0" class="javax.swing.JTextField" binding="srcMainJavaOrgTextField1" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="30"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="./src/main/java/org/antogautjean/data/prix.csv"/>
+                    </properties>
+                  </component>
+                  <component id="3978d" class="javax.swing.JButton" binding="chargerCeFichierButton1" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Charger ce fichier"/>
+                    </properties>
+                  </component>
+                  <component id="10b88" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="16"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="Fichier CSV des chaines de production"/>
+                    </properties>
+                  </component>
+                  <component id="1fc1c" class="javax.swing.JButton" binding="chargerCeFichierButton2" default-binding="true">
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Charger ce fichier"/>
+                    </properties>
+                  </component>
+                  <component id="82a46" class="javax.swing.JTextField" binding="srcMainJavaOrgTextField2" default-binding="true">
+                    <constraints>
+                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="773" height="30"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="./src/main/java/org/antogautjean/data/chaines.csv"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <hspacer id="d04a9">
                 <constraints>
-                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <vspacer id="eb143">
+              <vspacer id="a709e">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
-              <component id="1af9c" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="bf7a0" class="javax.swing.JTextField" binding="textField2" default-binding="true">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="cf126" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Product File"/>
-                </properties>
-              </component>
-              <component id="f03e0" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Price File"/>
-                </properties>
-              </component>
-              <vspacer id="6256e">
-                <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <component id="10b88" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Line File"/>
-                </properties>
-              </component>
-              <component id="1fc1c" class="javax.swing.JButton" binding="loadButton" default-binding="true">
-                <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Load"/>
-                </properties>
-              </component>
             </children>
           </grid>
         </children>

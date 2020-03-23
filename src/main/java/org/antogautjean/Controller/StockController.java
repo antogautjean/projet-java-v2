@@ -53,4 +53,12 @@ public class StockController {
     public String toString(){
         return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> €)." ;
     }
+
+    public StockController clone() {
+        StockController s = new StockController();
+        for (Product product : this.stock.values()) {
+            s.addProduct(product.clone());
+        }
+        return s;
+    }
 }

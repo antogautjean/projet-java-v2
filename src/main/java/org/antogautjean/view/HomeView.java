@@ -3,6 +3,7 @@ package org.antogautjean.view;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.ProductionLine;
+import org.antogautjean.model.ProductionLineState;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,18 +16,20 @@ public class HomeView extends JPanel {
 
     private JPanel homePanel;
     private JTabbedPane Dashboard;
-    private JButton button1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JButton loadButton;
+    private JButton chargerCeFichierButton1;
+    private JTextField srcMainJavaOrgTextField;
+    private JTextField srcMainJavaOrgTextField1;
+    private JButton chargerCeFichierButton2;
     protected JTable stockTable;
-    protected JTable linesTable;
+    protected JTable factoryTable;
+    private JButton chargerCeFichierButton;
+    private JTextField srcMainJavaOrgTextField2;
 
     private int increment = 0;
     protected StockController stockList;
-    protected FactoryController linesList;
+    protected FactoryController factoryList;
 
-    public HomeView(StockController stockList, FactoryController lineList) {
+    public HomeView(StockController stockList, FactoryController factoryList) {
 
         JFrame frame = new JFrame("Factory");
         frame.setSize(1280, 800);
@@ -35,11 +38,9 @@ public class HomeView extends JPanel {
         frame.setVisible(true);
 
         this.stockList = stockList;
-        this.linesList = lineList;
+        this.factoryList = factoryList;
 
         createUIComponents();
-        linesTable.addComponentListener(new ComponentAdapter() {
-        });
     }
 
     public void updateLine(){
@@ -77,14 +78,14 @@ public class HomeView extends JPanel {
         this.stockTable.setAutoCreateRowSorter(true);
     }
 
-    private void configLinesTable(){
+    private void configFactoryTable(){
         //HashMap<Integer, ProductionLine> p = linesList.getProductionLines();
 
-        DefaultTableModel tableModel = new DefaultTableModel(/*this.linesList.getProductionLines().size()*/ 10, 7);
-        this.linesTable.setModel(tableModel);
-        this.linesTable.setRowHeight(40);
+        DefaultTableModel tableModel = new DefaultTableModel(this.factoryList.getProductionLines().size(), 7);
+        this.factoryTable.setModel(tableModel);
+        this.factoryTable.setRowHeight(40);
 
-        JTableHeader header = this.linesTable.getTableHeader();
+        JTableHeader header = this.factoryTable.getTableHeader();
         TableColumnModel columnModel = header.getColumnModel();
 
         columnModel.getColumn(0).setHeaderValue("Ordre");
@@ -103,7 +104,7 @@ public class HomeView extends JPanel {
         columnModel.getColumn(6).setPreferredWidth(80);
         header.repaint();
 
-        this.linesTable.setAutoCreateRowSorter(true);
+        this.factoryTable.setAutoCreateRowSorter(true);
     }
 
     public void loadStock(){
@@ -112,7 +113,6 @@ public class HomeView extends JPanel {
 
         this.stockList.getStock().forEach((code, product) -> {
             try {
-                System.out.println(code + product.getName() + product.getQuantity());
                 this.stockTable.setValueAt(code, this.increment, 0);
                 this.stockTable.setValueAt(product.getName(), this.increment, 1);
                 this.stockTable.setValueAt(product.getQuantity(), this.increment, 2);
@@ -132,13 +132,50 @@ public class HomeView extends JPanel {
                 System.exit(0);
             }
         });
+        this.stockTable.getRowSorter().toggleSortOrder(0);
+    }
+
+    public void loadFactory(){
+
+        this.increment = 0;
+
+        this.factoryList.getProductionLines().forEach((code, productLine) -> {
+            try {
+                int column = 0;
+                this.factoryTable.setValueAt(productLine.getVerificationOrder(), this.increment, column++);
+                this.factoryTable.setValueAt(code, this.increment, column++);
+                this.factoryTable.setValueAt(productLine.getName(), this.increment, column++);
+                this.factoryTable.setValueAt(String.join("\n", productLine.getOutputList()), this.increment, column++);
+                this.factoryTable.setValueAt(productLine.getActivationLevel(), this.increment, column++);
+
+                switch (productLine.getState()) {
+                    case IMPOSSIBLE:
+                        this.factoryTable.setValueAt("⚠ Production impossible", this.increment, column++);
+                        break;
+                    case POSSIBLE:
+                        this.factoryTable.setValueAt("👍 Production possible", this.increment, column++);
+                        break;
+                    default: // NONE
+                        this.factoryTable.setValueAt("Aucune production", this.increment, column++);
+                }
+
+                this.factoryTable.setValueAt("42% (42 / 100 kg)", this.increment, column++);
+
+                this.increment++;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.exit(0);
+            }
+        });
+        this.factoryTable.getRowSorter().toggleSortOrder(1);
     }
 
     private void createUIComponents() {
 
         configStockTable();
-        configLinesTable();
+        configFactoryTable();
 
         loadStock();
+        loadFactory();
     }
 }

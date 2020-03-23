@@ -7,6 +7,8 @@ import org.antogautjean.view.HomeView;
 
 import java.io.IOException;
 
+import javax.swing.UIManager;
+
 public class App {
 
     public static void main(String[] args) throws IOException {
@@ -25,9 +27,13 @@ public class App {
         StockController stockController = FileImporter.fileToStock(dataPath + "elements.csv", dataPath + "prix.csv");
         // Prod line controller
         FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
-        System.out.println(factory);
 
         if (isUIVisible) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                System.err.println("): setLookAndFeel a échoué, désolé");
+            }
             new HomeView(stockController, factory);
             System.out.println("Runing with UI");
         } else {

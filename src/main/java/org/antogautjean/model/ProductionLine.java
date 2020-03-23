@@ -1,8 +1,9 @@
 package org.antogautjean.model;
 
 import java.util.HashMap;
+import java.util.Set;
 
-import org.antogautjean.App;
+import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 
 public class ProductionLine {
@@ -18,13 +19,13 @@ public class ProductionLine {
     private Integer staffAmountQualified;
 
     // attributs supplémentaires
-      private Integer verificationOrder;
+    private Integer verificationOrder;
     private Integer activationLevel;
-    private StockController stockController;
+    private FactoryController factory;
 
-    public ProductionLine(StockController stockController, String code, String name, HashMap<String, Integer> inputs,
-            HashMap<String, Integer> outputs, Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified,
-            Integer verificationOrder) {
+    public ProductionLine(String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
+            Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified, Integer verificationOrder) {
+        this.factory = factory;
         this.code = code;
         this.name = name;
         this.inputs = inputs;
@@ -66,12 +67,52 @@ public class ProductionLine {
         return this.activationLevel;
     }
 
-    // Setters
+    public String[] getInputList() {
+        String[] output = new String[this.inputs.size()];
+        int i = 0;
+        for (String str : this.inputs.keySet()) {
+            output[i++] = str;
+        }
+        return output;
+    }
+
+    public String[] getOutputList() {
+        String[] output = new String[this.outputs.size()];
+        int i = 0;
+        for (String str : this.outputs.keySet()) {
+            output[i++] = str;
+        }
+        return output;
+    }
+
+    // Setter
+    public void setFactory(FactoryController factory) {
+        this.factory = factory;
+    }
 
     // Autres fonctions
     public HashMap<String, Integer> getMissingIngredients() {
         // TODO
         return this.inputs;
+    }
+
+    public void incrementVerificationOrder() {
+        // TODO
+        this.verificationOrder++;
+    }
+
+    public void decrementVerificationOrder() {
+        // TODO
+        this.verificationOrder--;
+    }
+
+    public HashMap<String, Integer> getInputNeeds() {
+        HashMap<String, Integer> outputQuantity = new HashMap<>();
+        // https://stackoverflow.com/a/9009709/5736301
+        for (HashMap.Entry<String, Integer> entry : this.inputs.entrySet()) {
+            outputQuantity.put(entry.getKey(), entry.getValue() * this.activationLevel);
+        }
+        return outputQuantity;
     }
 
     public HashMap<String, Integer> getOutputQuantity() {
@@ -84,11 +125,27 @@ public class ProductionLine {
     }
 
     public HashMap<String, Integer> getQuantityDemanded() {
-        HashMap<String, Integer> orderedQuantity = new HashMap<>();
-        for (HashMap.Entry<String, Integer> entry : this.outputs.entrySet()) {
-            orderedQuantity.put(entry.getKey(), this.stockController.getProduct(entry.getKey()).getDemand());
+        // récupérer la liste des produits qu'elle peut produire
+        HashMap<String, Integer> quantitiesDemanded = new HashMap<>();
+        for (String pcode : this.getOutputList()) {
+            // récupérer la quantité demandée
+            quantitiesDemanded.put(pcode, this.factory.getStockController().getProduct(pcode).getDemand());
         }
-        return orderedQuantity;
+        return quantitiesDemanded;
+    }
+
+    public ProductionLineState getState() {
+        if (this.activationLevel > 0) {
+            HashMap<String, Integer> inputNeeds = this.getInputNeeds();
+            for (HashMap.Entry<String, Integer> produit : inputNeeds.entrySet()) {
+                if (this.factory.getStockController().getProduct(produit.getKey()).getQuantity() < produit.getValue()) {
+                    return ProductionLineState.IMPOSSIBLE;
+                }
+            }
+            return ProductionLineState.POSSIBLE;
+        } else {
+            return ProductionLineState.NONE;
+        }
     }
 
     @Override

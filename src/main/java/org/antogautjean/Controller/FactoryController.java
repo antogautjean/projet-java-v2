@@ -6,9 +6,15 @@ import java.util.HashMap;
 
 public class FactoryController {
     private HashMap<String, ProductionLine> productionLines = new HashMap<>();
+    private StockController stock;
 
-    public FactoryController(HashMap<String, ProductionLine> productionLines) {
+    public FactoryController(HashMap<String, ProductionLine> productionLines, StockController stock) {
         this.productionLines = productionLines;
+        this.stock = stock;
+        
+        for(ProductionLine pl : this.productionLines.values()) {
+            pl.setFactory(this);
+        }
     }
 
     public HashMap<String, ProductionLine> getProductionLines() {
@@ -19,11 +25,15 @@ public class FactoryController {
         return this.productionLines.get(code);
     }
 
+    public StockController getStockController() {
+        return this.stock;
+    }
+
     @Override
     public String toString() {
         String output = "";
-        for (HashMap.Entry<String, ProductionLine> pl : this.productionLines.entrySet()) {
-            output += pl.getValue().toString() + "\n";
+        for (ProductionLine pl : this.productionLines.values()) {
+            output += pl + "\n";
         }
         return output;
     }

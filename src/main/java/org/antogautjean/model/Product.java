@@ -96,4 +96,10 @@ public class Product {
 
         return description;
     }
+
+    public Product clone() {
+        Product p = new Product(this.code, this.name, this.quantity, this.unit, this.buyPrice, this.sellPrice, this.demand);
+        p.setQuantityToBuy(this.getQuantityToBuy());
+        return p;
+    }
 }

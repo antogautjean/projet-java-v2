@@ -83,14 +83,15 @@ public class FileImporter {
             String[] line = row.split(";");
 
             factoryLines.put(line[0],
-                    new ProductionLine(stockController, line[0], line[1], FileImporter.stringToHashMap(line[2]),
+                    new ProductionLine(line[0], line[1], FileImporter.stringToHashMap(line[2]),
                             FileImporter.stringToHashMap(line[3]), Integer.parseInt(line[4]), Integer.parseInt(line[5]),
                             Integer.parseInt(line[6]), i));
         }
+        FactoryController factory = new FactoryController(factoryLines, stockController);
 
         csvReader.close();
         
-        return new FactoryController(factoryLines);
+        return factory;
     }
 
 }
