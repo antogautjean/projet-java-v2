@@ -1,6 +1,5 @@
 package org.antogautjean.model;
 
-import org.antogautjean.Controller.LineController;
 import org.antogautjean.Controller.StockController;
 
 import java.io.*;
@@ -50,7 +49,7 @@ public class FileImporter {
         csvReader.close();
     }
 
-    public static void fileToFactory(String lineFilePath, LineController lineController) throws IOException {
+    public static void fileToFactory(String lineFilePath, FactoryModel factory) throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;
