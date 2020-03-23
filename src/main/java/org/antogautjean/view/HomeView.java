@@ -183,7 +183,7 @@ public class HomeView extends JPanel {
                 }
                 switch (productLine.getState()) {
                     case IMPOSSIBLE:
-                        this.factoryTable.setValueAt("⚠ Production impossible\n(il manque des ressources)", this.increment, column++);
+                        this.factoryTable.setValueAt("<html><span color='red'>⚠ Production impossible</span><br>(il manque des ressources)</html>", this.increment, column++);
                         break;
                     case POSSIBLE:
                         this.factoryTable.setValueAt("👍 Production possible", this.increment, column++);
