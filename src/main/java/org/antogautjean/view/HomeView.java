@@ -17,13 +17,14 @@ public class HomeView extends JPanel {
     private JTextField textField2;
     private JButton loadButton;
     private JTable stockTable;
-    private JTable lines;
-    private JTable indicators;
+    private JTable linesTable;
+    private JTable indicatorsTable;
 
     private int increment = 0;
     private StockController stockList;
+    private LineController linesList;
 
-    public HomeView(StockController stockList, LineController line) {
+    public HomeView(StockController stockList, LineController lineList) {
 
         JFrame frame = new JFrame("Factory");
         frame.setSize(1280, 720);
@@ -31,6 +32,7 @@ public class HomeView extends JPanel {
         frame.setContentPane(this.homePanel);
         frame.setVisible(true);
         this.stockList = stockList;
+        this.linesList = lineList;
 
         createUIComponents();
     }
@@ -64,6 +66,33 @@ public class HomeView extends JPanel {
         stockTable.setAutoCreateRowSorter(true);
     }
 
+    private void configLineList() {
+
+        DefaultTableModel tableModel = new DefaultTableModel(this.linesList.getLines().size(), 7);
+        linesTable.setModel(tableModel);
+
+        JTableHeader header = linesTable.getTableHeader();
+        TableColumnModel columnModel = header.getColumnModel();
+
+        columnModel.getColumn(0).setHeaderValue("Ordre");
+        columnModel.getColumn(0).setPreferredWidth(50);
+        columnModel.getColumn(1).setHeaderValue("Code");
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(2).setHeaderValue("Nom");
+        columnModel.getColumn(2).setPreferredWidth(60);
+        columnModel.getColumn(3).setHeaderValue("Code éléments en sortie");
+        columnModel.getColumn(3).setPreferredWidth(60);
+        columnModel.getColumn(4).setHeaderValue("Niveau d'activation");
+        columnModel.getColumn(4).setPreferredWidth(60);
+        columnModel.getColumn(5).setHeaderValue("Etat de la chaine");
+        columnModel.getColumn(5).setPreferredWidth(60);
+        columnModel.getColumn(6).setHeaderValue("Quantité produite / demandée");
+        columnModel.getColumn(6).setPreferredWidth(60);
+        header.repaint();
+
+        linesTable.setAutoCreateRowSorter(true);
+    }
+
     public void loadStock(){
 
         this.increment = 0;
@@ -85,6 +114,7 @@ public class HomeView extends JPanel {
     private void createUIComponents() {
 
         configStockList();
+        configLineList();
 
         loadStock();
 
