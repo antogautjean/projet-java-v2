@@ -8,8 +8,9 @@
     <properties>
       <background color="-1"/>
       <enabled value="false"/>
+      <font name="Arial" size="20" style="1"/>
     </properties>
-    <border type="none" title="FACTORY Manager" title-justification="2">
+    <border type="none" title="F A C T O R Y   M A N A G E R" title-justification="2">
       <font name="Arial Black" size="18"/>
       <title-color color="-4521961"/>
     </border>
@@ -72,7 +73,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font name="Courier New" size="20" style="1"/>
+                      <font name="Arial" size="20" style="1"/>
                       <text value="Chaines de production"/>
                     </properties>
                   </component>
@@ -96,7 +97,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font name="Courier New" size="20" style="1"/>
+                      <font name="Arial" size="20" style="1"/>
                       <text value="Stock"/>
                     </properties>
                   </component>
@@ -178,7 +179,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font name="Courier New" size="20" style="1"/>
+                      <font name="Arial" size="20" style="1"/>
                       <text value="Indicateurs"/>
                     </properties>
                   </component>
