@@ -2,13 +2,15 @@ package org.antogautjean.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 
 public class FileImporter {
-    public static void fileToStock(String productFilePath, String priceFilePath, StockController stock)
+    public static StockController fileToStock(String productFilePath, String priceFilePath)
             throws IOException {
+        StockController stock = new StockController();
         // Products
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(productFilePath));
         String row;
@@ -50,33 +52,45 @@ public class FileImporter {
             }
         }
         csvReader.close();
+        return stock;
     }
 
-    public static void fileToFactory(String lineFilePath, FactoryController factory, StockController stockController) throws IOException {
+    private static HashMap<String, Integer> stringToHashMap(String input) {
+        HashMap<String, Integer> output = new HashMap<>();
+        String[] inputs = input.substring(1, input.length() - 1).split("\\),\\(");
+        String[] tmp;
+        try {
+            for (String str : inputs) {
+                tmp = str.split(" ?, ?");
+                output.put(tmp[0], Integer.parseInt(tmp[1]));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            // TODO: (un jour) Prévenir l'utilisateur que le parsing ne s'est pas bien passé
+            System.err.println("Désolé mais le fichier CSV n'a pas pu être parsé correctement");
+        }
+        return output;
+    }
+
+    public static FactoryController fileToFactory(String lineFilePath, StockController stockController)
+            throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;
         csvReader.readLine();
 
-        while ((row = csvReader.readLine()) != null) {
+        HashMap<String, ProductionLine> factoryLines = new HashMap<>();
+        for (int i = 1; (row = csvReader.readLine()) != null; i++) {
             String[] line = row.split(";");
 
-            // new ProductionLine(stockController, code, name, inputs, outputs, verificationOrder)
-            String code = line[0];
-            String name = line[1];
-            String input = line[2];
-            String output = line[3];
-            String duration = line[4];
-            String qualified = line[5];
-            String unqualified = line[6];
-
-            String[] dataIn = input.split(",");
-
-            System.out.println(dataIn.length);
-
-            break;
+            factoryLines.put(line[0],
+                    new ProductionLine(stockController, line[0], line[1], FileImporter.stringToHashMap(line[2]),
+                            FileImporter.stringToHashMap(line[3]), Integer.parseInt(line[4]), Integer.parseInt(line[5]),
+                            Integer.parseInt(line[6]), i));
         }
+
         csvReader.close();
+        
+        return new FactoryController(factoryLines);
     }
 
 }

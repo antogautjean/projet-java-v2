@@ -18,15 +18,14 @@ public class App {
             }
         }
         System.out.println("starting : OK");
-        
+
         System.out.println("FileImporter : Reading CSV Stock file");
         String dataPath = "./src/main/java/org/antogautjean/data/";
         // Stock controller
-        StockController stockController = new StockController("Principal");
-        FileImporter.fileToStock(dataPath + "elements.csv", dataPath + "prix.csv", stockController);
+        StockController stockController = FileImporter.fileToStock(dataPath + "elements.csv", dataPath + "prix.csv");
         // Prod line controller
-        FactoryController factory = new FactoryController();
-        FileImporter.fileToFactory(dataPath + "chaines.csv", factory, stockController);
+        FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
+        System.out.println(factory);
 
         if (isUIVisible) {
             new HomeView(stockController, factory);

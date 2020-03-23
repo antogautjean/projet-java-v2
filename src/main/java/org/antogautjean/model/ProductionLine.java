@@ -9,25 +9,29 @@ public class ProductionLine {
     // attributs CSV
     private String code;
     private String name;
-    private HashMap<String, Integer> inputs;
-    private HashMap<String, Integer> outputs;
+    private HashMap<String, Integer> inputs = new HashMap<>();
+    private HashMap<String, Integer> outputs = new HashMap<>();
 
     // attributs CSV non utilisés dans la version de base
-    private int time;
-    private int staffAmountNOTqualified;
-    private int staffAmountQualified;
+    private Integer time;
+    private Integer staffAmountNOTqualified;
+    private Integer staffAmountQualified;
 
     // attributs supplémentaires
-    private int verificationOrder;
-    private int activationLevel;
+      private Integer verificationOrder;
+    private Integer activationLevel;
     private StockController stockController;
 
-    public ProductionLine(StockController stockController, String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
-            int verificationOrder) {
+    public ProductionLine(StockController stockController, String code, String name, HashMap<String, Integer> inputs,
+            HashMap<String, Integer> outputs, Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified,
+            Integer verificationOrder) {
         this.code = code;
         this.name = name;
         this.inputs = inputs;
         this.outputs = outputs;
+        this.time = time;
+        this.staffAmountNOTqualified = staffAmountNOTqualified;
+        this.staffAmountQualified = staffAmountQualified;
         this.verificationOrder = verificationOrder;
 
         this.activationLevel = 0;
@@ -42,23 +46,23 @@ public class ProductionLine {
         return this.name;
     }
 
-    public int getTime() {
+    public Integer getTime() {
         return this.time;
     }
 
-    public int getStaffAmountNOTqualified() {
+    public Integer getStaffAmountNOTqualified() {
         return this.staffAmountNOTqualified;
     }
 
-    public int getStaffAmountQualified() {
+    public Integer getStaffAmountQualified() {
         return this.staffAmountQualified;
     }
 
-    public int getVerificationOrder() {
+    public Integer getVerificationOrder() {
         return this.verificationOrder;
     }
 
-    public int getActivationLevel() {
+    public Integer getActivationLevel() {
         return this.activationLevel;
     }
 
@@ -85,5 +89,10 @@ public class ProductionLine {
             orderedQuantity.put(entry.getKey(), this.stockController.getProduct(entry.getKey()).getOrderedQuantity());
         }
         return orderedQuantity;
+    }
+
+    @Override
+    public String toString() {
+        return this.code + " " + this.name;
     }
 }

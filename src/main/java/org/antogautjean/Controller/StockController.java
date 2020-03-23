@@ -5,19 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class StockController {
-
-    private String stockName;
-
-    private HashMap<String, Product> stock = new HashMap<>(1);
-
-    public StockController(String stockName) throws IOException {
-
-        this.stockName = stockName;
-    }
-
-    public String getStockName(){
-        return this.stockName;
-    }
+    private HashMap<String, Product> stock = new HashMap<>();
 
     public boolean addProduct(Product product){
         //tester si le produit existe deja dans la base de donnée
