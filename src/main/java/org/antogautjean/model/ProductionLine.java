@@ -83,10 +83,10 @@ public class ProductionLine {
         return outputQuantity;
     }
 
-    public HashMap<String, Integer> getOrderedQuantity() {
+    public HashMap<String, Integer> getQuantityDemanded() {
         HashMap<String, Integer> orderedQuantity = new HashMap<>();
         for (HashMap.Entry<String, Integer> entry : this.outputs.entrySet()) {
-            orderedQuantity.put(entry.getKey(), this.stockController.getProduct(entry.getKey()).getOrderedQuantity());
+            orderedQuantity.put(entry.getKey(), this.stockController.getProduct(entry.getKey()).getDemand());
         }
         return orderedQuantity;
     }

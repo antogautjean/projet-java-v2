@@ -7,21 +7,32 @@ public class Product {
     private Unit unit;
     private Double buyPrice;
     private Double sellPrice;
-    private Integer orderedQuantity;
+    private Integer demand;
 
-    public Product(String code, String name, int quantity, Unit unit, Double buyPrice, Double sellPrice, Integer orderedQuantity){
+    private Integer quantityToBuy;
 
+    public Product(String code, String name, int quantity, Unit unit, Double buyPrice, Double sellPrice, Integer demand){
         this.code = code;
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
-        this.orderedQuantity = orderedQuantity;
+        this.demand = demand;
+
+        this.quantityToBuy = 0;
     }
 
     public Product(String code, String name, int quantity, Unit unit){
         this(code, name, quantity,  unit, null, null, 0);
+    }
+
+    public Integer getQuantityToBuy() {
+        return this.quantityToBuy;
+    }
+
+    public void setQuantityToBuy(Integer quantityToBuy) {
+        this.quantityToBuy = quantityToBuy;
     }
 
     public String getCode() {
@@ -48,8 +59,8 @@ public class Product {
         return sellPrice;
     }
 
-    public Integer getOrderedQuantity() {
-        return orderedQuantity;
+    public Integer getDemand() {
+        return demand;
     }
 
     public boolean setBuyPrice(Double buyPrice){
@@ -62,8 +73,8 @@ public class Product {
         return true;
     }
 
-    public boolean setOrderedQuantity(Integer demand){
-        this.orderedQuantity = demand;
+    public boolean setDemand(Integer demand){
+        this.demand = demand;
         return true;
     }
 
@@ -81,7 +92,7 @@ public class Product {
 
         if (buyPrice != null) description += " | acheté à " + buyPrice + "€ ";
         if (sellPrice != null) description += " | vendu à " + sellPrice + "€ ";
-        if (orderedQuantity != null) description += "(demande:" + orderedQuantity + ")";
+        if (demand != null) description += "(demande:" + demand + ")";
 
         return description;
     }

@@ -121,10 +121,10 @@ public class HomeView extends JPanel {
                 if (product.getBuyPrice() == null)
                     this.stockTable.setValueAt("N/A", this.increment, 4);
                 else
-                    this.stockTable.setValueAt(product.getBuyPrice() * product.getOrderedQuantity(), this.increment, 4);
+                    this.stockTable.setValueAt(product.getBuyPrice() * product.getDemand(), this.increment, 4);
 
-                this.stockTable.setValueAt(product.getQuantity() + product.getOrderedQuantity(), this.increment, 5);
-                this.stockTable.setValueAt(	product.getQuantity() - product.getOrderedQuantity(), this.increment, 6);
+                this.stockTable.setValueAt(product.getQuantity() + product.getDemand(), this.increment, 5);
+                this.stockTable.setValueAt(	product.getQuantity() - product.getDemand(), this.increment, 6);
 
                 this.increment++;
             } catch (Exception e) {

@@ -48,7 +48,7 @@ public class FileImporter {
                 if (!line[2].equals("NA"))
                     currentProduct.setSellPrice((double) Integer.parseInt(line[2]));
 
-                currentProduct.setOrderedQuantity(Integer.parseInt(line[3]));
+                currentProduct.setDemand(Integer.parseInt(line[3]));
             }
         }
         csvReader.close();
