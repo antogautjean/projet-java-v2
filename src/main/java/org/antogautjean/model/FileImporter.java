@@ -1,11 +1,14 @@
 package org.antogautjean.model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import org.antogautjean.Controller.ProductionLineController;
 import org.antogautjean.Controller.StockController;
 
-import java.io.*;
-
 public class FileImporter {
-    public static void fileToStock(String productFilePath, String priceFilePath, StockController stock) throws IOException {
+    public static void fileToStock(String productFilePath, String priceFilePath, StockController stock)
+            throws IOException {
         // Products
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(productFilePath));
         String row;
@@ -43,13 +46,13 @@ public class FileImporter {
                 if (!line[2].equals("NA"))
                     currentProduct.setSellPrice((double) Integer.parseInt(line[2]));
 
-                currentProduct.setDemand((double) Integer.parseInt(line[3]));
+                currentProduct.setOrderedQuantity(Integer.parseInt(line[3]));
             }
         }
         csvReader.close();
     }
 
-    public static void fileToFactory(String lineFilePath, FactoryModel factory) throws IOException {
+    public static void fileToProductionLine(String lineFilePath, ProductionLineController factory) throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;

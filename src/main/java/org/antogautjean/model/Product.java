@@ -1,22 +1,15 @@
 package org.antogautjean.model;
 
 public class Product {
-
     private String code;
-
     private String name;
-
     private Integer quantity;
-
     private Unit unit;
-
     private Double buyPrice;
-
     private Double sellPrice;
+    private Integer orderedQuantity;
 
-    private Double demand;
-
-    public Product(String code, String name, int quantity, Unit unit, Double buyPrice, Double sellPrice, Double demand){
+    public Product(String code, String name, int quantity, Unit unit, Double buyPrice, Double sellPrice, Integer orderedQuantity){
 
         this.code = code;
         this.name = name;
@@ -24,7 +17,7 @@ public class Product {
         this.unit = unit;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
-        this.demand = demand;
+        this.orderedQuantity = orderedQuantity;
     }
 
     public Product(String code, String name, int quantity, Unit unit){
@@ -55,8 +48,8 @@ public class Product {
         return sellPrice;
     }
 
-    public Double getDemand() {
-        return demand;
+    public Integer getOrderedQuantity() {
+        return orderedQuantity;
     }
 
     public boolean setBuyPrice(Double buyPrice){
@@ -69,8 +62,8 @@ public class Product {
         return true;
     }
 
-    public boolean setDemand(Double demand){
-        this.demand = demand;
+    public boolean setOrderedQuantity(Integer demand){
+        this.orderedQuantity = demand;
         return true;
     }
 
@@ -88,9 +81,8 @@ public class Product {
 
         if (buyPrice != null) description += " | acheté à " + buyPrice + "€ ";
         if (sellPrice != null) description += " | vendu à " + sellPrice + "€ ";
-        if (demand != null) description += "(demande:" + demand + ")";
+        if (orderedQuantity != null) description += "(demande:" + orderedQuantity + ")";
 
         return description;
     }
-
 }

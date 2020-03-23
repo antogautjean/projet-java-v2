@@ -1,6 +1,6 @@
 package org.antogautjean.view;
 
-import org.antogautjean.Controller.LineController;
+import org.antogautjean.Controller.ProductionLineController;
 import org.antogautjean.Controller.StockController;
 
 import javax.swing.*;
@@ -22,9 +22,9 @@ public class HomeView extends JPanel {
 
     private int increment = 0;
     private StockController stockList;
-    private LineController linesList;
+    private ProductionLineController linesList;
 
-    public HomeView(StockController stockList, LineController lineList) {
+    public HomeView(StockController stockList, ProductionLineController lineList) {
 
         JFrame frame = new JFrame("Factory");
         frame.setSize(1280, 720);
@@ -68,7 +68,7 @@ public class HomeView extends JPanel {
 
     private void configLineList() {
 
-        DefaultTableModel tableModel = new DefaultTableModel(this.linesList.getLines().size(), 7);
+        DefaultTableModel tableModel = new DefaultTableModel(this.linesList.getProductionLines().size(), 7);
         linesTable.setModel(tableModel);
 
         JTableHeader header = linesTable.getTableHeader();

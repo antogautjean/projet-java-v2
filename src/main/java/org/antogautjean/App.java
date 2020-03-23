@@ -1,6 +1,6 @@
 package org.antogautjean;
 
-import org.antogautjean.Controller.LineController;
+import org.antogautjean.Controller.ProductionLineController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
@@ -28,7 +28,7 @@ public class App {
         FileImporter.fileToStock("./src/main/java/org/antogautjean/data/elements.csv",
                 "./src/main/java/org/antogautjean/data/prix.csv", stockController);
 
-        LineController l = null;
+        ProductionLineController l = null;
 
         if (isUIVisible) {
             new HomeView(stockController, l);
