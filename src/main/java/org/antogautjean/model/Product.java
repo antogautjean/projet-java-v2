@@ -21,7 +21,7 @@ public class Product {
     }
 
     public Product(String code, String name, int quantity, Unit unit){
-        this(code, name, quantity,  unit, null, null, null);
+        this(code, name, quantity,  unit, null, null, 0);
     }
 
     public String getCode() {
