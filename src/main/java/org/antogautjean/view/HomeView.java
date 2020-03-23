@@ -1,6 +1,6 @@
 package org.antogautjean.view;
 
-import org.antogautjean.Controller.ProductionLineController;
+import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 
 import javax.swing.*;
@@ -22,9 +22,9 @@ public class HomeView extends JPanel {
 
     private int increment = 0;
     private StockController stockList;
-    private ProductionLineController linesList;
+    private FactoryController linesList;
 
-    public HomeView(StockController stockList, ProductionLineController lineList) {
+    public HomeView(StockController stockList, FactoryController lineList) {
 
         JFrame frame = new JFrame("Factory");
         frame.setSize(1280, 720);

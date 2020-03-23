@@ -59,7 +59,6 @@ public class StockController {
     }
 
     public HashMap<String, Product> getStock(){
-
         return this.stock;
     }
 

@@ -22,7 +22,7 @@ public class ProductionLine {
     private int activationLevel;
     private StockController stockController;
 
-    public ProductionLine(App parentController, StockController stockController, String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
+    public ProductionLine(StockController stockController, String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
             int verificationOrder) {
         this.code = code;
         this.name = name;

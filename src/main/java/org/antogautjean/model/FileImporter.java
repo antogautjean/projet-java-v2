@@ -3,7 +3,7 @@ package org.antogautjean.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import org.antogautjean.Controller.ProductionLineController;
+import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 
 public class FileImporter {
@@ -52,7 +52,7 @@ public class FileImporter {
         csvReader.close();
     }
 
-    public static void fileToProductionLine(String lineFilePath, ProductionLineController factory) throws IOException {
+    public static void fileToFactory(String lineFilePath, FactoryController factory, StockController stockController) throws IOException {
         BufferedReader csvReader = new BufferedReader(new java.io.FileReader(lineFilePath));
 
         String row;
@@ -61,6 +61,7 @@ public class FileImporter {
         while ((row = csvReader.readLine()) != null) {
             String[] line = row.split(";");
 
+            // new ProductionLine(stockController, code, name, inputs, outputs, verificationOrder)
             String code = line[0];
             String name = line[1];
             String input = line[2];
@@ -68,8 +69,6 @@ public class FileImporter {
             String duration = line[4];
             String qualified = line[5];
             String unqualified = line[6];
-
-            System.out.println(input);
 
             String[] dataIn = input.split(",");
 
