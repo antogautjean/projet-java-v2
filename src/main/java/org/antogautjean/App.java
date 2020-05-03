@@ -3,9 +3,13 @@ package org.antogautjean;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
-import org.antogautjean.view.HomeView;
+import org.antogautjean.view.*;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.UIManager;
 
@@ -28,17 +32,21 @@ public class App {
         // Prod line controller
         FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
 
+
+        final String[] columns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter", "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
+
+        final DefaultTableModel model = new customTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+
         if (isUIVisible) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
                 System.err.println("): setLookAndFeel a échoué, désolé");
             }
-            new HomeView(stockController, factory);
+            new HomeView2(stockController, factory);
             System.out.println("Runing with UI");
         } else {
             System.out.println("Runing with NO UI");
         }
-
-    }
+            }
 }

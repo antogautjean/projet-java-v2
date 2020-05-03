@@ -43,7 +43,9 @@
                 <children>
                   <component id="f51e9" class="javax.swing.JTable" binding="stockTable">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <enabled value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -56,7 +58,12 @@
                 <children>
                   <component id="ef2c4" class="javax.swing.JTable" binding="factoryTable">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <enabled value="true"/>
+                    </properties>
+                    <clientProperties>
+                      <Table.isFileList class="java.lang.Boolean" value="false"/>
+                    </clientProperties>
                   </component>
                 </children>
               </scrollpane>

@@ -23,6 +23,8 @@ public class HomeView extends JPanel {
     private JLabel indicValeur;
     private JLabel indicCommande;
 
+
+
     private int increment = 0;
     protected StockController stockList;
     protected FactoryController factoryList;
@@ -64,6 +66,9 @@ public class HomeView extends JPanel {
 
         DefaultTableModel tableModel = new DefaultTableModel(this.stockList.getStock().size(), 7);
         this.stockTable.setModel(tableModel);
+        this.stockTable.setRowHeight(30);
+        this.stockTable.setCellSelectionEnabled(false);
+        this.stockTable.setFocusable(false);
 
         JTableHeader header = this.stockTable.getTableHeader();
         TableColumnModel columnModel = header.getColumnModel();
@@ -82,6 +87,9 @@ public class HomeView extends JPanel {
         columnModel.getColumn(5).setPreferredWidth(100);
         columnModel.getColumn(6).setHeaderValue("Quantité simulée après calcul");
         columnModel.getColumn(6).setPreferredWidth(100);
+
+
+        //columnModel.getColumn(3).setCellEditor(new SpinnerEditor());
         header.repaint();
 
         this.stockTable.setAutoCreateRowSorter(true);
@@ -111,6 +119,7 @@ public class HomeView extends JPanel {
         columnModel.getColumn(5).setPreferredWidth(75);
         columnModel.getColumn(6).setHeaderValue("Quantité produite / demandée");
         columnModel.getColumn(6).setPreferredWidth(80);
+
         header.repaint();
 
         this.factoryTable.setAutoCreateRowSorter(true);
