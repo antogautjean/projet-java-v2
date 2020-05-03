@@ -50,8 +50,7 @@ public class FactoryController implements TableLinesFormatInterface {
         Object[][] output = new Object[productionLines.size()][7]; // 7 = amount of columns
         for (String key : productionLines.keySet()) {
             ProductionLine line = productionLines.get(key);
-            verifOrder++;
-
+            
             String lineState = "";
             Integer outputQty = 0;
             for (Integer qty : line.getOutputQuantity().values()) {
@@ -85,7 +84,7 @@ public class FactoryController implements TableLinesFormatInterface {
 
             output[verifOrder] = new Object[] {
                 new SpinnerCell(new JSpinner(new SpinnerNumberModel(
-                    verifOrder, 1, Integer.MAX_VALUE, 1
+                    (verifOrder + 1), 1, Integer.MAX_VALUE, 1
                 ))),
                 line.getCode(),
                 line.getName(),
@@ -96,6 +95,7 @@ public class FactoryController implements TableLinesFormatInterface {
                 lineState,
                 ratioQuantiteProduiteDemandee
             };
+            verifOrder++;
         }
         return output;
     }

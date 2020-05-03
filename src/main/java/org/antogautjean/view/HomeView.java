@@ -40,12 +40,12 @@ public class HomeView {
         frame.setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
-        topPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        topPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // rajoute des marges
         topPanel.setLayout(new BorderLayout());
         frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
+        bottomPanel.setBorder(new EmptyBorder(0, 10, 10, 10)); // rajoute des marges
         bottomPanel.setLayout(new BorderLayout());
         frame.getContentPane().add(bottomPanel, BorderLayout.CENTER);
 
@@ -99,8 +99,8 @@ public class HomeView {
         });
 
         // Load data
-        // for (Object[] line : factory.getTableLineFormat()) {
-        //     ctm.addRow(line);
-        // }
+        for (Object[] line : factory.getTableLineFormat()) {
+            ctm.addRow(line);
+        }
     }
 }
