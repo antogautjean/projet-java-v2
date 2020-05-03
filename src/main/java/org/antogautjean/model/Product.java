@@ -20,7 +20,7 @@ public class Product {
         this.sellPrice = sellPrice;
         this.demand = demand;
 
-        this.quantityToBuy = 1;
+        this.quantityToBuy = 0;
     }
 
     public Product(String code, String name, int quantity, Unit unit){
