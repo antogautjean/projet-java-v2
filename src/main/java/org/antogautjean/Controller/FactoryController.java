@@ -7,7 +7,6 @@ import org.antogautjean.view.TableLinesFormatInterface;
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class FactoryController implements TableLinesFormatInterface {

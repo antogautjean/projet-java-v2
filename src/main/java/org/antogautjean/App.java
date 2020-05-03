@@ -3,13 +3,9 @@ package org.antogautjean;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
-import org.antogautjean.view.CustomTableModel;
 import org.antogautjean.view.HomeView;
 
-import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Vector;
 
 import javax.swing.UIManager;
 
@@ -32,16 +28,11 @@ public class App {
         // Prod line controller
         FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
 
-        final String[] columns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
-                "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
-
-        final DefaultTableModel model = new CustomTableModel(new Vector<>(), new Vector<>(Arrays.asList(columns)));
-
         if (isUIVisible) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
-                System.err.println("): setLookAndFeel a échoué, désolé");
+                System.err.println("Attention: setLookAndFeel ne fonctionne pas");
             }
             new HomeView(stockController, factory);
             System.out.println("Runing with UI");

@@ -1,24 +1,18 @@
 package org.antogautjean.view;
 
-import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StockController;
-import org.antogautjean.model.ProductionLine;
-
 import java.awt.BorderLayout;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Vector;
+
+import org.antogautjean.Controller.FactoryController;
+import org.antogautjean.Controller.StockController;
 
 public class HomeView {
 
@@ -34,7 +28,7 @@ public class HomeView {
 
         JFrame frame = new JFrame("Factory");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setTitle("Gestion d'usine");
+        frame.setTitle("Gestionnaire de production");
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
