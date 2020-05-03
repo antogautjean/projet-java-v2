@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
+import org.antogautjean.Controller.StaffController;
 
 public class FileImporter {
     public static StockController fileToStock(String productFilePath, String priceFilePath)
@@ -94,4 +95,29 @@ public class FileImporter {
         return factory;
     }
 
+    public static StaffController fileToStaff(String staffFilePath, StaffController staffController) throws IOException {
+    	  StaffController staff = new StaffController();
+		  BufferedReader csvReader = new BufferedReader(new java.io.FileReader(staffFilePath));
+
+          String row;
+          csvReader.readLine();
+          try {
+	          while ((row = csvReader.readLine()) != null) {
+	              String[] line = row.split(";");
+	              int[] tempPlanning = new int[24];
+	              
+	              for (int j = 2; j < line.length; j++) {
+	            	  tempPlanning[j-2] = Integer.parseInt(line[j]);
+	              }
+	              
+	              staff.addEmployee(new Employee(line[0], line[1], tempPlanning));
+	          }            
+       	  } catch (Exception e) {
+          e.getMessage();
+       	  }
+
+          csvReader.close();
+          
+          return staff;
+    }
 }

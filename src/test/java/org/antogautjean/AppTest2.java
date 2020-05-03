@@ -2,7 +2,11 @@ package org.antogautjean;
 
 import org.antogautjean.view.SpinnerCell;
 import org.antogautjean.view.CustomJTable;
+<<<<<<< HEAD
 import org.antogautjean.view.StockTableModel;
+=======
+import org.antogautjean.view.CustomTableModel;
+>>>>>>> Added staff management
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
