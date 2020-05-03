@@ -23,15 +23,13 @@ public class CheckboxCell extends AbstractCellEditor implements TableCellEditor,
     }
 
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                                                 int column) {
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,int column) {
 
         return checkBox;
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                                                   int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row, int column) {
 
         return checkBox;
     }

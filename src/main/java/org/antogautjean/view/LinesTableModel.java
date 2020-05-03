@@ -3,9 +3,9 @@ package org.antogautjean.view;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
-public class CustomTableModel extends DefaultTableModel {
+public class LinesTableModel extends DefaultTableModel {
 
-    public CustomTableModel(Vector v1, Vector v2){
+    public LinesTableModel(Vector v1, Vector v2){
         super(v1, v2);
     }
 
@@ -34,7 +34,7 @@ public class CustomTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int colIndex) {
-        return colIndex == 3;
+        return colIndex == 0 || colIndex == 4;
     }
 
 }
