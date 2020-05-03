@@ -1,10 +1,15 @@
 package org.antogautjean.view;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.util.EventObject;
+
+import javax.swing.AbstractCellEditor;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import java.awt.*;
-import java.util.EventObject;
 
 public class SpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 

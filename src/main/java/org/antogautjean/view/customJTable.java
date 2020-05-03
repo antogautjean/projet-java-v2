@@ -1,15 +1,15 @@
 package org.antogautjean.view;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-public class customJTable extends JTable {
+public class CustomJTable extends JTable {
 
     DefaultTableModel model;
 
-    public customJTable(DefaultTableModel model){
+    public CustomJTable(DefaultTableModel model){
         super(model);
         this.model = model;
     }

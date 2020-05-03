@@ -1,8 +1,8 @@
 package org.antogautjean;
 
 import org.antogautjean.view.SpinnerCell;
-import org.antogautjean.view.customJTable;
-import org.antogautjean.view.customTableModel;
+import org.antogautjean.view.CustomJTable;
+import org.antogautjean.view.CustomTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,16 +13,16 @@ public class AppTest2 {
 
     static int[] selectedRows = new int[0];
 
-    final static String[] columns = new String[] { "Code", "Nom", "QuantitÃ© actuelle", "QuantitÃ© Ã  acheter", "CoÃ»t d'achat prÃ©visionnel", "Nouvelle quantitÃ© aprÃ¨s achat", "QuantitÃ© simulÃ©e aprÃ¨s calcul" };
+    final static String[] columns = new String[] { "Code", "Nom", "Quantit actuelle", "Quantit  acheter", "Cot d'achat prvisionnel", "Nouvelle quantit aprs achat", "Quantit simule aprs calcul" };
 
-    final static DefaultTableModel model = new customTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+    final static DefaultTableModel model = new CustomTableModel(new Vector(), new Vector(Arrays.asList(columns)));
 
     public static void main(String[] a) {
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        final JTable table = new customJTable(model);
+        final JTable table = new CustomJTable(model);
 
         table.getTableHeader().setReorderingAllowed(false);
         table.getSelectionModel().addListSelectionListener(arg0 -> {

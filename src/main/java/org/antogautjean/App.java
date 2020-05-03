@@ -3,7 +3,8 @@ package org.antogautjean;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
-import org.antogautjean.view.*;
+import org.antogautjean.view.CustomTableModel;
+import org.antogautjean.view.HomeView;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
@@ -31,10 +32,10 @@ public class App {
         // Prod line controller
         FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
 
+        final String[] columns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
+                "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
 
-        final String[] columns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter", "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
-
-        final DefaultTableModel model = new customTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+        final DefaultTableModel model = new CustomTableModel(new Vector<>(), new Vector<>(Arrays.asList(columns)));
 
         if (isUIVisible) {
             try {
@@ -47,5 +48,5 @@ public class App {
         } else {
             System.out.println("Runing with NO UI");
         }
-            }
+    }
 }
