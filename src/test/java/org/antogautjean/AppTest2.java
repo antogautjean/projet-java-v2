@@ -13,7 +13,7 @@ public class AppTest2 {
 
     static int[] selectedRows = new int[0];
 
-    final static String[] columns = new String[] { "Code", "Nom", "Quantit actuelle", "Quantit  acheter", "Cot d'achat prvisionnel", "Nouvelle quantit aprs achat", "Quantit simule aprs calcul" };
+    final static String[] columns = new String[] { "Code", "Nom", "Quantitï¿½ actuelle", "Quantitï¿½ ï¿½ acheter", "Coï¿½t d'achat prï¿½visionnel", "Nouvelle quantitï¿½ aprï¿½s achat", "Quantitï¿½ simulï¿½e aprï¿½s calcul" };
 
     final static DefaultTableModel model = new CustomTableModel(new Vector(), new Vector(Arrays.asList(columns)));
 

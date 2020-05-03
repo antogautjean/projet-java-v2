@@ -2,15 +2,22 @@ package org.antogautjean.view;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
+import org.antogautjean.model.ProductionLine;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 public class HomeView {
@@ -30,6 +37,17 @@ public class HomeView {
         frame.setTitle("Gestion d'usine");
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        JPanel topPanel = new JPanel();
+        topPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        topPanel.setLayout(new BorderLayout());
+        frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
+        bottomPanel.setLayout(new BorderLayout());
+        frame.getContentPane().add(bottomPanel, BorderLayout.CENTER);
 
         this.stockList = stockList;
         this.linesList = lineList;
@@ -40,7 +58,7 @@ public class HomeView {
         this.stockTableModel = new CustomTableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)));
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
-        frame.getContentPane().add(new JScrollPane(this.stockTable), BorderLayout.NORTH);
+        topPanel.add(new JScrollPane(this.stockTable));
 
         // Lines panel - Bottom
         final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom", "Code éléments en sortie",
@@ -48,15 +66,15 @@ public class HomeView {
         this.linesTableModel = new CustomTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
         this.linesTable = new CustomJTable(linesTableModel);
         this.linesTable.setRowHeight(30);
-        frame.getContentPane().add(new JScrollPane(this.linesTable), BorderLayout.CENTER);
+        bottomPanel.add(new JScrollPane(this.linesTable));
 
-        configPanel(this.linesTable, this.linesTableModel);
-        configPanel(this.stockTable, this.stockTableModel);
+        configPanel(this.stockTable, this.stockTableModel, this.stockList);
+        configPanel(this.linesTable, this.linesTableModel, this.linesList);
 
         frame.setVisible(true);
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface factory) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
             int[] selectedRows = new int[0];
@@ -80,13 +98,9 @@ public class HomeView {
             }
         });
 
-        // Load Stock
-        stockList.getStock().forEach((code, product) -> {
-            String prevision = product.getBuyPrice() == null ? "N/A"
-                    : (product.getBuyPrice() * product.getDemand()) + "";
-            ctm.addRow(new Object[] { product.getCode(), product.getName(), product.getQuantity(),
-                    new SpinnerCell(new JSpinner()), prevision, product.getQuantity() + product.getQuantityToBuy(),
-                    product.getQuantity() - product.getQuantityToBuy() });
-        });
+        // Load data
+        // for (Object[] line : factory.getTableLineFormat()) {
+        //     ctm.addRow(line);
+        // }
     }
 }
