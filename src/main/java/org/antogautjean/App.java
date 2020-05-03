@@ -5,7 +5,6 @@ import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.*;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class App {
             } catch (Exception e) {
                 System.err.println("): setLookAndFeel a échoué, désolé");
             }
-            new HomeView2(stockController, factory);
+            new HomeView(stockController, factory);
             System.out.println("Runing with UI");
         } else {
             System.out.println("Runing with NO UI");
