@@ -1,4 +1,4 @@
-package org.antogautjean.view;
+package org.antogautjean.view.elements;
 
 import java.awt.Color;
 import java.awt.Component;

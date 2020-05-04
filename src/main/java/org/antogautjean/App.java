@@ -4,7 +4,7 @@ import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
-import org.antogautjean.view.StockTableModel;
+import org.antogautjean.view.elements.StockTableModel;
 
 import java.io.IOException;
 import java.util.Arrays;

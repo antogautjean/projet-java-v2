@@ -1,8 +1,8 @@
 package org.antogautjean.Controller;
 
 import org.antogautjean.model.ProductionLine;
-import org.antogautjean.view.SpinnerCell;
-import org.antogautjean.view.TableLinesFormatInterface;
+import org.antogautjean.view.elements.SpinnerCell;
+import org.antogautjean.view.elements.TableLinesFormatInterface;
 
 import java.util.HashMap;
 

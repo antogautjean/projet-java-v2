@@ -1,8 +1,8 @@
 package org.antogautjean;
 
-import org.antogautjean.view.SpinnerCell;
-import org.antogautjean.view.CustomJTable;
-import org.antogautjean.view.StockTableModel;
+import org.antogautjean.view.elements.SpinnerCell;
+import org.antogautjean.view.elements.CustomJTable;
+import org.antogautjean.view.elements.StockTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

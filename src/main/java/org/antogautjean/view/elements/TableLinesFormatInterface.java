@@ -1,4 +1,4 @@
-package org.antogautjean.view;
+package org.antogautjean.view.elements;
 
 public interface TableLinesFormatInterface {
     public Object[][] getTableLineFormat();

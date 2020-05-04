@@ -1,4 +1,4 @@
-package org.antogautjean.view;
+package org.antogautjean.view.elements;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
