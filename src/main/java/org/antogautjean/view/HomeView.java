@@ -139,11 +139,12 @@ public class HomeView {
     private void initTabs(TabInterface[] tabs){
         this.tabs = new JTabbedPane();
 
-        for (TabInterface tab : tabs) {
+        for (int i = 0; i < tabs.length; i++) {
+            TabInterface tab = tabs[i];
             this.tabs.add(tab.getTabTitle(), tab.getComponent());
             JLabel tabLabel = new JLabel(tab.getTabTitle());
             tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            this.tabs.setTabComponentAt(0, tabLabel);
+            this.tabs.setTabComponentAt(i, tabLabel);
         }
 
         this.mainFrame.getContentPane().add(this.tabs);
