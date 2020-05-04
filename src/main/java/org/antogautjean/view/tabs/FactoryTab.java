@@ -1,4 +1,4 @@
-package org.antogautjean.view.Tabs;
+package org.antogautjean.view.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

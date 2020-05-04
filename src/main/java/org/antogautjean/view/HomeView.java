@@ -11,10 +11,10 @@ import javax.swing.JTabbedPane;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.Tabs.FactoryTab;
-import org.antogautjean.view.Tabs.SettingsTab;
-import org.antogautjean.view.Tabs.StaffTab;
-import org.antogautjean.view.Tabs.TabInterface;
+import org.antogautjean.view.tabs.FactoryTab;
+import org.antogautjean.view.tabs.SettingsTab;
+import org.antogautjean.view.tabs.StaffTab;
+import org.antogautjean.view.tabs.TabInterface;
 
 public class HomeView {
 

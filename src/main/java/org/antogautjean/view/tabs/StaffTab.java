@@ -1,4 +1,4 @@
-package org.antogautjean.view.Tabs;
+package org.antogautjean.view.tabs;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -9,7 +9,7 @@ public class StaffTab implements TabInterface {
     @Override
     public JComponent getComponent() {
         JPanel staffPanel = new JPanel();
-        staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: à remplacer par le vrai truc
+        staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: ï¿½ remplacer par le vrai truc
         return staffPanel;
     }
 

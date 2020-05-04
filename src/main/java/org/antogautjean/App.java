@@ -1,5 +1,6 @@
 package org.antogautjean;
 
+import org.antogautjean.Controller.ConfigController;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
@@ -20,6 +21,8 @@ public class App {
             }
         }
         System.out.println("starting : OK");
+
+        ConfigController cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
 
         System.out.println("FileImporter : Reading CSV Stock file");
         String dataPath = "./src/main/java/org/antogautjean/data/";
