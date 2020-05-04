@@ -10,14 +10,26 @@ public class Config
     Properties prop;
 
     public Config(String configFilePath) throws Exception {
-        File f = new File(configFilePath);
-        if (f.exists()){
-            this.configFilePath = configFilePath;
-            this.prop = new Properties();
+        try {
+            File f = new File(configFilePath);
+            if (!f.exists()) {
+                if(f.createNewFile()){
+                    System.out.println("File created: " + f.getName());
+                    FileWriter myWriter = new FileWriter(configFilePath);
+                    myWriter.write("stockFile=\n");
+                    myWriter.write("linesFile=");
+                    myWriter.close();
+                }else {
+                    System.out.println("File already exists.");
+                }
+            }
+        }catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
-        else {
-           throw new Exception("Le fichier spécifié n'existe pas");
-        }
+
+        this.configFilePath = configFilePath;
+        this.prop = new Properties();
     }
 
     public void setProperty(String key, String value){
