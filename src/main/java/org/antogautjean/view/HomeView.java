@@ -72,9 +72,6 @@ public class HomeView {
         this.linesTable = new CustomJTable(linesTableModel);
         this.linesTable.setRowHeight(30);
         this.linesTable.setDefaultRenderer(Object.class, createCellRenderer()); // adds padding
-        this.linesTable.setDragEnabled(true);
-        this.linesTable.setDropMode(DropMode.INSERT_ROWS);
-        this.linesTable.setTransferHandler(new TableRowTransferHandler(this.linesTable));
 
 
         TableColumnModel columnModel = this.linesTable.getColumnModel();
