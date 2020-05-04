@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -95,12 +96,10 @@ public class HomeView {
         final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom", "Code éléments en sortie", "Niveau d'activation", "Etat de la chaîne", "Quantité produite / quantité demandée" };
 
         JPanel topPanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
-
-        configJPanel(bottomPanel);
-
         configStockTable(topPanel, stockColumns);
-
+        
+        JPanel bottomPanel = new JPanel();
+        configJPanel(bottomPanel);
 
         this.linesTableModel = new LinesTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
         this.linesTable = new CustomJTable(linesTableModel);
@@ -113,10 +112,26 @@ public class HomeView {
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
 
-        this.mainFrame.getContentPane().add(splitPane);
+        // Onglets
+        // Onglet 1 : Usine
+        onglets = new JTabbedPane();
+        onglets.add("", splitPane);
+        JLabel tab0Label = new JLabel("Usine");
+        tab0Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        onglets.setTabComponentAt(0, tab0Label);
+        
+        // Onglet 2 : Param�tres
+        JPanel settingsPanel = new JPanel();
+        settingsPanel.add(new JLabel("En construction")); // TODO: à remplacer par le vrai truc
+        onglets.add("", settingsPanel);
+        JLabel tab1Label = new JLabel("Paramètres");
+        tab1Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        onglets.setTabComponentAt(1, tab1Label);
+
+        this.mainFrame.getContentPane().add(onglets);
         this.mainFrame.setVisible(true);
 
-        splitPane.setDividerLocation(.5);
+        splitPane.setResizeWeight(.5);
     }
 
 
