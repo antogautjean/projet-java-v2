@@ -26,7 +26,7 @@ public class FileImporter {
                 String code = line[0];
                 String name = line[1];
 
-                Integer quantity = Integer.parseInt(line[2]);
+                int quantity = Integer.parseInt(line[2]);
                 Unit unit = Unit.strToUnit(line[3]);
 
                 Product current = new Product(code, name, quantity, unit);
