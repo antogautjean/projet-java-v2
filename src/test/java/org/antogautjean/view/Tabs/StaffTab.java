@@ -57,7 +57,7 @@ public class StaffTab implements TabInterface {
 
         JPanel staffPanel = new JPanel();
         configStaffTable(staffPanel, staffColumns);
-        configPanel(this.staffTable, this.staffTableModel, (TableLinesFormatInterface) this.staffList);
+        configPanel(this.staffTable, this.staffTableModel, this.staffList);
 
 
         staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: à remplacer par le vrai truc
