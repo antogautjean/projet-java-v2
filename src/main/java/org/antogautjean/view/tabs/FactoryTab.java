@@ -115,7 +115,7 @@ public class FactoryTab implements TabInterface {
     // Lines Table
     private void configLinesTable(JPanel bottomPanel, String[] linesColumns){
         configJPanel(bottomPanel);
-        
+
         Font font = new Font("Arial", Font.PLAIN, 14);
         Color color = Color.BLACK;
         bottomPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));

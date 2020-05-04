@@ -2,6 +2,10 @@ package org.antogautjean.Controller;
 
 import java.util.HashMap;
 
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+
 import org.antogautjean.model.Employee;
 import org.antogautjean.view.elements.TableLinesFormatInterface;
 
@@ -9,7 +13,7 @@ public class StaffController implements TableLinesFormatInterface {
   private HashMap<String, Employee> staff = new HashMap<>();
 
     public boolean addEmployee(Employee employee){
-        //tester si le produit existe deja dans la base de donnée
+        //tester si le produit existe deja dans la base de donnÃ©e
         try {
             this.staff.put(employee.getCode(), employee);
             return true;
@@ -52,7 +56,7 @@ public class StaffController implements TableLinesFormatInterface {
     }
 
     public String toString(){
-        return "Il y a " + this.staff.size() + " employ�s parmit le staff (valeur <sum> €)." ;
+        return "Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)." ;
     }
 
     public StaffController clone() {
@@ -68,6 +72,47 @@ public class StaffController implements TableLinesFormatInterface {
         for (Employee Employee : this.staff.values()) {
         	output++;
         }
+        return output;
+    }
+
+    @Override
+    public Object[][] getTableStaffFormat() {
+        Object[][] output = new Object[staff.size()][26]; // 26 = amount of columns
+        int employeeIndex = 0;
+        for(String key : staff.keySet()) {
+            Employee employee = staff.get(key);
+
+            output[employeeIndex] = new Object[] {
+                employee.getCode(),
+                employee.getQualification(),
+                employee.getPlanning(0),
+                employee.getPlanning(1),
+                employee.getPlanning(2),
+                employee.getPlanning(3),
+                employee.getPlanning(4),
+                employee.getPlanning(5),
+                employee.getPlanning(6),
+                employee.getPlanning(7),
+                employee.getPlanning(8),
+                employee.getPlanning(9),
+                employee.getPlanning(10),
+                employee.getPlanning(11),
+                employee.getPlanning(12),
+                employee.getPlanning(13),
+                employee.getPlanning(14),
+                employee.getPlanning(15),
+                employee.getPlanning(16),
+                employee.getPlanning(17),
+                employee.getPlanning(18),
+                employee.getPlanning(19),
+                employee.getPlanning(20),
+                employee.getPlanning(21),
+                employee.getPlanning(22),
+                employee.getPlanning(23),
+                };
+            employeeIndex++;
+        }
+
         return output;
     }
 

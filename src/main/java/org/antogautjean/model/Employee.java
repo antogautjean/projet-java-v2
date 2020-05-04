@@ -44,8 +44,8 @@ public class Employee {
 	/**
 	 * @return the planning
 	 */
-	public int[] getPlanning() {
-		return planning;
+	public int getPlanning(int i) {
+		return planning[i];
 	}
 
 	/**

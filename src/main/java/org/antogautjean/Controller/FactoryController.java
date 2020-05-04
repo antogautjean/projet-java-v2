@@ -71,10 +71,10 @@ public class FactoryController implements TableLinesFormatInterface {
             }
             switch (line.getState()) {
                 case IMPOSSIBLE:
-                    lineState = "<html><span color='red'>⚠ Production impossible</span><br>(il manque des ressources)</html>";
+                    lineState = "<html><span color='red'>âš  Production impossible</span><br>(il manque des ressources)</html>";
                     break;
                 case POSSIBLE:
-                    lineState = "👍 Production possible";
+                    lineState = "ðŸ‘� Production possible";
                     break;
                 default: // NONE
                     lineState = "Aucune production";
