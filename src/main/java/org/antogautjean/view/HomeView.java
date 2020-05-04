@@ -21,6 +21,10 @@ import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
+import org.antogautjean.view.elements.CustomJTable;
+import org.antogautjean.view.elements.LinesTableModel;
+import org.antogautjean.view.elements.StockTableModel;
+import org.antogautjean.view.elements.TableLinesFormatInterface;
 
 import java.awt.Component;
 import java.awt.Dimension;
