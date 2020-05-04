@@ -3,8 +3,9 @@ package org.antogautjean.Controller;
 import java.util.HashMap;
 
 import org.antogautjean.model.Employee;
+import org.antogautjean.view.elements.TableLinesFormatInterface;
 
-public class StaffController {
+public class StaffController implements TableLinesFormatInterface {
   private HashMap<String, Employee> staff = new HashMap<>();
 
     public boolean addEmployee(Employee employee){
@@ -51,7 +52,7 @@ public class StaffController {
     }
 
     public String toString(){
-        return "Il y a " + this.staff.size() + " employ�s parmit le staff (valeur <sum> €)." ;
+        return "Il y a " + this.staff.size() + " employ�s parmit le staff (valeur <sum> €)." ;
     }
 
     public StaffController clone() {
@@ -70,4 +71,8 @@ public class StaffController {
         return output;
     }
 
+    @Override
+    public Object[][] getTableLineFormat() {
+        return new Object[0][];
+    }
 }

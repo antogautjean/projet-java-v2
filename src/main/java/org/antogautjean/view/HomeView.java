@@ -10,21 +10,22 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import org.antogautjean.Controller.FactoryController;
+import org.antogautjean.Controller.StaffController;
 import org.antogautjean.Controller.StockController;
+import org.antogautjean.view.tabs.StaffTab;
 import org.antogautjean.view.tabs.FactoryTab;
 import org.antogautjean.view.tabs.SettingsTab;
-import org.antogautjean.view.tabs.StaffTab;
 import org.antogautjean.view.tabs.TabInterface;
 
 public class HomeView {
 
     protected JTabbedPane tabs;
 
-    public HomeView(StockController stockList, FactoryController lineList) throws Exception {
+    public HomeView(StockController stockList, FactoryController lineList, StaffController staffList) throws Exception {
 
         frameInit();
 
-        TabInterface[] tabs = { new FactoryTab(stockList, lineList), new StaffTab(),  new SettingsTab() };
+        TabInterface[] tabs = { new FactoryTab(stockList, lineList), new StaffTab(staffList),  new SettingsTab() };
         this.initTabs(tabs);
         // initTabs(factoryTab(stockList, lineList), settingTab());
 

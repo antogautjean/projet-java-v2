@@ -98,7 +98,7 @@ public class FileImporter {
         return factory;
     }
 
-    public static StaffController fileToStaff(String staffFilePath, StaffController staffController) throws IOException {
+    public static StaffController fileToStaff(String staffFilePath) throws IOException {
     	  StaffController staff = new StaffController();
 		  BufferedReader csvReader = new BufferedReader(new java.io.FileReader(staffFilePath));
 

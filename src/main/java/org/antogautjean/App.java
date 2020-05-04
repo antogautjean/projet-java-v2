@@ -2,6 +2,7 @@ package org.antogautjean;
 
 import org.antogautjean.Controller.ConfigController;
 import org.antogautjean.Controller.FactoryController;
+import org.antogautjean.Controller.StaffController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
@@ -29,14 +30,17 @@ public class App {
         // Stock controller
         StockController stockController;
         FactoryController factory;
+        StaffController staff;
 
         try{
             stockController = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
             factory = FileImporter.fileToFactory(cfg.getProperty("linesFiles"), stockController);
+            staff = FileImporter.fileToStaff("./src/main/java/org/antogautjean/data/employes.csv");
         }
         catch (Exception ex){
             stockController = null;
             factory = null;
+            staff = null;
         }
 
         if (isUIVisible) {
@@ -45,7 +49,7 @@ public class App {
             } catch (Exception e) {
                 System.err.println("Attention: setLookAndFeel ne fonctionne pas");
             }
-            new HomeView(stockController, factory);
+            new HomeView(stockController, factory, staff);
             System.out.println("Runing with UI");
         } else {
             System.out.println("Runing with NO UI");
