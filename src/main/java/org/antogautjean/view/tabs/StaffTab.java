@@ -62,7 +62,6 @@ public class StaffTab implements TabInterface {
             configPanel(this.staffTable, this.staffTableModel, this.staffList);
         }
 
-
         staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: � remplacer par le vrai truc
         return staffPanel;
     }

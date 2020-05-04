@@ -33,7 +33,7 @@ public class SettingsTab implements TabInterface, ActionListener {
         container = new JPanel();
         container.setBorder(BorderFactory.createTitledBorder("Configuration des fichiers source (CSV)"));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.setPreferredSize(new Dimension(400, 210));
+        container.setPreferredSize(new Dimension(800, 250));
 
         this.addStock = new JButton("Modifier");
         this.addLines = new JButton("Modifier");

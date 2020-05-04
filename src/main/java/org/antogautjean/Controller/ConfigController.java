@@ -18,7 +18,8 @@ public class ConfigController
                     FileWriter myWriter = new FileWriter(configFilePath);
                     myWriter.write("stockFile=\n");
                     myWriter.write("pricesFile=\n");
-                    myWriter.write("linesFile=");
+                    myWriter.write("linesFile=\n");
+                    myWriter.write("staffFile=");
                     myWriter.close();
                 }else {
                     System.out.println("File already exists.");
