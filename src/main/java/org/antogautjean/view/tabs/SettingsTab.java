@@ -16,9 +16,11 @@ public class SettingsTab implements TabInterface, ActionListener {
     JPanel container;
     JButton addStock;
     JButton addLines;
+    JButton addPrices;
     JButton confirm;
 
     JLabel stockPath;
+    JLabel pricesPath;
     JLabel linesPath;
 
     @Override
@@ -33,6 +35,7 @@ public class SettingsTab implements TabInterface, ActionListener {
 
         this.addStock = new JButton("Modifier");
         this.addLines = new JButton("Modifier");
+        this.addPrices = new JButton("Modifier");
         // this.confirm = new JButton("Enregistrer");
 
         JPanel settingsPanel = new JPanel();
@@ -45,6 +48,10 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.stockPath = new JLabel(this.cfg.getProperty("stockFile"));
         labelStock.setFont(font);
 
+        JLabel labelPrices = new JLabel("Fichier des prix");
+        this.pricesPath = new JLabel(this.cfg.getProperty("pricesFile"));
+        labelPrices.setFont(font);
+
         JLabel labelList = new JLabel("Fichier de chaine de production");
         this.linesPath = new JLabel(this.cfg.getProperty("linesFile"));
         labelList.setFont(font);
@@ -54,6 +61,10 @@ public class SettingsTab implements TabInterface, ActionListener {
         container.add(this.addStock);
         container.add(this.stockPath);
         container.add(spacer);
+        container.add(labelPrices);
+        container.add(this.addPrices);
+        container.add(this.pricesPath);
+        container.add(spacer);
         container.add(labelList);
         container.add(this.addLines);
         container.add(this.linesPath);
@@ -62,9 +73,9 @@ public class SettingsTab implements TabInterface, ActionListener {
         // container.add(confirm);
         // container.add(spacer);
 
-        addStock.addActionListener(this);
-        addLines.addActionListener(this);
-        //confirm.addActionListener(this);
+        this.addStock.addActionListener(this);
+        this.addLines.addActionListener(this);
+        this.addPrices.addActionListener(this);
 
         settingsPanel.add(container);
         return settingsPanel;
@@ -95,11 +106,20 @@ public class SettingsTab implements TabInterface, ActionListener {
                 if (e.getSource() == this.addStock){
                     this.cfg.setProperty("stockFile", selectedFile.getAbsolutePath());
                     this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
+                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
                     stockPath.setText(selectedFile.getAbsolutePath());
+                    this.cfg.commit();
+                }
+                if (e.getSource() == this.addPrices){
+                    this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
+                    this.cfg.setProperty("pricesFile", selectedFile.getAbsolutePath());
+                    this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
+                    pricesPath.setText(selectedFile.getAbsolutePath());
                     this.cfg.commit();
                 }
                 if (e.getSource() == this.addLines){
                     this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
+                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
                     this.cfg.setProperty("linesFile", selectedFile.getAbsolutePath());
                     linesPath.setText(selectedFile.getAbsolutePath());
                     this.cfg.commit();

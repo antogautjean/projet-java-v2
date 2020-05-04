@@ -69,8 +69,10 @@ public class FactoryTab implements TabInterface {
         JPanel bottomPanel = new JPanel();
         configLinesTable(bottomPanel, linesColumns);
 
-        configPanel(this.stockTable, this.stockTableModel, this.stockList);
-        configPanel(this.linesTable, this.linesTableModel, this.linesList);
+        if(this.stockList != null && this.linesList != null){
+            configPanel(this.stockTable, this.stockTableModel, this.stockList);
+            configPanel(this.linesTable, this.linesTableModel, this.linesList);
+        }
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
         splitPane.setResizeWeight(.5);

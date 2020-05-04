@@ -17,6 +17,7 @@ public class ConfigController
                     System.out.println("File created: " + f.getName());
                     FileWriter myWriter = new FileWriter(configFilePath);
                     myWriter.write("stockFile=\n");
+                    myWriter.write("pricesFile=\n");
                     myWriter.write("linesFile=");
                     myWriter.close();
                 }else {

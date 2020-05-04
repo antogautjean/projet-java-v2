@@ -27,9 +27,17 @@ public class App {
         System.out.println("FileImporter : Reading CSV Stock file");
         String dataPath = "./src/main/java/org/antogautjean/data/";
         // Stock controller
-        StockController stockController = FileImporter.fileToStock(dataPath + "elements.csv", dataPath + "prix.csv");
-        // Prod line controller
-        FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
+        StockController stockController;
+        FactoryController factory;
+
+        try{
+            stockController = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
+            factory = FileImporter.fileToFactory(cfg.getProperty("linesFiles"), stockController);
+        }
+        catch (Exception ex){
+            stockController = null;
+            factory = null;
+        }
 
         if (isUIVisible) {
             try {
