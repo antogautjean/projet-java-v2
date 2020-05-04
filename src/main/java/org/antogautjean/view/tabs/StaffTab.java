@@ -3,6 +3,7 @@ package org.antogautjean.view.tabs;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.view.elements.CustomJTable;
 import org.antogautjean.view.elements.StaffTableModel;
+import org.antogautjean.view.elements.TableLinesFormatInterface;
 import org.antogautjean.view.elements.TableStaffFormatInterface;
 
 import java.awt.BorderLayout;
@@ -56,7 +57,7 @@ public class StaffTab implements TabInterface {
 
         JPanel staffPanel = new JPanel();
         configStaffTable(staffPanel, staffColumns);
-        configPanel(this.staffTable, this.staffTableModel, (TableStaffFormatInterface) this.staffList);
+        configPanel(this.staffTable, this.staffTableModel, this.staffList);
 
 
         staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: � remplacer par le vrai truc
@@ -97,7 +98,7 @@ public class StaffTab implements TabInterface {
         return "Gestion du personnel";
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableStaffFormatInterface staff) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
             int[] selectedRows = new int[0];
@@ -122,7 +123,7 @@ public class StaffTab implements TabInterface {
         });
 
         // Load data
-        for (Object[] line : staff.getTableStaffFormat()) {
+        for (Object[] line : this.staffList.getTableLineFormat()) {
             ctm.addRow(line);
         }
     }

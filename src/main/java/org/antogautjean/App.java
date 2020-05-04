@@ -39,6 +39,7 @@ public class App {
             staff = FileImporter.fileToStaff(cfg.getProperty("staffFiles"));
         }
         catch (Exception ex){
+            ex.printStackTrace();
             stock = null;
             factory = null;
             staff = null;

@@ -76,7 +76,7 @@ public class StaffController implements TableLinesFormatInterface {
     }
 
     @Override
-    public Object[][] getTableStaffFormat() {
+    public Object[][] getTableLineFormat() {
         Object[][] output = new Object[staff.size()][26]; // 26 = amount of columns
         int employeeIndex = 0;
         for(String key : staff.keySet()) {
@@ -114,10 +114,5 @@ public class StaffController implements TableLinesFormatInterface {
         }
 
         return output;
-    }
-
-    @Override
-    public Object[][] getTableLineFormat() {
-        return new Object[0][];
     }
 }
