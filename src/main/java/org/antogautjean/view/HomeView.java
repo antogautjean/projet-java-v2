@@ -1,56 +1,52 @@
 package org.antogautjean.view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.elements.CustomJTable;
-import org.antogautjean.view.elements.LinesTableModel;
-import org.antogautjean.view.elements.StockTableModel;
-import org.antogautjean.view.elements.TableLinesFormatInterface;
-
-import java.awt.Component;
-import java.awt.Dimension;
+import org.antogautjean.view.elements.*;
 
 public class HomeView {
 
     protected StockController stockList;
     protected FactoryController linesList;
-
-    protected JTabbedPane onglets;
-
+    protected JTabbedPane tabs;
     protected CustomJTable stockTable;
     protected CustomJTable linesTable;
     protected DefaultTableModel stockTableModel;
     protected DefaultTableModel linesTableModel;
 
+    public HomeView(StockController stockList, FactoryController lineList) {
+
+        frameInit();
+
+        initTabs(factoryTab(stockList, lineList), settingTab());
+
+        this.mainFrame.setVisible(true);
+    }
+
     private void configJPanel(JPanel panel){
-        panel.setBorder(new EmptyBorder(10, 10, 10, 10)); // rajoute des marges
+        //panel.setBorder(new EmptyBorder(30, 30, 30, 30)); // rajoute des marges
         panel.setLayout(new BorderLayout());
         panel.setMinimumSize(new Dimension(300,200));
     }
 
-
     private void configStockTable(JPanel topPanel, String[] stockColumns) {
 
         configJPanel(topPanel);
+
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        Color color = Color.BLACK;
+        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
         this.stockTableModel = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)));
         this.stockTable = new CustomJTable(stockTableModel);
@@ -58,18 +54,45 @@ public class HomeView {
 
         TableColumnModel columnModel = this.stockTable.getColumnModel();
         this.stockTable.setDefaultRenderer(Object.class, createCellRenderer());
-        columnModel.getColumn(0).setPreferredWidth(50);
+        columnModel.getColumn(0).setMaxWidth(50);
         columnModel.getColumn(1).setPreferredWidth(300);
         columnModel.getColumn(3).setPreferredWidth(100);
 
         topPanel.add(new JScrollPane(this.stockTable));
     }
 
+    private void configLinesTable(JPanel bottomPanel, String[] linesColumns){
+
+        configJPanel(bottomPanel);
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        Color color = Color.BLACK;
+        bottomPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
+
+        this.linesTableModel = new LinesTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
+        this.linesTable = new CustomJTable(linesTableModel);
+        this.linesTable.setRowHeight(30);
+        this.linesTable.setDefaultRenderer(Object.class, createCellRenderer()); // adds padding
+        this.linesTable.setDragEnabled(true);
+        this.linesTable.setDropMode(DropMode.INSERT_ROWS);
+        this.linesTable.setTransferHandler(new TableRowTransferHandler(this.linesTable));
+
+
+        TableColumnModel columnModel = this.linesTable.getColumnModel();
+        this.linesTable.setDefaultRenderer(Object.class, createCellRenderer());
+        columnModel.getColumn(0).setMinWidth(120);
+        columnModel.getColumn(0).setMaxWidth(120);
+        columnModel.getColumn(1).setMaxWidth(50);
+        columnModel.getColumn(4).setMinWidth(110);
+        columnModel.getColumn(4).setMaxWidth(100);
+
+        bottomPanel.add(new JScrollPane(this.linesTable));
+    }
+
     private DefaultTableCellRenderer createCellRenderer(){
         return new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                // setHorizontalAlignment(JLabel.CENTER);
+                setHorizontalAlignment(JLabel.CENTER);
                 setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
                 return this;
             }
@@ -89,10 +112,7 @@ public class HomeView {
         this.mainFrame.setIconImage(new ImageIcon("./src/main/java/org/antogautjean/data/factory_icon.png").getImage());
     }
 
-
-    public HomeView(StockController stockList, FactoryController lineList) {
-
-        frameInit();
+    private JSplitPane factoryTab(StockController stockList, FactoryController lineList){
 
         this.stockList = stockList;
         this.linesList = lineList;
@@ -101,43 +121,41 @@ public class HomeView {
 
         JPanel topPanel = new JPanel();
         configStockTable(topPanel, stockColumns);
-        
-        JPanel bottomPanel = new JPanel();
-        configJPanel(bottomPanel);
 
-        this.linesTableModel = new LinesTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
-        this.linesTable = new CustomJTable(linesTableModel);
-        this.linesTable.setRowHeight(30);
-        this.linesTable.setDefaultRenderer(Object.class, createCellRenderer()); // adds padding
-        bottomPanel.add(new JScrollPane(this.linesTable));
+        JPanel bottomPanel = new JPanel();
+        configLinesTable(bottomPanel, linesColumns);
 
         configPanel(this.stockTable, this.stockTableModel, this.stockList);
         configPanel(this.linesTable, this.linesTableModel, this.linesList);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
-
-        // Onglets
-        // Onglet 1 : Usine
-        onglets = new JTabbedPane();
-        onglets.add("", splitPane);
-        JLabel tab0Label = new JLabel("Usine");
-        tab0Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        onglets.setTabComponentAt(0, tab0Label);
-        
-        // Onglet 2 : Param�tres
-        JPanel settingsPanel = new JPanel();
-        settingsPanel.add(new JLabel("En construction")); // TODO: à remplacer par le vrai truc
-        onglets.add("", settingsPanel);
-        JLabel tab1Label = new JLabel("Paramètres");
-        tab1Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        onglets.setTabComponentAt(1, tab1Label);
-
-        this.mainFrame.getContentPane().add(onglets);
-        this.mainFrame.setVisible(true);
-
         splitPane.setResizeWeight(.5);
+        return splitPane;
     }
 
+    private JPanel settingTab(){
+        JPanel settingsPanel = new JPanel();
+        settingsPanel.add(new JLabel("En construction")); // TODO: à remplacer par le vrai truc
+        return settingsPanel;
+    }
+
+    private void initTabs(JSplitPane factoryTab, JPanel settingTab){
+
+        this.tabs = new JTabbedPane();
+
+        JLabel tab0Label = new JLabel("Usine");
+        tab0Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.tabs.add("", factoryTab);
+        this.tabs.setTabComponentAt(0, tab0Label);
+
+
+        JLabel tab1Label = new JLabel("Paramètres");
+        tab1Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.tabs.add("", settingTab);
+        this.tabs.setTabComponentAt(1, tab1Label);
+
+        this.mainFrame.getContentPane().add( this.tabs);
+    }
 
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface factory) {
         cjt.getTableHeader().setReorderingAllowed(true);
