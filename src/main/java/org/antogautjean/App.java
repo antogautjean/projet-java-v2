@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 
 public class App {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // init depending of args
         boolean isUIVisible = true;
         for (String s : args) {

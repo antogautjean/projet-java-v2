@@ -20,7 +20,7 @@ public class HomeView {
 
     protected JTabbedPane tabs;
 
-    public HomeView(StockController stockList, FactoryController lineList) {
+    public HomeView(StockController stockList, FactoryController lineList) throws Exception {
 
         frameInit();
 
@@ -44,7 +44,7 @@ public class HomeView {
         this.mainFrame.setIconImage(new ImageIcon("./src/main/java/org/antogautjean/data/factory_icon.png").getImage());
     }
 
-    private void initTabs(TabInterface[] tabs){
+    private void initTabs(TabInterface[] tabs) throws Exception {
         this.tabs = new JTabbedPane();
 
         for (int i = 0; i < tabs.length; i++) {
