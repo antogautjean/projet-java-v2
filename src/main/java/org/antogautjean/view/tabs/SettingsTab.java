@@ -17,11 +17,13 @@ public class SettingsTab implements TabInterface, ActionListener {
     JButton addStock;
     JButton addLines;
     JButton addPrices;
+    JButton addStaff;
     JButton confirm;
 
     JLabel stockPath;
     JLabel pricesPath;
     JLabel linesPath;
+    JLabel staffPath;
 
     @Override
     public JComponent getComponent() throws Exception {
@@ -36,6 +38,7 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.addStock = new JButton("Modifier");
         this.addLines = new JButton("Modifier");
         this.addPrices = new JButton("Modifier");
+        this.addStaff = new JButton("Modifier");
         // this.confirm = new JButton("Enregistrer");
 
         JPanel settingsPanel = new JPanel();
@@ -56,6 +59,10 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.linesPath = new JLabel(this.cfg.getProperty("linesFile"));
         labelList.setFont(font);
 
+        JLabel labelStaff = new JLabel("Fichier des employées");
+        this.staffPath = new JLabel(this.cfg.getProperty("staffFile"));
+        labelStaff.setFont(font);
+
         container.add(spacer);
         container.add(labelStock);
         container.add(this.addStock);
@@ -68,6 +75,10 @@ public class SettingsTab implements TabInterface, ActionListener {
         container.add(labelList);
         container.add(this.addLines);
         container.add(this.linesPath);
+        container.add(spacer);
+        container.add(labelStaff);
+        container.add(this.addStaff);
+        container.add(this.staffPath);
         // container.add(spacer);
         // container.add(new JSeparator(JSeparator.HORIZONTAL));
         // container.add(confirm);
@@ -76,6 +87,7 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.addStock.addActionListener(this);
         this.addLines.addActionListener(this);
         this.addPrices.addActionListener(this);
+        this.addStaff.addActionListener(this);
 
         settingsPanel.add(container);
         return settingsPanel;
@@ -107,6 +119,7 @@ public class SettingsTab implements TabInterface, ActionListener {
                     this.cfg.setProperty("stockFile", selectedFile.getAbsolutePath());
                     this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
                     this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
+                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
                     stockPath.setText(selectedFile.getAbsolutePath());
                     this.cfg.commit();
                 }
@@ -114,6 +127,7 @@ public class SettingsTab implements TabInterface, ActionListener {
                     this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
                     this.cfg.setProperty("pricesFile", selectedFile.getAbsolutePath());
                     this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
+                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
                     pricesPath.setText(selectedFile.getAbsolutePath());
                     this.cfg.commit();
                 }
@@ -121,7 +135,16 @@ public class SettingsTab implements TabInterface, ActionListener {
                     this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
                     this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
                     this.cfg.setProperty("linesFile", selectedFile.getAbsolutePath());
+                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
                     linesPath.setText(selectedFile.getAbsolutePath());
+                    this.cfg.commit();
+                }
+                if (e.getSource() == this.addStaff){
+                    this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
+                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
+                    this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
+                    this.cfg.setProperty("staffFile", selectedFile.getAbsolutePath());
+                    staffPath.setText(selectedFile.getAbsolutePath());
                     this.cfg.commit();
                 }
             }

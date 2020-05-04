@@ -36,7 +36,7 @@ public class App {
         try{
             stockController = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
             factory = FileImporter.fileToFactory(cfg.getProperty("linesFiles"), stockController);
-            staff = FileImporter.fileToStaff("./src/main/java/org/antogautjean/data/employes.csv");
+            staff = FileImporter.fileToStaff(cfg.getProperty("staffFiles"));
         }
         catch (Exception ex){
             stockController = null;
