@@ -17,7 +17,7 @@ class Fenetre extends JFrame
 
     JPanel contentListe = new JPanel();
     JLabel label = new JLabel("Voici une liste : ");
-    JComboBox liste = new JComboBox();
+    JComboBox<String> liste = new JComboBox<>();
 
     JCheckBox case1 = new JCheckBox("Case 1");
     JCheckBox case2 = new JCheckBox("Case 2");

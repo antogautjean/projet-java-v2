@@ -1,10 +1,8 @@
 package org.antogautjean.view.Tabs;
 
-import org.antogautjean.model.Config;
+import org.antogautjean.Controller.ConfigController;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +11,7 @@ import java.io.*;
 
 public class SettingsTab implements TabInterface, ActionListener {
 
-    Config cfg;
+    ConfigController cfg;
 
     JPanel container;
     JButton addStock;
@@ -26,7 +24,7 @@ public class SettingsTab implements TabInterface, ActionListener {
     @Override
     public JComponent getComponent() throws Exception {
 
-        this.cfg = new Config("src/main/java/org/antogautjean/settings.properties");
+        this.cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
 
         container = new JPanel();
         container.setBorder(BorderFactory.createTitledBorder("Configuration des fichiers source (CSV)"));
@@ -83,7 +81,7 @@ public class SettingsTab implements TabInterface, ActionListener {
         if(e.getSource() == this.confirm){
             try {
                 this.cfg.commit();
-                this.cfg = new Config("src/main/java/org/antogautjean/settings.properties");
+                this.cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

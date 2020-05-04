@@ -1,15 +1,15 @@
-package org.antogautjean.model;
+package org.antogautjean.Controller;
 
 import java.io.*;
 import java.util.Properties;
 
-public class Config
+public class ConfigController
 {
     String configFilePath;
     OutputStream output;
     Properties prop;
 
-    public Config(String configFilePath) throws Exception {
+    public ConfigController(String configFilePath) throws Exception {
         try {
             File f = new File(configFilePath);
             if (!f.exists()) {
