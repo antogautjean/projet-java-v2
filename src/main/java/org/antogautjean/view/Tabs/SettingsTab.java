@@ -23,7 +23,6 @@ public class SettingsTab implements TabInterface, ActionListener {
     JLabel stockPath;
     JLabel linesPath;
 
-
     @Override
     public JComponent getComponent() throws Exception {
 
