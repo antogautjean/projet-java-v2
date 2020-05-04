@@ -13,6 +13,10 @@ import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
+import org.antogautjean.view.Tabs.FactoryTab;
+import org.antogautjean.view.Tabs.SettingsTab;
+import org.antogautjean.view.Tabs.StaffTab;
+import org.antogautjean.view.Tabs.TabInterface;
 import org.antogautjean.view.elements.*;
 
 public class HomeView {
@@ -29,7 +33,9 @@ public class HomeView {
 
         frameInit();
 
-        initTabs(factoryTab(stockList, lineList), settingTab());
+        TabInterface[] tabs = { new FactoryTab(), new StaffTab(),  new SettingsTab() };
+        this.initTabs(tabs);
+        // initTabs(factoryTab(stockList, lineList), settingTab());
 
         this.mainFrame.setVisible(true);
     }
@@ -130,28 +136,17 @@ public class HomeView {
         return splitPane;
     }
 
-    private JPanel settingTab(){
-        JPanel settingsPanel = new JPanel();
-        settingsPanel.add(new JLabel("En construction")); // TODO: à remplacer par le vrai truc
-        return settingsPanel;
-    }
-
-    private void initTabs(JSplitPane factoryTab, JPanel settingTab){
-
+    private void initTabs(TabInterface[] tabs){
         this.tabs = new JTabbedPane();
 
-        JLabel tab0Label = new JLabel("Usine");
-        tab0Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.tabs.add("", factoryTab);
-        this.tabs.setTabComponentAt(0, tab0Label);
+        for (TabInterface tab : tabs) {
+            this.tabs.add(tab.getTabTitle(), tab.getComponent());
+            JLabel tabLabel = new JLabel(tab.getTabTitle());
+            tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            this.tabs.setTabComponentAt(0, tabLabel);
+        }
 
-
-        JLabel tab1Label = new JLabel("Paramètres");
-        tab1Label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.tabs.add("", settingTab);
-        this.tabs.setTabComponentAt(1, tab1Label);
-
-        this.mainFrame.getContentPane().add( this.tabs);
+        this.mainFrame.getContentPane().add(this.tabs);
     }
 
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface factory) {

@@ -4,14 +4,10 @@ import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
-import org.antogautjean.view.elements.StockTableModel;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Vector;
 
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 public class App {
 
@@ -31,12 +27,6 @@ public class App {
         StockController stockController = FileImporter.fileToStock(dataPath + "elements.csv", dataPath + "prix.csv");
         // Prod line controller
         FactoryController factory = FileImporter.fileToFactory(dataPath + "chaines.csv", stockController);
-
-
-        final String[] columns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
-                "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
-
-        final DefaultTableModel model = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(columns)));
 
         if (isUIVisible) {
             try {
