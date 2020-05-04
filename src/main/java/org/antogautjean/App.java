@@ -29,17 +29,17 @@ public class App {
         System.out.println("FileImporter : Reading CSV Stock file");
         String dataPath = "./src/main/java/org/antogautjean/data/";
         // Stock controller
-        StockController stockController;
+        StockController stock;
         FactoryController factory;
         StaffController staff;
 
         try{
-            stockController = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
+            stock = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
             factory = FileImporter.fileToFactory(cfg.getProperty("linesFiles"), stockController);
             staff = FileImporter.fileToStaff(cfg.getProperty("staffFiles"));
         }
         catch (Exception ex){
-            stockController = null;
+            stock = null;
             factory = null;
             staff = null;
         }
@@ -50,7 +50,7 @@ public class App {
             } catch (Exception e) {
                 System.err.println("Attention: setLookAndFeel ne fonctionne pas");
             }
-            new HomeView(stockController, factory, staff);
+            new HomeView(stock, factory, staff);
             System.out.println("Runing with UI");
         } else {
             System.out.println("Runing with NO UI");
