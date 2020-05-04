@@ -3,3 +3,4 @@ target
 .idea
 .metadata
 .vscode
+.classpath
