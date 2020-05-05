@@ -1,6 +1,7 @@
 package org.antogautjean.Controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -10,7 +11,8 @@ import org.antogautjean.model.Employee;
 import org.antogautjean.view.elements.TableLinesFormatInterface;
 
 public class StaffController implements TableLinesFormatInterface {
-  private HashMap<String, Employee> staff = new HashMap<>();
+
+    private HashMap<String, Employee> staff = new HashMap<>();
 
     public boolean addEmployee(Employee employee){
         //tester si le produit existe deja dans la base de donnÃ©e
@@ -41,7 +43,7 @@ public class StaffController implements TableLinesFormatInterface {
 
     }
 
-    public Employee getProduct(String code){
+    public Employee getEmployee(String code){
         try {
             return this.staff.get(code);
         }
@@ -51,7 +53,7 @@ public class StaffController implements TableLinesFormatInterface {
         }
     }
 
-    public HashMap<String, Employee> getStock(){
+    public HashMap<String, Employee> getStaff(){
         return this.staff;
     }
 
@@ -74,6 +76,22 @@ public class StaffController implements TableLinesFormatInterface {
         }
         return output;
     }
+    
+    public void debug(){
+        System.out.println(this.staff);
+
+
+        for(Map.Entry<String, Employee> entry : this.staff.entrySet()) {
+            String key = entry.getKey();
+            Employee e = entry.getValue();
+
+            System.out.print(key + " : ");
+            for (int i = 0; i < e.getPlanning().length; i++){
+                System.out.print(e.getPlanning()[i] + " ");
+            }
+            System.out.println("");
+        }
+    }
 
     @Override
     public Object[][] getTableLineFormat() {
@@ -85,30 +103,30 @@ public class StaffController implements TableLinesFormatInterface {
             output[employeeIndex] = new Object[] {
                 employee.getCode(),
                 employee.getQualification(),
-                employee.getPlanning(0),
-                employee.getPlanning(1),
-                employee.getPlanning(2),
-                employee.getPlanning(3),
-                employee.getPlanning(4),
-                employee.getPlanning(5),
-                employee.getPlanning(6),
-                employee.getPlanning(7),
-                employee.getPlanning(8),
-                employee.getPlanning(9),
-                employee.getPlanning(10),
-                employee.getPlanning(11),
-                employee.getPlanning(12),
-                employee.getPlanning(13),
-                employee.getPlanning(14),
-                employee.getPlanning(15),
-                employee.getPlanning(16),
-                employee.getPlanning(17),
-                employee.getPlanning(18),
-                employee.getPlanning(19),
-                employee.getPlanning(20),
-                employee.getPlanning(21),
-                employee.getPlanning(22),
-                employee.getPlanning(23),
+                employee.getPlanningOn(0),
+                employee.getPlanningOn(1),
+                employee.getPlanningOn(2),
+                employee.getPlanningOn(3),
+                employee.getPlanningOn(4),
+                employee.getPlanningOn(5),
+                employee.getPlanningOn(6),
+                employee.getPlanningOn(7),
+                employee.getPlanningOn(8),
+                employee.getPlanningOn(9),
+                employee.getPlanningOn(10),
+                employee.getPlanningOn(11),
+                employee.getPlanningOn(12),
+                employee.getPlanningOn(13),
+                employee.getPlanningOn(14),
+                employee.getPlanningOn(15),
+                employee.getPlanningOn(16),
+                employee.getPlanningOn(17),
+                employee.getPlanningOn(18),
+                employee.getPlanningOn(19),
+                employee.getPlanningOn(20),
+                employee.getPlanningOn(21),
+                employee.getPlanningOn(22),
+                employee.getPlanningOn(23)
                 };
             employeeIndex++;
         }

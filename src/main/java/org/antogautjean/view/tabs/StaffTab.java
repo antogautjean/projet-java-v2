@@ -50,7 +50,7 @@ public class StaffTab implements TabInterface {
 
     @Override
     public JComponent getComponent() {
-    	final String[] staffColumns = new String[] { "Code", "Nom", "0H","1H","2H","3H","4H","5H","6H","7H","8H","9H","10H",
+    	final String[] staffColumns = new String[] { "Code", "Qualification", "0H","1H","2H","3H","4H","5H","6H","7H","8H","9H","10H",
     												"11H","12H","13H","14H","15H","16H","17H","18H","19H","20H","21H",
     												"22H","23H"};
 
@@ -87,8 +87,7 @@ public class StaffTab implements TabInterface {
         TableColumnModel columnModel = this.staffTable.getColumnModel();
         this.staffTable.setDefaultRenderer(Object.class, this.cellRenderer);
         columnModel.getColumn(0).setMaxWidth(50);
-        columnModel.getColumn(1).setPreferredWidth(300);
-        columnModel.getColumn(3).setPreferredWidth(100);
+        columnModel.getColumn(1).setPreferredWidth(100);
 
         topPanel.add(new JScrollPane(this.staffTable));
     }
@@ -123,8 +122,6 @@ public class StaffTab implements TabInterface {
         });
 
         // Load data
-
-
         for (Object[] line : staff.getTableLineFormat()) {
             ctm.addRow(line);
         }

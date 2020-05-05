@@ -106,21 +106,23 @@ public class FileImporter {
           csvReader.readLine();
           try {
 	          while ((row = csvReader.readLine()) != null) {
+
+
 	              String[] line = row.split(";");
-	              int[] tempPlanning = new int[24];
-	              
+	              String[] tempPlanning = new String[24];
+
 	              for (int j = 2; j < line.length; j++) {
-	            	  tempPlanning[j-2] = Integer.parseInt(line[j]);
+	            	  tempPlanning[j-2] = line[j];
 	              }
-	              
+
 	              staff.addEmployee(new Employee(line[0], line[1], tempPlanning));
 	          }            
        	  } catch (Exception e) {
-          e.getMessage();
+                e.getMessage();
        	  }
 
           csvReader.close();
-          
+
           return staff;
     }
 }

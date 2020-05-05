@@ -27,7 +27,6 @@ public class HomeView {
 
         TabInterface[] tabs = { new FactoryTab(stockList, lineList), new StaffTab(staffList),  new SettingsTab() };
         this.initTabs(tabs);
-
         this.mainFrame.setVisible(true);
     }
 

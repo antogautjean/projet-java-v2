@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class Employee {
     private String code;
     private String qualification;
-    private int[] planning;
+    private String[] planning;
 
-	public Employee(String code, String qualification, int[] planning) {
+	public Employee(String code, String qualification, String[] planning) {
 		this.code = code;
 		this.qualification = qualification;
 		this.planning = planning;
@@ -44,14 +44,18 @@ public class Employee {
 	/**
 	 * @return the planning
 	 */
-	public int getPlanning(int i) {
+	public String[] getPlanning() {
+		return planning;
+	}
+
+	public String getPlanningOn(int i){
 		return planning[i];
 	}
 
 	/**
 	 * @param planning the planning to set
 	 */
-	public void setPlanning(int[] planning) {
+	public void setPlanning(String[] planning) {
 		this.planning = planning;
 	}
 

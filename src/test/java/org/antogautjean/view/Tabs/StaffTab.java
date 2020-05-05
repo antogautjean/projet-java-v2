@@ -54,30 +54,25 @@ public class StaffTab implements TabInterface {
         final String[] staffColumns = new String[] { "Code", "Nom", "0H","1H","2H","3H","4H","5H","6H","7H","8H","9H","10H",
                 "11H","12H","13H","14H","15H","16H","17H","18H","19H","20H","21H",
                 "22H","23H"};
-
         JPanel staffPanel = new JPanel();
         configStaffTable(staffPanel, staffColumns);
-        configPanel(this.staffTable, this.staffTableModel, this.staffList);
 
+
+
+        configPanel(this.staffTable, this.staffTableModel, this.staffList);
 
         staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: à remplacer par le vrai truc
         return staffPanel;
     }
 
-
-    private void configJPanel(JPanel panel) {
-        // panel.setBorder(new EmptyBorder(30, 30, 30, 30)); // rajoute des marges
+    // Stock Table
+    private void configStaffTable(JPanel panel, String[] staffColumns) {
         panel.setLayout(new BorderLayout());
         panel.setMinimumSize(new Dimension(300, 200));
-    }
-
-    // Stock Table
-    private void configStaffTable(JPanel topPanel, String[] staffColumns) {
-        configJPanel(topPanel);
 
         Font font = new Font("Arial", Font.PLAIN, 14);
         Color color = Color.BLACK;
-        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff",
+        panel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
         this.staffTableModel = new StaffTableModel(new Vector<>(), new Vector<>(Arrays.asList(staffColumns)));
@@ -90,7 +85,7 @@ public class StaffTab implements TabInterface {
         columnModel.getColumn(1).setPreferredWidth(300);
         columnModel.getColumn(3).setPreferredWidth(100);
 
-        topPanel.add(new JScrollPane(this.staffTable));
+        panel.add(new JScrollPane(this.staffTable));
     }
 
     @Override
