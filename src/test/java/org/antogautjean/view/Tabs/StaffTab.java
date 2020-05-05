@@ -24,7 +24,7 @@ import javax.swing.table.TableColumnModel;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.view.elements.CustomJTable;
 import org.antogautjean.view.elements.StaffTableModel;
-import org.antogautjean.view.elements.TableStaffFormatInterface;
+import org.antogautjean.view.elements.TableLinesFormatInterface;
 import org.antogautjean.view.tabs.TabInterface;
 
 public class StaffTab implements TabInterface {
@@ -57,7 +57,7 @@ public class StaffTab implements TabInterface {
 
         JPanel staffPanel = new JPanel();
         configStaffTable(staffPanel, staffColumns);
-        configPanel(this.staffTable, this.staffTableModel, (TableStaffFormatInterface) this.staffList);
+        configPanel(this.staffTable, this.staffTableModel, (TableLinesFormatInterface) this.staffList);
 
 
         staffPanel.add(new JLabel(getTabTitle() + " en construction")); // TODO: à remplacer par le vrai truc
@@ -98,10 +98,10 @@ public class StaffTab implements TabInterface {
         return "Gestion du personnel";
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableStaffFormatInterface staff) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
-            int[] selectedRows = new int[0];
+            int[] selectedRows;
             if (cjt.getSelectedColumn() == 0) {
                 selectedRows = cjt.getSelectedRows();
                 System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
@@ -110,20 +110,15 @@ public class StaffTab implements TabInterface {
 
         final ListSelectionModel columnListSelectionModel = cjt.getColumnModel().getSelectionModel();
         columnListSelectionModel.addListSelectionListener(e -> {
-            int[] selectedRows = new int[0];
-
             if (cjt.getSelectedColumn() != 0) {
                 cjt.clearSelection();
                 System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
-                for (int selectedRow : selectedRows) {
-                    cjt.getSelectionModel().addSelectionInterval(selectedRow, selectedRow);
-                }
                 System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });
 
         // Load data
-        for (Object[] line : staff.getTableStaffFormat()) {
+        for (Object[] line : staff.getTableLineFormat()) {
             ctm.addRow(line);
         }
     }

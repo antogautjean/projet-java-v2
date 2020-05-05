@@ -140,7 +140,7 @@ public class FactoryTab implements TabInterface {
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface factory) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
-            int[] selectedRows = new int[0];
+            int[] selectedRows;
             if (cjt.getSelectedColumn() == 0) {
                 selectedRows = cjt.getSelectedRows();
                 System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
@@ -149,14 +149,9 @@ public class FactoryTab implements TabInterface {
 
         final ListSelectionModel columnListSelectionModel = cjt.getColumnModel().getSelectionModel();
         columnListSelectionModel.addListSelectionListener(e -> {
-            int[] selectedRows = new int[0];
-
             if (cjt.getSelectedColumn() != 0) {
                 cjt.clearSelection();
                 System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
-                for (int selectedRow : selectedRows) {
-                    cjt.getSelectionModel().addSelectionInterval(selectedRow, selectedRow);
-                }
                 System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });

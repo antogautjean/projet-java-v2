@@ -4,7 +4,6 @@ import org.antogautjean.Controller.StaffController;
 import org.antogautjean.view.elements.CustomJTable;
 import org.antogautjean.view.elements.StaffTableModel;
 import org.antogautjean.view.elements.TableLinesFormatInterface;
-import org.antogautjean.view.elements.TableStaffFormatInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -124,7 +123,9 @@ public class StaffTab implements TabInterface {
         });
 
         // Load data
-        for (Object[] line : this.staffList.getTableLineFormat()) {
+
+
+        for (Object[] line : staff.getTableLineFormat()) {
             ctm.addRow(line);
         }
     }
