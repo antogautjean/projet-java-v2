@@ -76,10 +76,9 @@ public class StaffTab implements TabInterface {
     private void configStaffTable(JPanel panel, String[] staffColumns) {
         configJPanel(panel);
 
-        Font font = new Font("Arial", Font.PLAIN, 14);
+        Font font = new Font("Arial", Font.BOLD, 14);
         Color color = Color.BLACK;
-        panel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff",
-                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
+        panel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
         this.staffTableModel = new StaffTableModel(new Vector<>(), new Vector<>(Arrays.asList(staffColumns)));
         this.staffTable = new CustomJTable(staffTableModel);

@@ -45,7 +45,7 @@ public class SettingsTab implements TabInterface, ActionListener {
 
         Font font = new Font("Arial", Font.BOLD,12);
 
-        JLabel spacer = new JLabel(" ");
+        //JLabel spacer = new JLabel(" ");
 
         JLabel labelStock = new JLabel("Fichier de stock");
         this.stockPath = new JLabel(this.cfg.getProperty("stockFile"));
@@ -63,19 +63,18 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.staffPath = new JLabel(this.cfg.getProperty("staffFile"));
         labelStaff.setFont(font);
 
-        container.add(spacer);
         container.add(labelStock);
         container.add(this.addStock);
         container.add(this.stockPath);
-        container.add(spacer);
+        container.add(new JSeparator(JSeparator.HORIZONTAL));
         container.add(labelPrices);
         container.add(this.addPrices);
         container.add(this.pricesPath);
-        container.add(spacer);
+        container.add(new JSeparator(JSeparator.HORIZONTAL));
         container.add(labelList);
         container.add(this.addLines);
         container.add(this.linesPath);
-        container.add(spacer);
+        container.add(new JSeparator(JSeparator.HORIZONTAL));
         container.add(labelStaff);
         container.add(this.addStaff);
         container.add(this.staffPath);

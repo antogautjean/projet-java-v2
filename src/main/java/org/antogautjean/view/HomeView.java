@@ -1,7 +1,6 @@
 package org.antogautjean.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -44,12 +43,16 @@ public class HomeView {
     }
 
     private void initTabs(TabInterface[] tabs) throws Exception {
+
         this.tabs = new JTabbedPane();
+
+        Font font = new Font("Arial", Font.BOLD,12);
 
         for (int i = 0; i < tabs.length; i++) {
             TabInterface tab = tabs[i];
             this.tabs.add(tab.getTabTitle(), tab.getComponent());
             JLabel tabLabel = new JLabel(tab.getTabTitle());
+            tabLabel.setFont(font);
             tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             this.tabs.setTabComponentAt(i, tabLabel);
         }

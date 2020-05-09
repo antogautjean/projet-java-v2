@@ -42,11 +42,12 @@ public class FactoryTab implements TabInterface {
     DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
         private static final long serialVersionUID = 1L;
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             setHorizontalAlignment(JLabel.CENTER);
             setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            c.setBackground(row%2==0 ? Color.white : Color.lightGray);
             return this;
         }
     };
@@ -94,10 +95,9 @@ public class FactoryTab implements TabInterface {
     private void configStockTable(JPanel topPanel, String[] stockColumns) {
         configJPanel(topPanel);
 
-        Font font = new Font("Arial", Font.PLAIN, 14);
+        Font font = new Font("Arial", Font.BOLD, 14);
         Color color = Color.BLACK;
-        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
-                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
+        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
         this.stockTableModel = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)));
         this.stockTable = new CustomJTable(stockTableModel);
@@ -109,6 +109,7 @@ public class FactoryTab implements TabInterface {
         columnModel.getColumn(1).setPreferredWidth(300);
         columnModel.getColumn(3).setPreferredWidth(100);
 
+
         topPanel.add(new JScrollPane(this.stockTable));
     }
 
@@ -116,7 +117,7 @@ public class FactoryTab implements TabInterface {
     private void configLinesTable(JPanel bottomPanel, String[] linesColumns){
         configJPanel(bottomPanel);
 
-        Font font = new Font("Arial", Font.PLAIN, 14);
+        Font font = new Font("Arial", Font.BOLD, 14);
         Color color = Color.BLACK;
         bottomPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
@@ -155,6 +156,7 @@ public class FactoryTab implements TabInterface {
                 System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });
+
 
         // Load data
         for (Object[] line : factory.getTableLineFormat()) {
