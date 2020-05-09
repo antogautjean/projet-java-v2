@@ -47,7 +47,7 @@ public class FactoryTab implements TabInterface {
             setHorizontalAlignment(JLabel.CENTER);
             setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            c.setBackground(row%2==0 ? Color.white : Color.lightGray);
+            c.setBackground(row%2==0 ? Color.white : Color.decode("#E8E8E8"));
             return this;
         }
     };
