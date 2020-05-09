@@ -24,10 +24,10 @@ import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.elements.CustomJTable;
-import org.antogautjean.view.elements.LinesTableModel;
-import org.antogautjean.view.elements.StockTableModel;
-import org.antogautjean.view.elements.TableLinesFormatInterface;
+import org.antogautjean.view.components.CustomJTable;
+import org.antogautjean.view.components.LinesTableModel;
+import org.antogautjean.view.components.StockTableModel;
+import org.antogautjean.view.components.TableLinesFormatInterface;
 
 public class FactoryTab implements TabInterface {
     protected StockController stockList;

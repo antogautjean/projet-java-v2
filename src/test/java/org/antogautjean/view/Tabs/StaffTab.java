@@ -22,9 +22,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.StaffController;
-import org.antogautjean.view.elements.CustomJTable;
-import org.antogautjean.view.elements.StaffTableModel;
-import org.antogautjean.view.elements.TableLinesFormatInterface;
+import org.antogautjean.view.components.CustomJTable;
+import org.antogautjean.view.components.StaffTableModel;
+import org.antogautjean.view.components.TableLinesFormatInterface;
 import org.antogautjean.view.tabs.TabInterface;
 
 public class StaffTab implements TabInterface {

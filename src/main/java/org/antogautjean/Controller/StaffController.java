@@ -3,12 +3,8 @@ package org.antogautjean.Controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-
 import org.antogautjean.model.Employee;
-import org.antogautjean.view.elements.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableLinesFormatInterface;
 
 public class StaffController implements TableLinesFormatInterface {
 

@@ -1,9 +1,9 @@
 package org.antogautjean.view.tabs;
 
 import org.antogautjean.Controller.StaffController;
-import org.antogautjean.view.elements.CustomJTable;
-import org.antogautjean.view.elements.StaffTableModel;
-import org.antogautjean.view.elements.TableLinesFormatInterface;
+import org.antogautjean.view.components.CustomJTable;
+import org.antogautjean.view.components.StaffTableModel;
+import org.antogautjean.view.components.TableLinesFormatInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -54,7 +54,8 @@ public class StaffTab implements TabInterface {
     												"11H","12H","13H","14H","15H","16H","17H","18H","19H","20H","21H",
     												"22H","23H"};
 
-        JPanel staffPanel = new JPanel();
+
+    	JPanel staffPanel = new JPanel();
         configStaffTable(staffPanel, staffColumns);
 
         if(this.staffList != null) {
@@ -72,24 +73,29 @@ public class StaffTab implements TabInterface {
     }
 
     // Stock Table
-    private void configStaffTable(JPanel topPanel, String[] staffColumns) {
-        configJPanel(topPanel);
+    private void configStaffTable(JPanel panel, String[] staffColumns) {
+        configJPanel(panel);
 
         Font font = new Font("Arial", Font.PLAIN, 14);
         Color color = Color.BLACK;
-        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff",
+        panel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Staff",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
         this.staffTableModel = new StaffTableModel(new Vector<>(), new Vector<>(Arrays.asList(staffColumns)));
         this.staffTable = new CustomJTable(staffTableModel);
         this.staffTable.setRowHeight(30);
+        this.staffTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         TableColumnModel columnModel = this.staffTable.getColumnModel();
         this.staffTable.setDefaultRenderer(Object.class, this.cellRenderer);
+
+        JScrollPane scrollPanel = new JScrollPane(this.staffTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+
         columnModel.getColumn(0).setMaxWidth(50);
         columnModel.getColumn(1).setPreferredWidth(100);
 
-        topPanel.add(new JScrollPane(this.staffTable));
+        panel.add(scrollPanel);
     }
 
     @Override

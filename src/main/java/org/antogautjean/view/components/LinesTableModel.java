@@ -1,14 +1,11 @@
-package org.antogautjean.view.elements;
-
-import org.antogautjean.view.elements.CheckboxCell;
-import org.antogautjean.view.elements.SpinnerCell;
+package org.antogautjean.view.components;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
-public class StockTableModel extends DefaultTableModel {
+public class LinesTableModel extends DefaultTableModel {
 
-    public StockTableModel(Vector v1, Vector v2){
+    public LinesTableModel(Vector v1, Vector v2){
         super(v1, v2);
     }
 
@@ -37,7 +34,7 @@ public class StockTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int colIndex) {
-        return colIndex == 3;
+        return colIndex == 0 || colIndex == 4;
     }
 
 }
