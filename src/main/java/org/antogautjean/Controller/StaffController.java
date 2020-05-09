@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.antogautjean.model.Employee;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
-public class StaffController implements TableLinesFormatInterface {
+public class StaffController implements TableRowFormatInterface {
 
     private HashMap<String, Employee> staff = new HashMap<>();
 

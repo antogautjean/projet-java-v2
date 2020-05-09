@@ -2,7 +2,7 @@ package org.antogautjean.Controller;
 
 import org.antogautjean.model.Product;
 import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
 import java.util.HashMap;
 
@@ -10,7 +10,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-public class StockController implements TableLinesFormatInterface {
+public class StockController implements TableRowFormatInterface {
     private HashMap<String, Product> stock = new HashMap<>();
 
     public boolean addProduct(Product product) {

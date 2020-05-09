@@ -2,7 +2,6 @@ package org.antogautjean.view.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Arrays;
@@ -10,24 +9,18 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.components.CustomJTable;
-import org.antogautjean.view.components.LinesTableModel;
-import org.antogautjean.view.components.StockTableModel;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.*;
 
 public class FactoryTab implements TabInterface {
     protected StockController stockList;
@@ -39,18 +32,10 @@ public class FactoryTab implements TabInterface {
     protected DefaultTableModel stockTableModel;
     protected DefaultTableModel linesTableModel;
 
-    DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
-        private static final long serialVersionUID = 1L;
+    StockTableCellRenderer stockCellRenderer = new StockTableCellRenderer();
+    LinesTableCellRenderer linesCellRenderer;
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            setHorizontalAlignment(JLabel.CENTER);
-            setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            c.setBackground(row%2==0 ? Color.white : Color.decode("#E8E8E8"));
-            return this;
-        }
-    };
+    public static boolean[] linesState = {false, false};
 
     public FactoryTab(StockController stockList, FactoryController lineList) {
         this.stockList = stockList;
@@ -64,18 +49,24 @@ public class FactoryTab implements TabInterface {
         final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom", "Code éléments en sortie",
                 "Niveau d'activation", "Etat de la chaîne", "Quantité produite / quantité demandée" };
 
+        // Test à destination des développeurs
+        if (!Arrays.asList(linesColumns).contains("Etat de la chaîne")) {
+            System.err.println("Attention : la colonne \"Etat de la chaîne\" est introuvable\n"
+                    + "Or il y a un getTableCellRendererComponent qui utilise le nom de cette colonne");
+        }
+
         JPanel topPanel = new JPanel();
         configStockTable(topPanel, stockColumns);
 
         JPanel bottomPanel = new JPanel();
-        configLinesTable(bottomPanel, linesColumns);
+        configLinesTable(bottomPanel, linesColumns, this.linesList);
 
         if(this.stockList != null && this.linesList != null){
             configPanel(this.stockTable, this.stockTableModel, this.stockList);
             configPanel(this.linesTable, this.linesTableModel, this.linesList);
         }
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, topPanel, bottomPanel);
         splitPane.setResizeWeight(.5);
         return splitPane;
     }
@@ -102,9 +93,9 @@ public class FactoryTab implements TabInterface {
         this.stockTableModel = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)));
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
+        this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
 
         TableColumnModel columnModel = this.stockTable.getColumnModel();
-        this.stockTable.setDefaultRenderer(Object.class, this.cellRenderer);
         columnModel.getColumn(0).setMaxWidth(50);
         columnModel.getColumn(1).setPreferredWidth(300);
         columnModel.getColumn(3).setPreferredWidth(100);
@@ -114,7 +105,8 @@ public class FactoryTab implements TabInterface {
     }
 
     // Lines Table
-    private void configLinesTable(JPanel bottomPanel, String[] linesColumns){
+    private void configLinesTable(JPanel bottomPanel, String[] linesColumns, FactoryController factory){
+        this.linesCellRenderer = new LinesTableCellRenderer(factory);
         configJPanel(bottomPanel);
 
         Font font = new Font("Arial", Font.BOLD, 14);
@@ -124,11 +116,10 @@ public class FactoryTab implements TabInterface {
         this.linesTableModel = new LinesTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
         this.linesTable = new CustomJTable(linesTableModel);
         this.linesTable.setRowHeight(30);
-        this.linesTable.setDefaultRenderer(Object.class, this.cellRenderer); // adds padding
+        this.linesTable.setDefaultRenderer(Object.class, this.linesCellRenderer);
 
 
         TableColumnModel columnModel = this.linesTable.getColumnModel();
-        this.linesTable.setDefaultRenderer(Object.class, this.cellRenderer);
         columnModel.getColumn(0).setMinWidth(120);
         columnModel.getColumn(0).setMaxWidth(120);
         columnModel.getColumn(1).setMaxWidth(50);
@@ -138,7 +129,7 @@ public class FactoryTab implements TabInterface {
         bottomPanel.add(new JScrollPane(this.linesTable));
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface factory) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface factory) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
             int[] selectedRows;
@@ -157,9 +148,9 @@ public class FactoryTab implements TabInterface {
             }
         });
 
-
         // Load data
         for (Object[] line : factory.getTableLineFormat()) {
+
             ctm.addRow(line);
         }
     }

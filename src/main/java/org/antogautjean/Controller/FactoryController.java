@@ -2,14 +2,14 @@ package org.antogautjean.Controller;
 
 import org.antogautjean.model.ProductionLine;
 import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-public class FactoryController implements TableLinesFormatInterface {
+public class FactoryController implements TableRowFormatInterface {
     private HashMap<String, ProductionLine> productionLines = new HashMap<>();
     private StockController stock;
 
@@ -71,7 +71,7 @@ public class FactoryController implements TableLinesFormatInterface {
             }
             switch (line.getState()) {
                 case IMPOSSIBLE:
-                    lineState = "<html><span color='red'>!!! Production impossible</span><br>(il manque des ressources)</html>";
+                    lineState = "<html><span color='white'><strong>Production impossible</strong><br>(il manque des ressources)</span></html>";
                     break;
                 case POSSIBLE:
                     lineState = "Production possible";

@@ -1,5 +1,5 @@
 package org.antogautjean.view.components;
 
-public interface TableLinesFormatInterface {
+public interface TableRowFormatInterface {
     public Object[][] getTableLineFormat();
 }

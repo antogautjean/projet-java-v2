@@ -24,7 +24,7 @@ import javax.swing.table.TableColumnModel;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.view.components.CustomJTable;
 import org.antogautjean.view.components.StaffTableModel;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableRowFormatInterface;
 import org.antogautjean.view.tabs.TabInterface;
 
 public class StaffTab implements TabInterface {
@@ -93,7 +93,7 @@ public class StaffTab implements TabInterface {
         return "Gestion du personnel";
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface staff) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
             int[] selectedRows;

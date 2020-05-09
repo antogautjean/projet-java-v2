@@ -3,7 +3,7 @@ package org.antogautjean.view.tabs;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.view.components.CustomJTable;
 import org.antogautjean.view.components.StaffTableModel;
-import org.antogautjean.view.components.TableLinesFormatInterface;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -50,9 +50,7 @@ public class StaffTab implements TabInterface {
 
     @Override
     public JComponent getComponent() {
-    	final String[] staffColumns = new String[] { "Code", "Qualification", "0H","1H","2H","3H","4H","5H","6H","7H","8H","9H","10H",
-    												"11H","12H","13H","14H","15H","16H","17H","18H","19H","20H","21H",
-    												"22H","23H"};
+    	final String[] staffColumns = new String[] { "Code", "Qualification", "0H","1H","2H","3H","4H","5H","6H","7H","8H","9H","10H", "11H","12H","13H","14H","15H","16H","17H","18H","19H","20H","21H", "22H","23H"};
 
 
     	JPanel staffPanel = new JPanel();
@@ -102,7 +100,7 @@ public class StaffTab implements TabInterface {
         return "Gestion du personnel";
     }
 
-    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableLinesFormatInterface staff) {
+    private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
             int[] selectedRows = new int[0];
