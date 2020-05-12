@@ -109,7 +109,7 @@ public class FileImporter {
 
 
 	              String[] line = row.split(";");
-	              String[] tempPlanning = new String[24];
+	              String[] tempPlanning = new String[35];
 
 	              for (int j = 2; j < line.length; j++) {
 	            	  tempPlanning[j-2] = line[j];

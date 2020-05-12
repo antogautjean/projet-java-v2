@@ -91,7 +91,7 @@ public class StaffController implements TableRowFormatInterface {
 
     @Override
     public Object[][] getTableLineFormat() {
-        Object[][] output = new Object[staff.size()][26]; // 26 = amount of columns
+        Object[][] output = new Object[staff.size()][37]; // 37 = amount of columns
         int employeeIndex = 0;
         for(String key : staff.keySet()) {
             Employee employee = staff.get(key);
@@ -122,7 +122,18 @@ public class StaffController implements TableRowFormatInterface {
                 employee.getPlanningOn(20),
                 employee.getPlanningOn(21),
                 employee.getPlanningOn(22),
-                employee.getPlanningOn(23)
+                employee.getPlanningOn(23),
+                employee.getPlanningOn(24),
+                employee.getPlanningOn(25),
+                employee.getPlanningOn(26),
+                employee.getPlanningOn(27),
+                employee.getPlanningOn(28),
+                employee.getPlanningOn(29),
+                employee.getPlanningOn(30),
+                employee.getPlanningOn(31),
+                employee.getPlanningOn(32),
+                employee.getPlanningOn(33),
+                employee.getPlanningOn(34)
                 };
             employeeIndex++;
         }
