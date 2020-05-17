@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.Font;
+import java.awt.Label;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Vector;
@@ -13,7 +13,6 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -22,7 +21,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -30,12 +28,12 @@ import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.view.components.CustomJTable;
 import org.antogautjean.view.components.TableRowFormatInterface;
-import org.antogautjean.view.components.LinesTable.LinesTableModel;
-import org.antogautjean.view.components.StockTable.StockTableModel;
+import org.antogautjean.view.components.TableCellRenderer;
+import org.antogautjean.view.components.TableModel;
 
 public class FactoryTab implements TabInterface {
     protected StockController stockCtrl;
-    protected FactoryController linesCtrl;
+    protected FactoryController factoryCtrl;
 
     protected CustomJTable stockTable;
     protected CustomJTable linesTable;
@@ -43,30 +41,22 @@ public class FactoryTab implements TabInterface {
     protected DefaultTableModel stockTableModel;
     protected DefaultTableModel linesTableModel;
 
-    protected DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
-        private static final long serialVersionUID = 1L;
+    protected TableCellRenderer factoryCellRenderer;
+    protected TableCellRenderer stockCellRenderer;
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            setHorizontalAlignment(JLabel.CENTER);
-            setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            c.setBackground(row % 2 == 0 ? Color.white : Color.decode("#E8E8E8"));
-            return this;
-        }
-    };
-
-    public FactoryTab(StockController stockCtrl, FactoryController lineCtrl) {
+    public FactoryTab(StockController stockCtrl, FactoryController factoryCtrl) {
         this.stockCtrl = stockCtrl;
-        this.linesCtrl = lineCtrl;
+        this.factoryCtrl = factoryCtrl;
+
+        factoryCellRenderer = new TableCellRenderer(factoryCtrl);
+        stockCellRenderer = new TableCellRenderer();
     }
 
     @Override
     public JComponent getComponent() throws Exception {
         // Refresh from file
         this.stockCtrl.refreshFromFile();
-        this.linesCtrl.refreshFromFile();
+        this.factoryCtrl.refreshFromFile();
 
         final String[] stockColumns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
                 "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
@@ -89,7 +79,7 @@ public class FactoryTab implements TabInterface {
         configIndicatiorsTable(indicatorsPanel);
 
         configPanel(this.stockTable, this.stockTableModel, (TableRowFormatInterface) this.stockCtrl);
-        configPanel(this.linesTable, this.linesTableModel, (TableRowFormatInterface) this.linesCtrl);
+        configPanel(this.linesTable, this.linesTableModel, (TableRowFormatInterface) this.factoryCtrl);
 
         JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
         SLsplitPane.setResizeWeight(.5);
@@ -186,10 +176,11 @@ public class FactoryTab implements TabInterface {
         topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.stockTableModel = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)));
+        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)),
+                new int[] { 3 });
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
-        this.stockTable.setDefaultRenderer(Object.class, this.cellRenderer);
+        this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
 
         TableColumnModel columnModel = this.stockTable.getColumnModel();
         columnModel.getColumn(0).setMaxWidth(50);
@@ -208,10 +199,11 @@ public class FactoryTab implements TabInterface {
         bottomPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.linesTableModel = new LinesTableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)));
+        this.linesTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)),
+                new int[] { 0, 4 });
         this.linesTable = new CustomJTable(linesTableModel);
         this.linesTable.setRowHeight(30);
-        this.linesTable.setDefaultRenderer(Object.class, this.cellRenderer);
+        this.linesTable.setDefaultRenderer(Object.class, this.factoryCellRenderer);
 
         TableColumnModel columnModel = this.linesTable.getColumnModel();
         columnModel.getColumn(0).setMinWidth(120);
@@ -235,12 +227,12 @@ public class FactoryTab implements TabInterface {
 
     @Override
     public boolean isComponentRenderable() {
-        return !this.linesCtrl.getIfFileImportFailed() && !this.stockCtrl.getIfFileImportFailed();
+        return !this.factoryCtrl.getIfFileImportFailed() && !this.stockCtrl.getIfFileImportFailed();
     }
 
     @Override
     public void refreshFromFile() throws IOException {
-        this.linesCtrl.refreshFromFile();
+        this.factoryCtrl.refreshFromFile();
         this.stockCtrl.refreshFromFile();
     }
 }

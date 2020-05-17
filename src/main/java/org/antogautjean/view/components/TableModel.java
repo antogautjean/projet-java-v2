@@ -1,17 +1,17 @@
-package org.antogautjean.view.components.StockTable;
+package org.antogautjean.view.components;
 
-import org.antogautjean.view.components.CheckboxCell;
-import org.antogautjean.view.components.SpinnerCell;
-
-import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
-public class StockTableModel extends DefaultTableModel {
+import javax.swing.table.DefaultTableModel;
+
+public class TableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
+    protected int[] concernedIndexes;
 
     @SuppressWarnings("rawtypes")
-    public StockTableModel(Vector<? extends Vector> v1, Vector<?> v2){
+    public TableModel(Vector<? extends Vector> v1, Vector<?> v2, int[] concernedIndexes){
         super(v1, v2);
+        this.concernedIndexes = concernedIndexes;
     }
 
     @Override
@@ -39,7 +39,13 @@ public class StockTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int colIndex) {
-        return colIndex == 3;
+        // [0, 4] pour Factory
+        // [3] pour Stock
+        boolean res = false;
+        for (int i = 0; i < this.concernedIndexes.length && !res; i++) {
+            res = this.concernedIndexes[i] == colIndex;
+        }
+        return res;
     }
 
 }
