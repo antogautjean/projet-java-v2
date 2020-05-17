@@ -1,4 +1,4 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.LinesTable;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.model.ProductionLineState;

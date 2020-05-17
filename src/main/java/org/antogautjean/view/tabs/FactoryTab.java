@@ -1,26 +1,23 @@
 package org.antogautjean.view.tabs;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.SwingWorker;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.view.components.*;
+import org.antogautjean.view.components.LinesTable.LinesTableCellRenderer;
+import org.antogautjean.view.components.LinesTable.LinesTableModel;
+import org.antogautjean.view.components.StockTable.StockTableCellRenderer;
+import org.antogautjean.view.components.StockTable.StockTableModel;
 
 public class FactoryTab implements TabInterface {
     protected StockController stockList;
@@ -55,20 +52,93 @@ public class FactoryTab implements TabInterface {
                     + "Or il y a un getTableCellRendererComponent qui utilise le nom de cette colonne");
         }
 
-        JPanel topPanel = new JPanel();
-        configStockTable(topPanel, stockColumns);
+        JPanel stockPanel = new JPanel();
+        configStockTable(stockPanel, stockColumns);
 
-        JPanel bottomPanel = new JPanel();
-        configLinesTable(bottomPanel, linesColumns, this.linesList);
+        JPanel linesPanel = new JPanel();
+        configLinesTable(linesPanel, linesColumns, this.linesList);
+
+        JPanel indicatorsPanel = new JPanel();
+        configIndicatiorsTable(indicatorsPanel);
 
         if(this.stockList != null && this.linesList != null){
             configPanel(this.stockTable, this.stockTableModel, this.stockList);
             configPanel(this.linesTable, this.linesTableModel, this.linesList);
         }
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, topPanel, bottomPanel);
-        splitPane.setResizeWeight(.5);
-        return splitPane;
+        JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
+        SLsplitPane.setResizeWeight(.5);
+
+        JSplitPane SLIsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SLsplitPane, indicatorsPanel);
+        SLIsplitPane.setResizeWeight(.9);
+
+        return SLIsplitPane;
+    }
+
+    private void configIndicatiorsTable(JPanel indicatorsPanel) {
+
+        String[][] table_data = { {"1001","Cherry"}};
+        String[] table_column = {"Indicateur de valeur (Commande satisfaites)","Indicateur de commandes (Valeur totale du stock vendable)"};
+        JTable table = new JTable(table_data,table_column);
+        table.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        indicatorsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        indicatorsPanel.setLayout(new BoxLayout(indicatorsPanel,BoxLayout.Y_AXIS));
+
+        //indicatorsPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        Font font = new Font("Arial", Font.BOLD, 14);
+        Font font2 = new Font("Arial", Font.PLAIN, 18);
+
+        JProgressBar orders;
+        orders = new JProgressBar(0, 100);
+        orders.setValue(50);
+        orders.setStringPainted(true);
+
+        Label order = new Label("Indicateur de valeurs (Commande satisfaites)");
+        order.setFont(font);
+
+        JPanel a = new JPanel();
+        //a.setBackground(Color.GRAY);
+        a.add(order);
+        a.add(orders);
+
+        Label value = new Label("Indicateur de commandes (Valeur totale du stock vendable)");
+        Label total = new Label("1500€");
+        total.setFont(font2);
+
+        value.setFont(font);
+
+        JPanel b = new JPanel();
+        //b.setBackground(Color.GRAY);
+        b.add(value);
+        b.add(total);
+
+        indicatorsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+        indicatorsPanel.add(a);
+        indicatorsPanel.add(b);
+
+        //table_jt.setBounds(30,40,200,300);
+        //JScrollPane scrollPane = new JScrollPane();
+       // scrollPane.setViewportView(table);
+
+        //indicatorsPanel.add(table);
+
+    }
+
+    class CustomPanel extends JPanel
+    {
+        public CustomPanel(Color backGroundColour)
+        {
+            setOpaque(true);
+            setBackground(backGroundColour);
+        }
+
+        @Override
+        public Dimension getPreferredSize()
+        {
+            return (new Dimension(200, 150));
+        }
     }
 
     @Override

@@ -89,8 +89,12 @@ public class SettingsTab implements TabInterface, ActionListener {
         this.addStaff.addActionListener(this);
 
         settingsPanel.add(container);
+        
         return settingsPanel;
     }
+
+    private Component component;
+
 
     @Override
     public String getTabTitle() {

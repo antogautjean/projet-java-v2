@@ -1,5 +1,8 @@
 package org.antogautjean.view.components;
 
+import org.antogautjean.view.components.CheckboxCell;
+import org.antogautjean.view.components.SpinnerCell;
+
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
