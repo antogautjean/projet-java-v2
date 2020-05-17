@@ -41,8 +41,6 @@ public class FixedColumnTable implements ChangeListener, PropertyChangeListener
         //  Use the existing table to create a new table sharing
         //  the DataModel and ListSelectionModel
 
-        int totalColumns = main.getColumnCount();
-
         fixed = new JTable();
         fixed.setAutoCreateColumnsFromModel( false );
         fixed.setModel( main.getModel() );

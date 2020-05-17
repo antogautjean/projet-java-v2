@@ -1,16 +1,15 @@
 package org.antogautjean;
 
+import java.io.IOException;
+
+import javax.swing.UIManager;
+
 import org.antogautjean.Controller.ConfigController;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.Controller.StaffController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
-
-import java.io.IOException;
-
-import javax.swing.UIManager;
 
 public class App {
 
@@ -24,37 +23,33 @@ public class App {
         }
         System.out.println("starting : OK");
 
-        ConfigController cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
+        // IMPORTANT
+        ConfigController.setConfigFilePath("src/main/java/org/antogautjean/settings.properties");
 
         System.out.println("FileImporter : Reading CSV Stock file");
-        String dataPath = "./src/main/java/org/antogautjean/data/";
         // Stock controller
-        StockController stock;
-        FactoryController factory;
-        StaffController staff;
+        StockController stock = new StockController();
+        FactoryController factory = new FactoryController();
+        StaffController staff = new StaffController();
 
-        try{
-            stock = FileImporter.fileToStock(cfg.getProperty("stockFile"), cfg.getProperty("pricesFile"));
-            factory = FileImporter.fileToFactory(cfg.getProperty("linesFile"), stock);
-            staff = FileImporter.fileToStaff(cfg.getProperty("staffFile"));
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-            stock = null;
-            factory = null;
-            staff = null;
-        }
+        try {
+            FileImporter.fileToStock(stock);
+            FileImporter.fileToFactory(factory, stock);
+            FileImporter.fileToStaff(staff);
 
-        if (isUIVisible) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-                System.err.println("Attention: setLookAndFeel ne fonctionne pas");
+            if (isUIVisible) {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    System.err.println("Attention: setLookAndFeel ne fonctionne pas");
+                }
+                new HomeView(stock, factory, staff);
+                System.out.println("Runing with UI");
+            } else {
+                System.out.println("Runing with NO UI");
             }
-            new HomeView(stock, factory, staff);
-            System.out.println("Runing with UI");
-        } else {
-            System.out.println("Runing with NO UI");
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

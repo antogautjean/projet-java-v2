@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 
 class Fenetre extends JFrame
 {
+    private static final long serialVersionUID = 1L;
+
     JPanel container = new JPanel(), fieldset = new JPanel();
 
     JPanel contentListe = new JPanel();

@@ -7,8 +7,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
 public class StockTableModel extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
 
-    public StockTableModel(Vector v1, Vector v2){
+    @SuppressWarnings("rawtypes")
+    public StockTableModel(Vector<? extends Vector> v1, Vector<?> v2){
         super(v1, v2);
     }
 

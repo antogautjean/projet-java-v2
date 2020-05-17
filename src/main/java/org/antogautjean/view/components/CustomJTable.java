@@ -6,7 +6,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 public class CustomJTable extends JTable {
-
+    private static final long serialVersionUID = 1L;
     DefaultTableModel model;
 
     public CustomJTable(DefaultTableModel model){

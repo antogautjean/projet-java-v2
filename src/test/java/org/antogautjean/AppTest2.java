@@ -15,7 +15,7 @@ public class AppTest2 {
 
     final static String[] columns = new String[] { "Code", "Nom", "Quantit� actuelle", "Quantit� � acheter", "Co�t d'achat pr�visionnel", "Nouvelle quantit� apr�s achat", "Quantit� simul�e apr�s calcul" };
 
-    final static DefaultTableModel model = new StockTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+    final static DefaultTableModel model = new StockTableModel(new Vector<>(), new Vector<>(Arrays.asList(columns)));
 
     public static void main(String[] a) {
 

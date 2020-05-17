@@ -17,7 +17,8 @@ class AppTest {
 
     final static String[] columns = new String[] { "Layer", "Enabled", "Read Only", "Storage" };
 
-    final static DefaultTableModel model = new DefaultTableModel(new Vector(), new Vector(Arrays.asList(columns))) {
+    final static DefaultTableModel model = new DefaultTableModel(new Vector<>(), new Vector<>(Arrays.asList(columns))) {
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void setValueAt(Object obj, int row, int col) {
@@ -60,6 +61,7 @@ class AppTest {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 final JTable table = new JTable(model) {
+                    private static final long serialVersionUID = 1L;
 
                     @Override
                     public TableCellRenderer getCellRenderer(final int rowIndex, int colIndex) {

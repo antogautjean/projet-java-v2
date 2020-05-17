@@ -1,12 +1,14 @@
 package org.antogautjean.view.components.LinesTable;
 
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.model.ProductionLineState;
-import org.antogautjean.view.tabs.FactoryTab;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
 
 public class LinesTableCellRenderer extends DefaultTableCellRenderer {
 

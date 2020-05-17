@@ -1,6 +1,7 @@
 package org.antogautjean.view.tabs;
 
 import org.antogautjean.Controller.ConfigController;
+import org.antogautjean.view.HomeView;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -10,9 +11,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class SettingsTab implements TabInterface, ActionListener {
-
-    ConfigController cfg;
-
     JPanel container;
     JButton addStock;
     JButton addLines;
@@ -25,11 +23,14 @@ public class SettingsTab implements TabInterface, ActionListener {
     JLabel linesPath;
     JLabel staffPath;
 
+    HomeView parentComponent;
+
+    public SettingsTab(HomeView parentComponent) {
+        this.parentComponent = parentComponent;
+    }
+
     @Override
     public JComponent getComponent() throws Exception {
-
-        this.cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
-
         container = new JPanel();
         container.setBorder(BorderFactory.createTitledBorder("Configuration des fichiers source (CSV)"));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -43,24 +44,24 @@ public class SettingsTab implements TabInterface, ActionListener {
 
         JPanel settingsPanel = new JPanel();
 
-        Font font = new Font("Arial", Font.BOLD,12);
+        Font font = new Font("Arial", Font.BOLD, 12);
 
-        //JLabel spacer = new JLabel(" ");
+        // JLabel spacer = new JLabel(" ");
 
         JLabel labelStock = new JLabel("Fichier de stock");
-        this.stockPath = new JLabel(this.cfg.getProperty("stockFile"));
+        this.stockPath = new JLabel(ConfigController.getProperty("stockFile"));
         labelStock.setFont(font);
 
         JLabel labelPrices = new JLabel("Fichier des prix");
-        this.pricesPath = new JLabel(this.cfg.getProperty("pricesFile"));
+        this.pricesPath = new JLabel(ConfigController.getProperty("pricesFile"));
         labelPrices.setFont(font);
 
         JLabel labelList = new JLabel("Fichier de chaine de production");
-        this.linesPath = new JLabel(this.cfg.getProperty("linesFile"));
+        this.linesPath = new JLabel(ConfigController.getProperty("linesFile"));
         labelList.setFont(font);
 
         JLabel labelStaff = new JLabel("Fichier des employées");
-        this.staffPath = new JLabel(this.cfg.getProperty("staffFile"));
+        this.staffPath = new JLabel(ConfigController.getProperty("staffFile"));
         labelStaff.setFont(font);
 
         container.add(labelStock);
@@ -93,64 +94,70 @@ public class SettingsTab implements TabInterface, ActionListener {
         return settingsPanel;
     }
 
-    private Component component;
-
-
     @Override
     public String getTabTitle() {
         return "Paramètres";
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent evt) {
 
-        if(e.getSource() == this.confirm){
-            try {
-                this.cfg.commit();
-                this.cfg = new ConfigController("src/main/java/org/antogautjean/settings.properties");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        else {
+        if (evt.getSource() == this.confirm) {
+            ConfigController.commit();
+        } else {
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int returnValue = jfc.showOpenDialog(null);
             File selectedFile = jfc.getSelectedFile();
 
             if (returnValue == JFileChooser.APPROVE_OPTION) {
-                if (e.getSource() == this.addStock){
-                    this.cfg.setProperty("stockFile", selectedFile.getAbsolutePath());
-                    this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
-                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
-                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
+                if (evt.getSource() == this.addStock) {
+                    ConfigController.setProperty("stockFile", selectedFile.getAbsolutePath());
+                    ConfigController.setProperty("linesFile", ConfigController.getProperty("linesFile"));
+                    ConfigController.setProperty("pricesFile", ConfigController.getProperty("pricesFile"));
+                    ConfigController.setProperty("staffFile", ConfigController.getProperty("staffFile"));
                     stockPath.setText(selectedFile.getAbsolutePath());
-                    this.cfg.commit();
+                    ConfigController.commit();
                 }
-                if (e.getSource() == this.addPrices){
-                    this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
-                    this.cfg.setProperty("pricesFile", selectedFile.getAbsolutePath());
-                    this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
-                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
+                if (evt.getSource() == this.addPrices) {
+                    ConfigController.setProperty("stockFile", ConfigController.getProperty("stockFile"));
+                    ConfigController.setProperty("pricesFile", selectedFile.getAbsolutePath());
+                    ConfigController.setProperty("linesFile", ConfigController.getProperty("linesFile"));
+                    ConfigController.setProperty("staffFile", ConfigController.getProperty("staffFile"));
                     pricesPath.setText(selectedFile.getAbsolutePath());
-                    this.cfg.commit();
+                    ConfigController.commit();
                 }
-                if (e.getSource() == this.addLines){
-                    this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
-                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
-                    this.cfg.setProperty("linesFile", selectedFile.getAbsolutePath());
-                    this.cfg.setProperty("staffFile", this.cfg.getProperty("staffFile"));
+                if (evt.getSource() == this.addLines) {
+                    ConfigController.setProperty("stockFile", ConfigController.getProperty("stockFile"));
+                    ConfigController.setProperty("pricesFile", ConfigController.getProperty("pricesFile"));
+                    ConfigController.setProperty("linesFile", selectedFile.getAbsolutePath());
+                    ConfigController.setProperty("staffFile", ConfigController.getProperty("staffFile"));
                     linesPath.setText(selectedFile.getAbsolutePath());
-                    this.cfg.commit();
+                    ConfigController.commit();
                 }
-                if (e.getSource() == this.addStaff){
-                    this.cfg.setProperty("stockFile", this.cfg.getProperty("stockFile"));
-                    this.cfg.setProperty("pricesFile", this.cfg.getProperty("pricesFile"));
-                    this.cfg.setProperty("linesFile", this.cfg.getProperty("linesFile"));
-                    this.cfg.setProperty("staffFile", selectedFile.getAbsolutePath());
+                if (evt.getSource() == this.addStaff) {
+                    ConfigController.setProperty("stockFile", ConfigController.getProperty("stockFile"));
+                    ConfigController.setProperty("pricesFile", ConfigController.getProperty("pricesFile"));
+                    ConfigController.setProperty("linesFile", ConfigController.getProperty("linesFile"));
+                    ConfigController.setProperty("staffFile", selectedFile.getAbsolutePath());
                     staffPath.setText(selectedFile.getAbsolutePath());
-                    this.cfg.commit();
+                    ConfigController.commit();
+                }
+                try {
+                    this.parentComponent.refreshTabs();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isComponentRenderable() {
+        return !ConfigController.isConfigStringEmpty();
+    }
+
+    @Override
+    public void refreshFromFile() throws IOException {
+        // ne rien faire, car cet onglet ne dépend d'aucun fichier
     }
 }

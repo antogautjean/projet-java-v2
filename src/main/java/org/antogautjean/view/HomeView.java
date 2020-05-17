@@ -1,11 +1,14 @@
 package org.antogautjean.view;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import org.antogautjean.Controller.FactoryController;
@@ -18,23 +21,27 @@ import org.antogautjean.view.tabs.TabInterface;
 
 public class HomeView {
 
-    protected JTabbedPane tabs;
+    protected JTabbedPane tabsContainer;
+    protected ArrayList<TabInterface> tabsContent = new ArrayList<>();
 
-    public HomeView(StockController stockList, FactoryController lineList, StaffController staffList) throws Exception {
-
+    public HomeView(StockController stockCtrl, FactoryController factoryCtrl, StaffController staffCtrl)
+            throws Exception {
         frameInit();
 
-        TabInterface[] tabs = { new FactoryTab(stockList, lineList), new StaffTab(staffList),  new SettingsTab() };
-        this.initTabs(tabs);
+        this.tabsContent.add(new FactoryTab(stockCtrl, factoryCtrl));
+        this.tabsContent.add(new StaffTab(staffCtrl));
+        this.tabsContent.add(new SettingsTab(this));
+
+        this.initTabs();
         this.mainFrame.setVisible(true);
     }
 
     private JFrame mainFrame;
 
-    public void frameInit(){
+    public void frameInit() {
         this.mainFrame = new JFrame("Factory");
         this.mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.mainFrame.setMinimumSize(new Dimension(1200,500));
+        this.mainFrame.setMinimumSize(new Dimension(1200, 500));
         this.mainFrame.setTitle("Gestionnaire de production");
         this.mainFrame.setLocationRelativeTo(null);
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,21 +49,52 @@ public class HomeView {
         this.mainFrame.setIconImage(new ImageIcon("./src/main/java/org/antogautjean/data/factory_icon.png").getImage());
     }
 
-    private void initTabs(TabInterface[] tabs) throws Exception {
-
-        this.tabs = new JTabbedPane();
-
-        Font font = new Font("Arial", Font.BOLD,12);
-
-        for (int i = 0; i < tabs.length; i++) {
-            TabInterface tab = tabs[i];
-            this.tabs.add(tab.getTabTitle(), tab.getComponent());
-            JLabel tabLabel = new JLabel(tab.getTabTitle());
-            tabLabel.setFont(font);
-            tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            this.tabs.setTabComponentAt(i, tabLabel);
+    public void refreshTabs() {
+        // refresh controllers from file
+        ArrayList<String> failedTabLoading = new ArrayList<>();
+        for(TabInterface tab: this.tabsContent) {
+            try {
+                tab.refreshFromFile();
+                if (!tab.isComponentRenderable()) {
+                    failedTabLoading.add(tab.getTabTitle());
+                }
+            } catch (IOException e) {
+                failedTabLoading.add(tab.getTabTitle());
+            }
         }
+        displayFailedTabs(failedTabLoading);
+    }
 
-        this.mainFrame.getContentPane().add(this.tabs);
+    public void initTabs() throws Exception {
+        this.tabsContainer = new JTabbedPane();
+        Font font = new Font("Arial", Font.BOLD, 12);
+
+        int tabIndex = 0;
+        ArrayList<String> failedTabLoading = new ArrayList<>();
+        for (TabInterface tab : this.tabsContent) {
+            if (tab.isComponentRenderable()) {
+                this.tabsContainer.add(tab.getTabTitle(), tab.getComponent());
+                JLabel tabLabel = new JLabel(tab.getTabTitle());
+                tabLabel.setFont(font);
+                tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                this.tabsContainer.setTabComponentAt(tabIndex, tabLabel);
+                tabIndex++;
+            } else {
+                failedTabLoading.add(tab.getTabTitle());
+            }
+        }
+        displayFailedTabs(failedTabLoading);
+
+        this.mainFrame.getContentPane().add(this.tabsContainer);
+    }
+
+    /**
+     * N'affiche rien si la liste est vide
+     */
+    protected void displayFailedTabs(ArrayList<String> failedTabLoading) {
+        if (failedTabLoading.size() > 0) {
+            JOptionPane.showMessageDialog(null, "Les onglets suivant n'ont pas pu être chargés correctement :\n- "
+                    + String.join("\n- ", failedTabLoading), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

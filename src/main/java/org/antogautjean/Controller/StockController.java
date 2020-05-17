@@ -1,17 +1,31 @@
 package org.antogautjean.Controller;
 
+import org.antogautjean.model.ControllerFromFileInterface;
+import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
 import org.antogautjean.view.components.SpinnerCell;
 import org.antogautjean.view.components.TableRowFormatInterface;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-public class StockController implements TableRowFormatInterface {
+public class StockController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, Product> stock = new HashMap<>();
+    protected boolean fileImportFailed = false;
+
+    @Override
+    public void setIfFileImportFailed(boolean b) {
+        this.fileImportFailed = b;
+    }
+
+    @Override
+    public boolean getIfFileImportFailed() {
+        return this.fileImportFailed;
+    }
 
     public boolean addProduct(Product product) {
         // tester si le produit existe deja dans la base de donnée
@@ -19,7 +33,7 @@ public class StockController implements TableRowFormatInterface {
             this.stock.put(product.getCode(), product);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -29,7 +43,7 @@ public class StockController implements TableRowFormatInterface {
             this.stock.remove(code);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -44,7 +58,7 @@ public class StockController implements TableRowFormatInterface {
         try {
             return this.stock.get(code);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -110,5 +124,10 @@ public class StockController implements TableRowFormatInterface {
         }
 
         return output;
+    }
+
+    @Override
+    public void refreshFromFile() throws IOException {
+        FileImporter.fileToStock(this);
     }
 }

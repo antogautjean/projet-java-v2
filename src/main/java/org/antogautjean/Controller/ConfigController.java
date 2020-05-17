@@ -1,15 +1,21 @@
 package org.antogautjean.Controller;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 public class ConfigController
 {
-    String configFilePath;
-    OutputStream output;
-    Properties prop;
+    protected static String configFilePath = "";
+    protected static OutputStream output;
+    protected static Properties prop;
 
-    public ConfigController(String configFilePath) throws Exception {
+    public static void setConfigFilePath(String configFilePath) throws Exception {
         try {
             File f = new File(configFilePath);
             if (!f.exists()) {
@@ -25,30 +31,37 @@ public class ConfigController
                     System.out.println("File already exists.");
                 }
             }
+            ConfigController.configFilePath = configFilePath;
+            ConfigController.prop = new Properties();
         }catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-        this.configFilePath = configFilePath;
-        this.prop = new Properties();
     }
 
-    public void setProperty(String key, String value){
-        this.prop.setProperty(key, value);
+    public static String getConfigString() {
+        return ConfigController.configFilePath;
     }
 
-    public void commit() {
+    public static boolean isConfigStringEmpty() {
+        return ConfigController.configFilePath == "";
+    }
+
+    public static void setProperty(String key, String value){
+        ConfigController.prop.setProperty(key, value);
+    }
+
+    public static void commit() {
         try {
-            this.output = new FileOutputStream(this.configFilePath);
-            this.prop.store(output, null);
+            ConfigController.output = new FileOutputStream(ConfigController.configFilePath);
+            ConfigController.prop.store(output, null);
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
-    public String getProperty(String key){
-        try (InputStream input = new FileInputStream(this.configFilePath)) {
+    public static String getProperty(String key){
+        try (InputStream input = new FileInputStream(ConfigController.configFilePath)) {
             Properties prop = new Properties();
             prop.load(input);
             return prop.getProperty(key);

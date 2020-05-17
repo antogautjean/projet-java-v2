@@ -7,8 +7,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
 public class LinesTableModel extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
 
-    public LinesTableModel(Vector v1, Vector v2){
+    @SuppressWarnings("rawtypes")
+    public LinesTableModel(Vector<? extends Vector> v1, Vector<?> v2){
         super(v1, v2);
     }
 
