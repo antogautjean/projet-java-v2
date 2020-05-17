@@ -33,8 +33,7 @@ public class HomeView {
         this.tabsContent.add(new StaffTab(staffCtrl));
         this.tabsContent.add(new SettingsTab(this));
 
-        this.mainFrame.setVisible(true);
-        this.initTabs();
+        this.init();
     }
 
     private JFrame mainFrame;
@@ -66,7 +65,7 @@ public class HomeView {
         displayFailedTabs(failedTabLoading);
     }
 
-    public void initTabs() throws Exception {
+    public void init() throws Exception {
         this.tabsContainer = new JTabbedPane();
         Font font = new Font("Arial", Font.BOLD, 12);
 
@@ -83,9 +82,10 @@ public class HomeView {
             }
             cursor++;
         }
-        displayFailedTabs(failedTabLoading);
-
         this.mainFrame.getContentPane().add(this.tabsContainer);
+        this.mainFrame.setVisible(true);
+
+        displayFailedTabs(failedTabLoading);
     }
 
     /**
