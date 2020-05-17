@@ -1,4 +1,4 @@
-package org.antogautjean.model;
+package org.antogautjean.Controller;
 
 import java.io.IOException;
 

@@ -1,7 +1,8 @@
 package org.antogautjean.view;
 
-import java.awt.*;
-import java.io.IOException;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -14,9 +15,9 @@ import javax.swing.JTabbedPane;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StaffController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.tabs.StaffTab;
 import org.antogautjean.view.tabs.FactoryTab;
 import org.antogautjean.view.tabs.SettingsTab;
+import org.antogautjean.view.tabs.StaffTab;
 import org.antogautjean.view.tabs.TabInterface;
 
 public class HomeView {
@@ -32,8 +33,8 @@ public class HomeView {
         this.tabsContent.add(new StaffTab(staffCtrl));
         this.tabsContent.add(new SettingsTab(this));
 
-        this.initTabs();
         this.mainFrame.setVisible(true);
+        this.initTabs();
     }
 
     private JFrame mainFrame;
@@ -52,14 +53,14 @@ public class HomeView {
     public void refreshTabs() {
         // refresh controllers from file
         ArrayList<String> failedTabLoading = new ArrayList<>();
-        for(TabInterface tab: this.tabsContent) {
-            try {
-                tab.refreshFromFile();
-                if (!tab.isComponentRenderable()) {
+        int cursor = 0;
+        for (TabInterface tab : this.tabsContent) {
+            if (!(tab instanceof SettingsTab)) {
+                this.tabsContainer.setComponentAt(cursor, tab.getComponent());
+                if (!tab.getIfRenderedCorrectly()) {
                     failedTabLoading.add(tab.getTabTitle());
                 }
-            } catch (IOException e) {
-                failedTabLoading.add(tab.getTabTitle());
+                cursor++;
             }
         }
         displayFailedTabs(failedTabLoading);
@@ -69,19 +70,18 @@ public class HomeView {
         this.tabsContainer = new JTabbedPane();
         Font font = new Font("Arial", Font.BOLD, 12);
 
-        int tabIndex = 0;
+        int cursor = 0;
         ArrayList<String> failedTabLoading = new ArrayList<>();
         for (TabInterface tab : this.tabsContent) {
-            if (tab.isComponentRenderable()) {
-                this.tabsContainer.add(tab.getTabTitle(), tab.getComponent());
-                JLabel tabLabel = new JLabel(tab.getTabTitle());
-                tabLabel.setFont(font);
-                tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                this.tabsContainer.setTabComponentAt(tabIndex, tabLabel);
-                tabIndex++;
-            } else {
+            this.tabsContainer.add(tab.getTabTitle(), tab.getComponent());
+            JLabel tabLabel = new JLabel(tab.getTabTitle());
+            tabLabel.setFont(font);
+            tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            this.tabsContainer.setTabComponentAt(cursor, tabLabel);
+            if (!tab.getIfRenderedCorrectly()) {
                 failedTabLoading.add(tab.getTabTitle());
             }
+            cursor++;
         }
         displayFailedTabs(failedTabLoading);
 

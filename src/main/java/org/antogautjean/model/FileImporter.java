@@ -28,7 +28,7 @@ public class FileImporter {
         try {
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
-            if (!row.equals(elements_csv_header)) {
+            if (!row.contains(elements_csv_header)) {
                 throw fileWrongCSVFormat;
             } else {
                 while ((row = csvReader.readLine()) != null) {
@@ -58,7 +58,7 @@ public class FileImporter {
             try {
                 // Vérifier si la première ligne du fichier CSV est au bon format
                 row = csvReader.readLine();
-                if (!row.equals(prix_csv_header)) {
+                if (!row.contains(prix_csv_header)) {
                     throw fileWrongCSVFormat;
                 } else {
                     while ((row = csvReader.readLine()) != null) {
@@ -111,7 +111,7 @@ public class FileImporter {
         try {
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
-            if (!row.equals(chaines_csv_header)) {
+            if (!row.contains(chaines_csv_header)) {
                 throw fileWrongCSVFormat;
             } else {
                 for (int i = 1; (row = csvReader.readLine()) != null; i++) {
@@ -145,9 +145,7 @@ public class FileImporter {
         try {
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
-            if (!row.equals(employes_csv_header)) {
-                // System.out.println(row);
-                // System.out.println(employes_csv_header);
+            if (!row.contains(employes_csv_header)) {
                 throw fileWrongCSVFormat;
             } else {
                 while ((row = csvReader.readLine()) != null) {

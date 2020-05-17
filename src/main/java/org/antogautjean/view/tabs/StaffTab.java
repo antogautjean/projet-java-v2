@@ -27,7 +27,7 @@ import org.antogautjean.view.components.CustomJTable;
 import org.antogautjean.view.components.StaffTableModel;
 import org.antogautjean.view.components.TableRowFormatInterface;
 
-public class StaffTab implements TabInterface {
+public class StaffTab extends DefaultTab implements TabInterface {
 
     protected StaffController staffCtrl;
     protected CustomJTable staffTable;
@@ -50,17 +50,24 @@ public class StaffTab implements TabInterface {
     }
 
     @Override
-    public JComponent getComponent() throws Exception {
-        final String[] staffColumns = new String[] { "Code", "Qualification", "0H", "1H", "2H", "3H", "4H", "5H", "6H",
-                "7H", "8H", "9H", "10H", "11H", "12H", "13H", "14H", "15H", "16H", "17H", "18H", "19H", "20H", "21H",
-                "22H", "23H", "24H", "25H", "26H", "27H", "28H", "29H", "30H", "31H", "32H", "33H", "34H", "35H" };
+    public JComponent getComponent() {
+        if (isControllerFresh()) {
+            final String[] staffColumns = new String[] { "Code", "Qualification", "0H", "1H", "2H", "3H", "4H", "5H",
+                    "6H", "7H", "8H", "9H", "10H", "11H", "12H", "13H", "14H", "15H", "16H", "17H", "18H", "19H", "20H",
+                    "21H", "22H", "23H", "24H", "25H", "26H", "27H", "28H", "29H", "30H", "31H", "32H", "33H", "34H",
+                    "35H" };
 
-        JPanel staffPanel = new JPanel();
-        configStaffTable(staffPanel, staffColumns);
+            JPanel staffPanel = new JPanel();
+            configStaffTable(staffPanel, staffColumns);
 
-        configPanel(this.staffTable, this.staffTableModel, this.staffCtrl);
+            configPanel(this.staffTable, this.staffTableModel, this.staffCtrl);
 
-        return staffPanel;
+            this.ifRenderedCorrectly = true;
+            return staffPanel;
+        } else {
+            this.ifRenderedCorrectly = false;
+            return notFoundDesign();
+        }
     }
 
     private void configJPanel(JPanel panel) {
@@ -130,13 +137,12 @@ public class StaffTab implements TabInterface {
         }
     }
 
-    @Override
-    public boolean isComponentRenderable() {
+    public boolean isControllerFresh() {
+        try {
+            this.staffCtrl.refreshFromFile();
+        } catch (IOException e) {
+            return false;
+        }
         return !this.staffCtrl.getIfFileImportFailed();
-    }
-
-    @Override
-    public void refreshFromFile() throws IOException {
-        this.staffCtrl.refreshFromFile();
     }
 }

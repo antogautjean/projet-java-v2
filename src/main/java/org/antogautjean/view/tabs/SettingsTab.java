@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class SettingsTab implements TabInterface, ActionListener {
+public class SettingsTab extends DefaultTab implements TabInterface, ActionListener {
     JPanel container;
     JButton addStock;
     JButton addLines;
@@ -30,7 +30,7 @@ public class SettingsTab implements TabInterface, ActionListener {
     }
 
     @Override
-    public JComponent getComponent() throws Exception {
+    public JComponent getComponent() {
         container = new JPanel();
         container.setBorder(BorderFactory.createTitledBorder("Configuration des fichiers source (CSV)"));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -91,6 +91,7 @@ public class SettingsTab implements TabInterface, ActionListener {
 
         settingsPanel.add(container);
         
+        this.ifRenderedCorrectly = true;
         return settingsPanel;
     }
 
@@ -149,15 +150,5 @@ public class SettingsTab implements TabInterface, ActionListener {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean isComponentRenderable() {
-        return !ConfigController.isConfigStringEmpty();
-    }
-
-    @Override
-    public void refreshFromFile() throws IOException {
-        // ne rien faire, car cet onglet ne dépend d'aucun fichier
     }
 }

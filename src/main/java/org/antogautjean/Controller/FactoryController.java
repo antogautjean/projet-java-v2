@@ -1,16 +1,15 @@
 package org.antogautjean.Controller;
 
-import org.antogautjean.model.ControllerFromFileInterface;
-import org.antogautjean.model.FileImporter;
-import org.antogautjean.model.ProductionLine;
-import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableRowFormatInterface;
-
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
+import org.antogautjean.model.FileImporter;
+import org.antogautjean.model.ProductionLine;
+import org.antogautjean.view.components.SpinnerCell;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
 public class FactoryController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, ProductionLine> productionLines = new HashMap<>();

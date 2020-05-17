@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.antogautjean.model.ControllerFromFileInterface;
 import org.antogautjean.model.Employee;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.components.TableRowFormatInterface;
@@ -65,7 +64,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
 
     public String toString() {
         String output = "Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)\n";
-        for (Employee e: this.staff.values()) {
+        for (Employee e : this.staff.values()) {
             output += e.toString();
         }
         return output;

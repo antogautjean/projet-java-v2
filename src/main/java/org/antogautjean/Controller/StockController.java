@@ -1,17 +1,16 @@
 package org.antogautjean.Controller;
 
-import org.antogautjean.model.ControllerFromFileInterface;
-import org.antogautjean.model.FileImporter;
-import org.antogautjean.model.Product;
-import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableRowFormatInterface;
-
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+
+import org.antogautjean.model.FileImporter;
+import org.antogautjean.model.Product;
+import org.antogautjean.view.components.SpinnerCell;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
 public class StockController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, Product> stock = new HashMap<>();

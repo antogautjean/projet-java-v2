@@ -1,15 +1,12 @@
 package org.antogautjean.view.tabs;
 
-import java.io.IOException;
-
 import javax.swing.JComponent;
 
 public interface TabInterface {
-    public JComponent getComponent() throws Exception;
+    public JComponent getComponent();
 
     public String getTabTitle();
 
-    public boolean isComponentRenderable();
-
-    public void refreshFromFile() throws IOException;
+    public void setIfRenderedCorrectly(boolean ifRendered);
+    public boolean getIfRenderedCorrectly();
 }

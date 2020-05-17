@@ -27,11 +27,11 @@ import javax.swing.table.TableColumnModel;
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
 import org.antogautjean.view.components.CustomJTable;
-import org.antogautjean.view.components.TableRowFormatInterface;
 import org.antogautjean.view.components.TableCellRenderer;
 import org.antogautjean.view.components.TableModel;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
-public class FactoryTab implements TabInterface {
+public class FactoryTab extends DefaultTab implements TabInterface {
     protected StockController stockCtrl;
     protected FactoryController factoryCtrl;
 
@@ -53,41 +53,45 @@ public class FactoryTab implements TabInterface {
     }
 
     @Override
-    public JComponent getComponent() throws Exception {
-        // Refresh from file
-        this.stockCtrl.refreshFromFile();
-        this.factoryCtrl.refreshFromFile();
+    public JComponent getComponent() {
+        if (areControllersFresh()) {
 
-        final String[] stockColumns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
-                "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
-        final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom", "Code éléments en sortie",
-                "Niveau d'activation", "Etat de la chaîne", "Quantité produite / quantité demandée" };
+            final String[] stockColumns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
+                    "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
+            final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom",
+                    "Code éléments en sortie", "Niveau d'activation", "Etat de la chaîne",
+                    "Quantité produite / quantité demandée" };
 
-        // Test à destination des développeurs
-        if (!Arrays.asList(linesColumns).contains("Etat de la chaîne")) {
-            System.err.println("Attention : la colonne \"Etat de la chaîne\" est introuvable\n"
-                    + "Or il y a un getTableCellRendererComponent qui utilise le nom de cette colonne");
+            // Test à destination des développeurs
+            if (!Arrays.asList(linesColumns).contains("Etat de la chaîne")) {
+                System.err.println("Attention : la colonne \"Etat de la chaîne\" est introuvable\n"
+                        + "Or il y a un getTableCellRendererComponent qui utilise le nom de cette colonne");
+            }
+
+            JPanel stockPanel = new JPanel();
+            configStockTable(stockPanel, stockColumns);
+
+            JPanel linesPanel = new JPanel();
+            configLinesTable(linesPanel, linesColumns);
+
+            JPanel indicatorsPanel = new JPanel();
+            configIndicatiorsTable(indicatorsPanel);
+
+            configPanel(this.stockTable, this.stockTableModel, (TableRowFormatInterface) this.stockCtrl);
+            configPanel(this.linesTable, this.linesTableModel, (TableRowFormatInterface) this.factoryCtrl);
+
+            JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
+            SLsplitPane.setResizeWeight(.5);
+
+            JSplitPane SLIsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SLsplitPane, indicatorsPanel);
+            SLIsplitPane.setResizeWeight(.9);
+
+            this.ifRenderedCorrectly = true;
+            return SLIsplitPane;
+        } else {
+            this.ifRenderedCorrectly = false;
+            return notFoundDesign();
         }
-
-        JPanel stockPanel = new JPanel();
-        configStockTable(stockPanel, stockColumns);
-
-        JPanel linesPanel = new JPanel();
-        configLinesTable(linesPanel, linesColumns);
-
-        JPanel indicatorsPanel = new JPanel();
-        configIndicatiorsTable(indicatorsPanel);
-
-        configPanel(this.stockTable, this.stockTableModel, (TableRowFormatInterface) this.stockCtrl);
-        configPanel(this.linesTable, this.linesTableModel, (TableRowFormatInterface) this.factoryCtrl);
-
-        JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
-        SLsplitPane.setResizeWeight(.5);
-
-        JSplitPane SLIsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SLsplitPane, indicatorsPanel);
-        SLIsplitPane.setResizeWeight(.9);
-
-        return SLIsplitPane;
     }
 
     private void configIndicatiorsTable(JPanel indicatorsPanel) {
@@ -225,14 +229,13 @@ public class FactoryTab implements TabInterface {
         }
     }
 
-    @Override
-    public boolean isComponentRenderable() {
+    public boolean areControllersFresh() {
+        try {
+            this.factoryCtrl.refreshFromFile();
+            this.stockCtrl.refreshFromFile();
+        } catch (IOException e) {
+            return false;
+        }
         return !this.factoryCtrl.getIfFileImportFailed() && !this.stockCtrl.getIfFileImportFailed();
-    }
-
-    @Override
-    public void refreshFromFile() throws IOException {
-        this.factoryCtrl.refreshFromFile();
-        this.stockCtrl.refreshFromFile();
     }
 }
