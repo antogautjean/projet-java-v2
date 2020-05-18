@@ -119,8 +119,8 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         orders.setValue(50);
         orders.setStringPainted(true);
 
-        Label order = new Label("Indicateur de valeurs (Commande satisfaites)");
-        Label value = new Label("Indicateur de commandes (Valeur totale du stock vendable)");
+        Label order = new Label("Indicateur de commandes (Commande satisfaites)");
+        Label value = new Label("Indicateur de valeurs (Valeur totale du stock vendable - achats)");
         Label total = new Label("1500€");
 
         order.setFont(font);
