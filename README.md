@@ -4,25 +4,25 @@
 Compte rendu
 --
 
-##Etat d'avancement
+## Etat d'avancement
 
 Ce programme à pour objectif de permet à un utilisateur possédant des données de production d'une usine de les visualiser sous forme de tableau.
 Il pourra ainsi 
 
-##Fonctionnalitée manquantes
+## Fonctionnalitée manquantes
 
 * a
 * b
 * c
 
-##Difficultées
+## Difficultées
 
-###Gestion de projet
+### Gestion de projet
 
 * Répartition du travail
 * Organisation
 
-###Technique
+### Technique
 
 * Apprentisage et compréhension de Java Swing
 * Gestion des conflis GitHub 
@@ -32,7 +32,7 @@ Dossier technique
 
 > https://github.com/antogautjean/projet-java-v2
 
-##Conception MVC
+## Conception MVC
 
 Sources
 ```
@@ -65,7 +65,7 @@ Structure du code (src)
       │  Vue Globale 
       └─────────────── 
 ```
-##Cas d'usage
+## Cas d'usage
 ```
 SUGGESTION APRES BUILDED
 │   projet-java-v2.jar
@@ -76,7 +76,7 @@ SUGGESTION APRES BUILDED
       |  prix.csv
       └─────────────── 
 ```
-##Lancer l'application
+## Lancer l'application
 
 1) ```java -jar projet-java-v2.jar```
 2) Dans l'onlget paramètre, ajouter les fichier CSV
