@@ -37,6 +37,9 @@ public class FactoryTab extends DefaultTab implements TabInterface {
     protected CustomJTable stockTable;
     protected CustomJTable linesTable;
 
+    protected JPanel indicatorsPanel;
+    protected JProgressBar orders;
+
     protected DefaultTableModel stockTableModel;
     protected DefaultTableModel linesTableModel;
 
@@ -78,7 +81,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
             JPanel linesPanel = new JPanel();
             configLinesTable(linesPanel, linesColumns);
 
-            JPanel indicatorsPanel = new JPanel();
+            indicatorsPanel = new JPanel();
             configIndicatorsTable(indicatorsPanel);
 
             configStockPanel();
@@ -114,9 +117,8 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         Font font = new Font("Arial", Font.BOLD, 14);
         Font font2 = new Font("Arial", Font.PLAIN, 18);
 
-        JProgressBar orders;
         orders = new JProgressBar(0, 100);
-        orders.setValue(50);
+        orders.setValue((int)(this.stockCtrl.getToBuyValue()+0));
         orders.setStringPainted(true);
 
         Label order = new Label("Indicateur de commandes (Commande satisfaites)");
@@ -239,5 +241,9 @@ public class FactoryTab extends DefaultTab implements TabInterface {
      */
     public void configProdLinesPanel() {
         configPanel(this.linesTable, this.linesTableModel, this.factoryCtrl);
+    }
+
+    public void configIndicPanel() {
+        orders.setValue((int)(this.stockCtrl.getToBuyValue()+0));
     }
 }
