@@ -7,6 +7,9 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Classe représentant le tableau du staff
+ */
 public class StaffTableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +17,12 @@ public class StaffTableModel extends DefaultTableModel {
         super(v1, v2);
     }
 
+    /**
+     * Classe permettant de définit la valeur d'une case
+     * @param obj
+     * @param row
+     * @param col
+     */
     @Override
     public void setValueAt(Object obj, int row, int col) {
 

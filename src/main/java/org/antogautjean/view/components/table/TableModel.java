@@ -7,6 +7,9 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Classe représentant un modèle tableau
+ */
 public class TableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
     protected int[] concernedIndexes;
@@ -16,6 +19,12 @@ public class TableModel extends DefaultTableModel {
         this.concernedIndexes = concernedIndexes;
     }
 
+    /**
+     * Permet de definir la valeur d'une cellule
+     * @param obj
+     * @param row
+     * @param col
+     */
     @Override
     public void setValueAt(Object obj, int row, int col) {
 
@@ -39,6 +48,12 @@ public class TableModel extends DefaultTableModel {
 
     }
 
+    /**
+     * Permet de savoir si une cellule est éditable
+     * @param rowIndex
+     * @param colIndex
+     * @return
+     */
     @Override
     public boolean isCellEditable(int rowIndex, int colIndex) {
         // [0, 4] pour Factory

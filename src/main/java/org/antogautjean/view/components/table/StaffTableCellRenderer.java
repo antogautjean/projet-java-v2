@@ -9,12 +9,19 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.antogautjean.controller.StaffController;
 
+/**
+ * Classe permettant de gerer les cellules du tableau staff
+ */
 public class StaffTableCellRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 1L;
     protected StaffController staffCtrl;
     protected String[] orderedKeys;
 
+    /**
+     * Constructeur du StaffTableCellRenderer
+     * @param staffCtrl
+     */
     public StaffTableCellRenderer(StaffController staffCtrl) {
         this.staffCtrl = staffCtrl;
 
@@ -28,6 +35,16 @@ public class StaffTableCellRenderer extends DefaultTableCellRenderer {
         }
     }
 
+    /**
+     * Fonction qui renvois comment une cellule doit etre gérer
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
             int row, int column) {

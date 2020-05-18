@@ -9,6 +9,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.antogautjean.controller.FactoryController;
 import org.antogautjean.model.ProductionLineState;
 
+/**
+ * Cette classe permet de gérer le rendu du tableau Factory
+ */
 public class TableCellRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 1L;
@@ -16,6 +19,10 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
     protected String[] orderedKeys;
     protected JButton button = new JButton();
 
+    /**
+     * Construit de TableCellRenderer et initialise orderedKeys
+     * @param factoryCtrl
+     */
     public TableCellRenderer(FactoryController factoryCtrl) {
         this.factoryCtrl = factoryCtrl;
 
@@ -33,6 +40,16 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
         this.factoryCtrl = null;
     }
 
+    /**
+     * L'appel de cette fonction permet de savoir comment doit etre afficher la cellule entrée en parametre
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
             int row, int column) {

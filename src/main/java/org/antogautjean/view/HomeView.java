@@ -20,6 +20,9 @@ import org.antogautjean.view.tabs.SettingsTab;
 import org.antogautjean.view.tabs.StaffTab;
 import org.antogautjean.view.tabs.TabInterface;
 
+/**
+ * Classe permettant l'affichage de l'application
+ */
 public class HomeView {
 
     protected JTabbedPane tabsContainer;
