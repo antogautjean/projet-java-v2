@@ -112,9 +112,8 @@ public class FileImporter {
             if (!row.contains(chaines_csv_header)) {
                 throw fileWrongCSVFormat;
             } else {
-                for (int i = 1; (row = csvReader.readLine()) != null; i++) {
+                while ((row = csvReader.readLine()) != null) {
                     String[] line = row.split(";");
-
                     factoryLines.put(line[0],
                             new ProductionLine(line[0], line[1], stringToHashMap(line[2]), stringToHashMap(line[3]),
                                     Integer.parseInt(line[4]), Integer.parseInt(line[5]), Integer.parseInt(line[6])));

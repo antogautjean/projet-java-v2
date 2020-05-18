@@ -1,5 +1,7 @@
 package org.antogautjean.view.components;
 
+import org.antogautjean.controller.ControllerFromFileInterface;
+import org.antogautjean.controller.StockController;
 import org.antogautjean.controller.StockMetaController;
 import java.awt.Color;
 import java.awt.Component;
@@ -9,24 +11,24 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-public class SpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+public class ActivationLevelSpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
 
-    public SpinnerCell(JSpinner showSpinner, String code, String className, StockMetaController metaController) {
+    public ActivationLevelSpinnerCell(JSpinner showSpinner, String code) {
 
-        ChangeListener listener = new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSpinner s = (JSpinner) e.getSource();
-                System.out.println(className + " " + code + " " + s.getValue());
-                metaController.getProductAfterCalculation(code).setQuantityToBuy(Integer.parseInt(s.getValue().toString()));
-            }
+
+        JSpinner.NumberEditor numberEditor = new JSpinner.NumberEditor(showSpinner, "00");
+        showSpinner.setEditor(numberEditor);
+
+        ChangeListener listener = e -> {
+            JSpinner s = (JSpinner) e.getSource();
+            System.out.println("Activation level: " + code + " -> " + s.getValue());
         };
 
         showSpinner.addChangeListener(listener);

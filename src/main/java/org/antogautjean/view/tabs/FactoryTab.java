@@ -7,7 +7,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 import org.antogautjean.controller.FactoryController;
 import org.antogautjean.controller.StockController;
@@ -155,6 +158,12 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         this.stockTable.setRowHeight(30);
         this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
 
+        RowSorter<TableModel> sorter = new TableRowSorter<TableModel>((TableModel) this.stockTable.getModel());
+        List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        this.stockTable.setRowSorter(sorter);
+
         TableColumnModel columnModel = this.stockTable.getColumnModel();
         columnModel.getColumn(0).setMaxWidth(50);
         columnModel.getColumn(1).setMinWidth(100);
@@ -179,6 +188,13 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         this.linesTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)),
                 new int[] { 0, 4 });
         this.linesTable = new CustomJTable(linesTableModel);
+
+        RowSorter<TableModel> sorter = new TableRowSorter<>((TableModel) this.linesTable.getModel());
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        this.linesTable.setRowSorter(sorter);
+
         this.linesTable.setRowHeight(30);
         this.linesTable.setDefaultRenderer(Object.class, this.factoryCellRenderer);
 

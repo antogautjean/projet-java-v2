@@ -84,6 +84,7 @@ public class HomeView {
         this.mainFrame.getContentPane().add(this.tabsContainer);
         this.mainFrame.setVisible(true);
 
+
         displayFailedTabs(failedTabLoading);
     }
 

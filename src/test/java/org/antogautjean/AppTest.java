@@ -1,157 +1,147 @@
 package org.antogautjean;
-import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.color.*;
+import javax.swing.*;
+import javax.swing.table.*;
+import javax.swing.event.*;
+import java.util.*;
 
-class JTableButtonRenderer implements TableCellRenderer {
-    private TableCellRenderer __defaultRenderer;
+public class AppTest extends JPanel
+        implements ActionListener {
 
-    public JTableButtonRenderer(TableCellRenderer renderer) {
-        __defaultRenderer = renderer;
-    }
+    DefaultTableModel myModel;
+    SortableTableModel mySortableModel;
+    JButton sort1, sort2, sort3, bonus;
 
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected,
-                                                   boolean hasFocus,
-                                                   int row, int column)
-    {
-        if(value instanceof Component)
-            return (Component)value;
-        return __defaultRenderer.getTableCellRendererComponent(
-                table, value, isSelected, hasFocus, row, column);
-    }
-}
-
-class JTableButtonModel extends AbstractTableModel {
-    private Object[][] __rows = {
-            { "One", new JButton("Button One") },
-            { "Two", new JButton("Button Two") },
-            { "Three", new JButton("Button Three") },
-            { "Four", new JButton("Button Four") }
+    static Object[] headers = {
+            "Letter", "Number", "Color"
+    };
+    static Object[][] data = {
+            {"A", new Integer(2), Color.gray.darker().darker()},
+            {"B", new Integer (3), Color.gray},
+            {"C", new Integer (1), Color.gray.darker()},
     };
 
-    private String[] __columns = { "Numbers", "Buttons" };
+    static Object[] bonusData = {
+            // "D", "0", Color.red  // this is the (buggy) book version
+            "D", new Integer(0), Color.red
+    };
 
-    public String getColumnName(int column) {
-        return __columns[column];
+    public AppTest (DefaultTableModel m) {
+        super (new BorderLayout());
+        myModel = m;
+        mySortableModel = new SortableTableModel (myModel);
+        mySortableModel.setComparatorForColumn (new MyColorComparator(), 2);
+        JTable table = new JTable (mySortableModel);
+        table.setDefaultRenderer (java.awt.Color.class, new ColorRenderer());
+        JScrollPane scroller =
+                new JScrollPane (table,
+                        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        table.setPreferredScrollableViewportSize (new Dimension (400, 200));
+        setLayout(new BorderLayout());
+        add (scroller, BorderLayout.CENTER);
+        // add sort buttons
+        JPanel buttonPanel = new JPanel();
+        sort1 = new JButton ("Sort 1");
+        buttonPanel.add(sort1);
+        sort1.addActionListener(this);
+        sort2 = new JButton ("Sort 2");
+        buttonPanel.add(sort2);
+        sort2.addActionListener(this);
+        sort3 = new JButton ("Sort 3");
+        buttonPanel.add(sort3);
+        sort3.addActionListener(this);
+        bonus = new JButton ("More data");
+        buttonPanel.add(bonus);
+        bonus.addActionListener(this);
+        add (buttonPanel, BorderLayout.SOUTH);
+
     }
 
-    public int getRowCount() {
-        return __rows.length;
+    public void actionPerformed (ActionEvent e) {
+        if (e.getSource() == sort1) {
+            mySortableModel.setSortColumn (0);
+        } else if (e.getSource() == sort2) {
+            mySortableModel.setSortColumn (1);
+        } else if (e.getSource() == sort3) {
+            mySortableModel.setSortColumn (2);
+        } else if (e.getSource() == bonus) {
+            myModel.addRow (bonusData);
+        }
+
+
     }
 
-    public int getColumnCount() {
-        return __columns.length;
-    }
-
-    public Object getValueAt(int row, int column) {
-        return __rows[row][column];
-    }
-
-    public boolean isCellEditable(int row, int column) {
-        return false;
-    }
-
-    public Class getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
-    }
-}
-
-class JTableButtonMouseListener implements MouseListener {
-    private JTable __table;
-
-    private void __forwardEventToButton(MouseEvent e) {
-        TableColumnModel columnModel = __table.getColumnModel();
-        int column = columnModel.getColumnIndexAtX(e.getX());
-        int row    = e.getY() / __table.getRowHeight();
-        Object value;
-        JButton button;
-        MouseEvent buttonEvent;
-
-        if(row >= __table.getRowCount() || row < 0 ||
-                column >= __table.getColumnCount() || column < 0)
-            return;
-
-        value = __table.getValueAt(row, column);
-
-        if(!(value instanceof JButton))
-            return;
-
-        button = (JButton)value;
-
-        buttonEvent =
-                (MouseEvent)SwingUtilities.convertMouseEvent(__table, e, button);
-        button.dispatchEvent(buttonEvent);
-        // This is necessary so that when a button is pressed and released
-        // it gets rendered properly.  Otherwise, the button may still appear
-        // pressed down when it has been released.
-        __table.repaint();
-    }
-
-    public JTableButtonMouseListener(JTable table) {
-        __table = table;
-    }
-
-    public void mouseClicked(MouseEvent e) {
-        __forwardEventToButton(e);
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        __forwardEventToButton(e);
-    }
-
-    public void mouseExited(MouseEvent e) {
-        __forwardEventToButton(e);
-    }
-
-    public void mousePressed(MouseEvent e) {
-        __forwardEventToButton(e);
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        __forwardEventToButton(e);
-    }
-}
-
-final class JTableButton extends JFrame {
-    private JTable __table;
-    private JScrollPane __scrollPane;
-
-    public JTableButton() {
-        super("JTableButton Demo");
-        TableCellRenderer defaultRenderer;
-
-        __table = new JTable(new JTableButtonModel());
-        defaultRenderer = __table.getDefaultRenderer(JButton.class);
-        __table.setDefaultRenderer(JButton.class,
-                new JTableButtonRenderer(defaultRenderer));
-        __table.setPreferredScrollableViewportSize(new Dimension(400, 200));
-        __table.addMouseListener(new JTableButtonMouseListener(__table));
-
-        __scrollPane = new JScrollPane(__table);
-        setContentPane(__scrollPane);
-    }
-
-    public static void main(String[] args) {
-        Frame frame;
-        WindowListener exitListener;
-
-        exitListener = new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                Window window = e.getWindow();
-                window.setVisible(false);
-                window.dispose();
-                System.exit(0);
-            }
-        };
-
-        frame = new JTableButton();
-        frame.addWindowListener(exitListener);
+    public static void main (String[] args) {
+        DefaultTableModel aModel =
+                new DefaultTableModel(data, headers) ;
+        JFrame frame = new JFrame ("Sortable Table");
+        frame.getContentPane().add (new AppTest(aModel),
+                BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
     }
-}
 
+
+    class MyColorComparator implements Comparator {
+        float[] hsb = new float[3];
+        public int compare (Object o1, Object o2) {
+            if ((! (o1 instanceof Color)) ||
+                    (! (o2 instanceof Color)))
+                return 0;
+            else {
+                Color c1 = (Color) o1;
+                Color c2 = (Color) o2;
+                Color.RGBtoHSB ( c1.getRed(),
+                        c1.getGreen(),
+                        c1.getBlue(),
+                        hsb);
+                float bright1 = hsb[2];
+                Color.RGBtoHSB ( c2.getRed(),
+                        c2.getGreen(),
+                        c2.getBlue(),
+                        hsb);
+                float bright2 = hsb[2];
+                if (bright1 == bright2)
+                    return 0;
+                else
+                    return ((bright1-bright2) < 0) ? -1 : 1;
+            }
+        }
+        public boolean equals (Object obj) {
+            return super.equals (obj);
+        }
+    }
+
+    class ColorRenderer extends DefaultTableCellRenderer {
+        public Component getTableCellRendererComponent (JTable table,
+                                                        Object value,
+                                                        boolean isSelected,
+                                                        boolean hasFocus,
+                                                        int row,
+                                                        int col) {
+            Component returnMe =
+                    super.getTableCellRendererComponent (table, value,
+                            isSelected,
+                            hasFocus, row, col);
+
+            // background only version
+
+            if (value instanceof Color) {
+                Color color = (Color) value;
+                returnMe.setBackground (color);
+                if (returnMe instanceof JLabel) {
+                    JLabel jl = (JLabel) returnMe;
+                    jl.setOpaque(true);
+                    jl.setText ("");
+                }
+            }
+            return returnMe;
+        }
+
+    }
+
+}

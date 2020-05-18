@@ -9,7 +9,7 @@ import javax.swing.SpinnerNumberModel;
 
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
-import org.antogautjean.view.components.SpinnerCell;
+import org.antogautjean.view.components.QuantityToBuySpinnerCell;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class StockController implements TableRowFormatInterface, ControllerFromFileInterface {
@@ -109,13 +109,13 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
             SpinnerModel quantity2buy_spinnerModel = new SpinnerNumberModel(product.getQuantityToBuy().intValue(), 0, 9,
                     1);
 
-            StockMetaController metaStock = new StockMetaController(this); //TODO: passer : this.stock
+            StockMetaController metaStock = new StockMetaController(this);
 
             output[productIndex] = new Object[] {
                 product.getCode(),
                 product.getName(),
                 product.getQuantity(),
-                new SpinnerCell(new JSpinner(quantity2buy_spinnerModel), product.getCode(), this.getClass().getName(), metaStock),
+                new QuantityToBuySpinnerCell(new JSpinner(quantity2buy_spinnerModel), product.getCode(), metaStock),
                 prevision,
                 product.getQuantity() + product.getQuantityToBuy(),
                 product.getQuantity() - product.getQuantityToBuy()
