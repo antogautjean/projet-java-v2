@@ -30,7 +30,7 @@ Difficultées
 Dossier technique
 --
 
-> https://github.com/antogautjean/projet-java-v2
+Lien du github : https://github.com/antogautjean/projet-java-v2
 
 ### Conception MVC
 
