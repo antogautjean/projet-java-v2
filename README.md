@@ -13,19 +13,53 @@ Fonctionnalitée manquantes
 
 Difficultées
 -- 
-###Gestion de projet
+
+Gestion de projet
 * Répartition du travail
 * Organisation
 
-###Technique
+Technique
 * Apprentisage et compréhension de Java Swing
 * Gestion des conflis GitHub 
 
-#Dossier technique
+Dossier technique
+--
+> https://github.com/antogautjean/projet-java-v2
 
 Conception MVC
 --
-
+Sources
+```
+Structure du code (src)
+│ AppMain    
+└─── controller
+|     │  Configuration
+|     │  Chaine de production
+|     |  Personnel
+|     |  Stock
+|     |  Stock virtuel
+|     └─────────────── 
+└─── model
+|     │  Employes
+|     │  Produit
+|     |  Chaine de production
+|     |  Unitées
+|     └─────────────── 
+└─── view
+      │─── Composants
+      |     │  employes.csv
+      |     |  prix.csv
+      |     └─────────────── 
+      │─── Onglets
+      |     │  Vue par défaut
+      |     |  Vue de usine
+      |     |  Vue de empoyés
+      |     |  Vue de paramètres
+      |     └─────────────── 
+      │  Vue Globale 
+      └─────────────── 
+```
+Cas d'usage
 ```
 SUGGESTION APRES BUILDED
 │   projet-java-v2.jar
@@ -36,9 +70,13 @@ SUGGESTION APRES BUILDED
       |  prix.csv
       └─────────────── 
 ```
+Lancer l'application
 
-###Architechture
+1) ```java -jar projet-java-v2.jar```
+2) Dans l'onlget paramètre, ajouter les fichier CSV
 
+Architechture Utilisateur
+--
 
 L'application est constituée de 3 onglets:
 * Le premier:    
