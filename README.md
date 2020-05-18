@@ -25,7 +25,38 @@ Difficultées
 
 Conception MVC
 --
-
+Sources
+```
+Structure du code (src)
+│ AppMain    
+└─── controller
+|     │  Configuration
+|     │  Chaine de production
+|     |  Personnel
+|     |  Stock
+|     |  Stock virtuel
+|     └─────────────── 
+└─── model
+|     │  Employes
+|     │  Produit
+|     |  Chaine de production
+|     |  Unitées
+|     └─────────────── 
+└─── view
+      │─── Composants
+      |     │  employes.csv
+      |     |  prix.csv
+      |     └─────────────── 
+      │─── Onglets
+      |     │  Vue par défaut
+      |     |  Vue de usine
+      |     |  Vue de empoyés
+      |     |  Vue de paramètres
+      |     └─────────────── 
+      │  Vue Globale 
+      └─────────────── 
+```
+Cas d'usage
 ```
 SUGGESTION APRES BUILDED
 │   projet-java-v2.jar
@@ -36,7 +67,10 @@ SUGGESTION APRES BUILDED
       |  prix.csv
       └─────────────── 
 ```
-
+Lancer l'application
+```
+java -jar projet-java-v2.jar
+```
 ###Architechture
 
 
