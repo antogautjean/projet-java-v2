@@ -19,6 +19,7 @@ public class App {
         for (String s : args) {
             if (s.equals("--no-ui")) {
                 isUIVisible = false;
+                break;
             }
         }
         System.out.println("starting : OK");

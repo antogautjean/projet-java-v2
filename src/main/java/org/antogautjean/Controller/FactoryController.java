@@ -23,7 +23,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
 
     @Override
     public boolean getIfFileImportFailed() {
-        return this.fileImportFailed;
+        return !this.fileImportFailed;
     }
 
     public void setStockController(StockController stockCtrl) {
@@ -52,11 +52,11 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (ProductionLine pl : this.productionLines.values()) {
-            output += pl + "\n";
+            output.append(pl).append("\n");
         }
-        return output;
+        return output.toString();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
         for (String key : productionLines.keySet()) {
             ProductionLine line = productionLines.get(key);
 
-            String lineState = "";
+            String lineState;
             Integer outputQty = 0;
             for (Integer qty : line.getOutputQuantity().values()) {
                 outputQty += qty;
@@ -75,13 +75,13 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             for (Integer qty : line.getQuantityDemanded().values()) {
                 outputQtyDemanded += qty;
             }
-            String percent = "";
+            String percent;
             if (outputQty >= outputQtyDemanded) {
                 percent = "100,00%";
             } else if (outputQtyDemanded == 0) {
                 percent = "NA";
             } else {
-                Double tmp = outputQty * 100. / outputQtyDemanded;
+                double tmp = outputQty * 100. / outputQtyDemanded;
                 percent = String.format("%.2f", tmp) + "%";
                 percent = (tmp < 10. ? "00" : "0") + percent;
             }
@@ -109,7 +109,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
     }
 
     @Override
-    public void refreshFromFile() throws IOException {
+    public void refreshFromFile() {
         FileImporter.fileToFactory(this, this.stock);
     }
 }

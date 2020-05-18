@@ -25,8 +25,7 @@ public class HomeView {
     protected JTabbedPane tabsContainer;
     protected ArrayList<TabInterface> tabsContent = new ArrayList<>();
 
-    public HomeView(StockController stockCtrl, FactoryController factoryCtrl, StaffController staffCtrl)
-            throws Exception {
+    public HomeView(StockController stockCtrl, FactoryController factoryCtrl, StaffController staffCtrl) {
         frameInit();
 
         this.tabsContent.add(new FactoryTab(stockCtrl, factoryCtrl));
@@ -56,7 +55,7 @@ public class HomeView {
         for (TabInterface tab : this.tabsContent) {
             if (!(tab instanceof SettingsTab)) {
                 this.tabsContainer.setComponentAt(cursor, tab.getComponent());
-                if (!tab.getIfRenderedCorrectly()) {
+                if (tab.getIfRenderedCorrectly()) {
                     failedTabLoading.add(tab.getTabTitle());
                 }
                 cursor++;
@@ -65,7 +64,7 @@ public class HomeView {
         displayFailedTabs(failedTabLoading);
     }
 
-    public void init() throws Exception {
+    public void init() {
         this.tabsContainer = new JTabbedPane();
         Font font = new Font("Arial", Font.BOLD, 12);
 
@@ -77,7 +76,7 @@ public class HomeView {
             tabLabel.setFont(font);
             tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             this.tabsContainer.setTabComponentAt(cursor, tabLabel);
-            if (!tab.getIfRenderedCorrectly()) {
+            if (tab.getIfRenderedCorrectly()) {
                 failedTabLoading.add(tab.getTabTitle());
             }
             cursor++;

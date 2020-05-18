@@ -8,7 +8,6 @@ public class TableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
     protected int[] concernedIndexes;
 
-    @SuppressWarnings("rawtypes")
     public TableModel(Vector<? extends Vector> v1, Vector<?> v2, int[] concernedIndexes){
         super(v1, v2);
         this.concernedIndexes = concernedIndexes;

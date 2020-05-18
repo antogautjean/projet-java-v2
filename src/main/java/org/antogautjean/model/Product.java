@@ -63,19 +63,16 @@ public class Product {
         return demand;
     }
 
-    public boolean setBuyPrice(Double buyPrice){
+    public void setBuyPrice(Double buyPrice){
         this.buyPrice = buyPrice;
-        return true;
     }
 
-    public boolean setSellPrice(Double sellPrice){
+    public void setSellPrice(Double sellPrice){
         this.sellPrice = sellPrice;
-        return true;
     }
 
-    public boolean setDemand(Integer demand){
+    public void setDemand(Integer demand){
         this.demand = demand;
-        return true;
     }
 
     public void setName(String name) {

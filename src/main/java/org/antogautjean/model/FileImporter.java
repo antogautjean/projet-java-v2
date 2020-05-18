@@ -3,6 +3,7 @@ package org.antogautjean.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.antogautjean.Controller.ConfigController;
 import org.antogautjean.Controller.FactoryController;
@@ -23,7 +24,7 @@ public class FileImporter {
         stock.setIfFileImportFailed(false);
         // Products
         BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(ConfigController.getProperty("stockFile")));
+                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("stockFile"))));
         String row;
         try {
             // Vérifier si la première ligne du fichier CSV est au bon format
@@ -52,9 +53,9 @@ public class FileImporter {
         }
 
         // If import didn't failed, then try with the second file
-        if (!stock.getIfFileImportFailed()) {
+        if (stock.getIfFileImportFailed()) {
             // Prices
-            csvReader = new BufferedReader(new java.io.FileReader(ConfigController.getProperty("pricesFile")));
+            csvReader = new BufferedReader(new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("pricesFile"))));
             try {
                 // Vérifier si la première ligne du fichier CSV est au bon format
                 row = csvReader.readLine();
@@ -98,17 +99,14 @@ public class FileImporter {
         return output;
     }
 
-    public static void fileToFactory(FactoryController factory, StockController stockController) throws IOException {
+    public static void fileToFactory(FactoryController factory, StockController stockController) {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         factory.setIfFileImportFailed(false);
 
-        BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(ConfigController.getProperty("linesFile")));
-
-        String row;
-
-        HashMap<String, ProductionLine> factoryLines = new HashMap<>();
-        try {
+        try (BufferedReader csvReader = new BufferedReader(
+                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("linesFile"))))) {
+            String row;
+            HashMap<String, ProductionLine> factoryLines = new HashMap<>();
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
             if (!row.contains(chaines_csv_header)) {
@@ -128,21 +126,17 @@ public class FileImporter {
         } catch (Exception e) {
             System.err.println("fileToFactory failed");
             factory.setIfFileImportFailed(true);
-        } finally {
-            csvReader.close();
         }
 
     }
 
-    public static void fileToStaff(StaffController staff) throws IOException {
+    public static void fileToStaff(StaffController staff) {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         staff.setIfFileImportFailed(false);
 
-        BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(ConfigController.getProperty("staffFile")));
-
-        String row;
-        try {
+        try (BufferedReader csvReader = new BufferedReader(
+                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("staffFile"))))) {
+            String row;
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
             if (!row.contains(employes_csv_header)) {
@@ -153,9 +147,8 @@ public class FileImporter {
                     String[] line = row.split(";");
                     String[] tempPlanning = new String[35];
 
-                    for (int j = 2; j < line.length; j++) {
-                        tempPlanning[j - 2] = line[j];
-                    }
+                    if (line.length - 2 >= 0)
+                        System.arraycopy(line, 2, tempPlanning, 0, line.length - 2);
 
                     staff.addEmployee(new Employee(line[0], line[1], tempPlanning));
                 }
@@ -163,8 +156,6 @@ public class FileImporter {
         } catch (Exception e) {
             System.err.println("fileToStaff failed");
             staff.setIfFileImportFailed(true);
-        } finally {
-            csvReader.close();
         }
     }
 }

@@ -1,6 +1,5 @@
 package org.antogautjean.Controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,17 +18,15 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
 
     @Override
     public boolean getIfFileImportFailed() {
-        return this.fileImportFailed;
+        return !this.fileImportFailed;
     }
 
-    public boolean addEmployee(Employee employee) {
+    public void addEmployee(Employee employee) {
         // tester si le produit existe deja dans la base de donnÃ©e
         try {
             this.staff.put(employee.getCode(), employee);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -63,14 +60,14 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
     }
 
     public String toString() {
-        String output = "Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)\n";
+        StringBuilder output = new StringBuilder("Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)\n");
         for (Employee e : this.staff.values()) {
-            output += e.toString();
+            output.append(e.toString());
         }
-        return output;
+        return output.toString();
     }
 
-    public StaffController clone() {
+    public StaffController clone() throws CloneNotSupportedException {
         StaffController s = new StaffController();
         for (Employee employee : this.staff.values()) {
             s.addEmployee(employee.clone());
@@ -93,7 +90,6 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
             for (int i = 0; i < e.getPlanning().length; i++) {
                 System.out.print(e.getPlanning()[i] + " ");
             }
-            System.out.println("");
         }
     }
 
@@ -120,7 +116,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
     }
 
     @Override
-    public void refreshFromFile() throws IOException {
+    public void refreshFromFile() {
         this.staff = new HashMap<>();
         FileImporter.fileToStaff(this);
     }

@@ -15,7 +15,7 @@ public class DefaultTab {
     }
 
     public boolean getIfRenderedCorrectly() {
-        return this.ifRenderedCorrectly;
+        return !this.ifRenderedCorrectly;
     }
 
     protected JComponent notFoundDesign() {

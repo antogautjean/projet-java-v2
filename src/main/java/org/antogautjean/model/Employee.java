@@ -65,9 +65,8 @@ public class Employee {
 				+ "]";
 	}
     
-    public Employee clone() {
-        Employee e = new Employee(this.code, this.qualification, this.planning);
-        return e;
+    public Employee clone() throws CloneNotSupportedException {
+		return (Employee) super.clone();
     }
 	
     

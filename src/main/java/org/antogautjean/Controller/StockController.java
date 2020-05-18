@@ -23,17 +23,15 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
 
     @Override
     public boolean getIfFileImportFailed() {
-        return this.fileImportFailed;
+        return !this.fileImportFailed;
     }
 
-    public boolean addProduct(Product product) {
+    public void addProduct(Product product) {
         // tester si le produit existe deja dans la base de donnée
         try {
             this.stock.put(product.getCode(), product);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -79,7 +77,7 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
     }
 
     public Double getSellValue() {
-        Double output = 0.0;
+        double output = 0.0;
         for (Product product : this.stock.values()) {
             if (product.getSellPrice() != null) {
                 output += product.getSellPrice() * product.getQuantity();
@@ -89,7 +87,7 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
     }
 
     public Double getToBuyValue() {
-        Double output = 0.0;
+        double output = 0.0;
         for (Product product : this.stock.values()) {
             if (product.getBuyPrice() != null) {
                 output += product.getBuyPrice() * product.getQuantityToBuy();

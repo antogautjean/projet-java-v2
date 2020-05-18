@@ -1,31 +1,19 @@
 package org.antogautjean.view.tabs;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Vector;
+import org.antogautjean.Controller.StaffController;
+import org.antogautjean.view.components.CustomJTable;
+import org.antogautjean.view.components.StaffTableModel;
+import org.antogautjean.view.components.TableRowFormatInterface;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
-import org.antogautjean.Controller.StaffController;
-import org.antogautjean.view.components.CustomJTable;
-import org.antogautjean.view.components.StaffTableModel;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Vector;
 
 public class StaffTab extends DefaultTab implements TabInterface {
 
@@ -110,7 +98,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
-            int[] selectedRows = new int[0];
+            int[] selectedRows;
             if (cjt.getSelectedColumn() == 0) {
                 selectedRows = cjt.getSelectedRows();
                 System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
@@ -119,14 +107,10 @@ public class StaffTab extends DefaultTab implements TabInterface {
 
         final ListSelectionModel columnListSelectionModel = cjt.getColumnModel().getSelectionModel();
         columnListSelectionModel.addListSelectionListener(e -> {
-            int[] selectedRows = new int[0];
 
             if (cjt.getSelectedColumn() != 0) {
                 cjt.clearSelection();
                 System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
-                for (int selectedRow : selectedRows) {
-                    cjt.getSelectionModel().addSelectionInterval(selectedRow, selectedRow);
-                }
                 System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });
@@ -138,11 +122,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
     }
 
     public boolean isControllerFresh() {
-        try {
-            this.staffCtrl.refreshFromFile();
-        } catch (IOException e) {
-            return false;
-        }
-        return !this.staffCtrl.getIfFileImportFailed();
+        this.staffCtrl.refreshFromFile();
+        return this.staffCtrl.getIfFileImportFailed();
     }
 }

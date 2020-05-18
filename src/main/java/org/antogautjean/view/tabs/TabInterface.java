@@ -3,10 +3,10 @@ package org.antogautjean.view.tabs;
 import javax.swing.JComponent;
 
 public interface TabInterface {
-    public JComponent getComponent();
+    JComponent getComponent();
 
-    public String getTabTitle();
+    String getTabTitle();
 
-    public void setIfRenderedCorrectly(boolean ifRendered);
-    public boolean getIfRenderedCorrectly();
+    void setIfRenderedCorrectly(boolean ifRendered);
+    boolean getIfRenderedCorrectly();
 }

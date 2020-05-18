@@ -8,8 +8,8 @@ public class ProductionLine {
     // attributs CSV
     private String code;
     private String name;
-    private HashMap<String, Integer> inputs = new HashMap<>();
-    private HashMap<String, Integer> outputs = new HashMap<>();
+    private HashMap<String, Integer> inputs;
+    private HashMap<String, Integer> outputs;
 
     // attributs CSV non utilisés dans la version de base
     private Integer time;

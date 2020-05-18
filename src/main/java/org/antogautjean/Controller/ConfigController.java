@@ -15,7 +15,7 @@ public class ConfigController
     protected static OutputStream output;
     protected static Properties prop;
 
-    public static void setConfigFilePath(String configFilePath) throws Exception {
+    public static void setConfigFilePath(String configFilePath) {
         try {
             File f = new File(configFilePath);
             if (!f.exists()) {

@@ -7,7 +7,6 @@ import javax.swing.table.DefaultTableModel;
 public class StaffTableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("rawtypes")
     public StaffTableModel(Vector<? extends Vector> v1, Vector<?> v2){
         super(v1, v2);
     }

@@ -10,15 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -26,10 +18,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.antogautjean.Controller.FactoryController;
 import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.components.CustomJTable;
-import org.antogautjean.view.components.TableCellRenderer;
-import org.antogautjean.view.components.TableModel;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import org.antogautjean.view.components.*;
 
 public class FactoryTab extends DefaultTab implements TabInterface {
     protected StockController stockCtrl;
@@ -77,8 +66,8 @@ public class FactoryTab extends DefaultTab implements TabInterface {
             JPanel indicatorsPanel = new JPanel();
             configIndicatiorsTable(indicatorsPanel);
 
-            configPanel(this.stockTable, this.stockTableModel, (TableRowFormatInterface) this.stockCtrl);
-            configPanel(this.linesTable, this.linesTableModel, (TableRowFormatInterface) this.factoryCtrl);
+            configPanel(this.stockTable, this.stockTableModel, this.stockCtrl);
+            configPanel(this.linesTable, this.linesTableModel, this.factoryCtrl);
 
             JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
             SLsplitPane.setResizeWeight(.5);
@@ -116,21 +105,19 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         orders.setStringPainted(true);
 
         Label order = new Label("Indicateur de valeurs (Commande satisfaites)");
+        Label value = new Label("Indicateur de commandes (Valeur totale du stock vendable)");
+        Label total = new Label("1500€");
+
         order.setFont(font);
+        value.setFont(font);
+        total.setFont(font2);
 
         JPanel a = new JPanel();
-        // a.setBackground(Color.GRAY);
+        JPanel b = new JPanel();
+
         a.add(order);
         a.add(orders);
 
-        Label value = new Label("Indicateur de commandes (Valeur totale du stock vendable)");
-        Label total = new Label("1500€");
-        total.setFont(font2);
-
-        value.setFont(font);
-
-        JPanel b = new JPanel();
-        // b.setBackground(Color.GRAY);
         b.add(value);
         b.add(total);
 
@@ -138,26 +125,6 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         indicatorsPanel.add(a);
         indicatorsPanel.add(b);
 
-        // table_jt.setBounds(30,40,200,300);
-        // JScrollPane scrollPane = new JScrollPane();
-        // scrollPane.setViewportView(table);
-
-        // indicatorsPanel.add(table);
-
-    }
-
-    class CustomPanel extends JPanel {
-        private static final long serialVersionUID = 1L;
-
-        public CustomPanel(Color backGroundColour) {
-            setOpaque(true);
-            setBackground(backGroundColour);
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            return (new Dimension(200, 150));
-        }
     }
 
     @Override
@@ -180,8 +147,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)),
-                new int[] { 3 });
+        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)), new int[] { 3 });
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
         this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
@@ -236,6 +202,6 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         } catch (IOException e) {
             return false;
         }
-        return !this.factoryCtrl.getIfFileImportFailed() && !this.stockCtrl.getIfFileImportFailed();
+        return this.factoryCtrl.getIfFileImportFailed() && this.stockCtrl.getIfFileImportFailed();
     }
 }
