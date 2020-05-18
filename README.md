@@ -24,6 +24,7 @@ Technique
 
 Dossier technique
 --
+> https://github.com/antogautjean/projet-java-v2
 
 Conception MVC
 --
@@ -70,11 +71,12 @@ SUGGESTION APRES BUILDED
       └─────────────── 
 ```
 Lancer l'application
-```
-java -jar projet-java-v2.jar
-```
 
-Architechture
+1) ```java -jar projet-java-v2.jar```
+2) Dans l'onlget paramètre, ajouter les fichier CSV
+
+Architechture Utilisateur
+--
 
 L'application est constituée de 3 onglets:
 * Le premier:    
