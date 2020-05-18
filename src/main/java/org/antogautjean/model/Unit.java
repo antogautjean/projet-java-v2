@@ -1,5 +1,8 @@
 package org.antogautjean.model;
 
+/**
+ * Enumération des différentes unités de mesures
+ */
 public enum Unit {
 
     KG("kg"),
@@ -18,6 +21,12 @@ public enum Unit {
         return unitType;
     }
 
+    /**
+     * Permet de transformer un String en Unit
+     * @param unit Un string
+     * @return L'unité sous la forme Unit
+     * @throws Exception L'unité n'existes pas
+     */
     public static Unit strToUnit(String unit) throws Exception{
 
             switch (unit){

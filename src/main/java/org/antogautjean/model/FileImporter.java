@@ -10,6 +10,9 @@ import org.antogautjean.controller.FactoryController;
 import org.antogautjean.controller.StaffController;
 import org.antogautjean.controller.StockController;
 
+/**
+ * Classe permetant l'import des différents fichiers csv.
+ */
 public class FileImporter {
     protected static final String elements_csv_header = "Code;Nom;Quantite;unite";
     protected static final String prix_csv_header = "Code;achat;vente;Demande";
@@ -19,6 +22,11 @@ public class FileImporter {
             + "9H;10H;11H;12H;13H;14H;15H;16H;17H;18H;19H;20H;21H;22H;23H";
     protected static final Exception fileWrongCSVFormat = new Exception("Le fichier n'est pas au format attendu");
 
+    /**
+     * Permet l'import d'un fichier csv vers un StockController
+     * @param stock Le StockController
+     * @throws IOException Si l'import ne marche pas
+     */
     public static void fileToStock(StockController stock) throws IOException {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         stock.setIfFileImportFailed(false);
@@ -88,6 +96,12 @@ public class FileImporter {
         }
     }
 
+    /**
+     * Permet de passer une chaine de caractère de la forme csv vers une hashmap
+     * @param input
+     * @return Une Hashmap
+     * @throws IndexOutOfBoundsException
+     */
     private static HashMap<String, Integer> stringToHashMap(String input) throws IndexOutOfBoundsException {
         HashMap<String, Integer> output = new HashMap<>();
         String[] inputs = input.substring(1, input.length() - 1).split("\\),\\(");
@@ -99,6 +113,11 @@ public class FileImporter {
         return output;
     }
 
+    /**
+     * Permet l'import d'un fichier csv vers un FactoryController et un StockController
+     * @param factory
+     * @param stockController
+     */
     public static void fileToFactory(FactoryController factory, StockController stockController) {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         factory.setIfFileImportFailed(false);
@@ -128,6 +147,10 @@ public class FileImporter {
 
     }
 
+    /**
+     * Permet l'import d'un fichier vers un StaffController
+     * @param staff
+     */
     public static void fileToStaff(StaffController staff) {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         staff.setIfFileImportFailed(false);

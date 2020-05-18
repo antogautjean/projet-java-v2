@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import org.antogautjean.controller.FactoryController;
 
+/**
+ * Classe représentant une ligne de production
+ */
 public class ProductionLine {
     // attributs CSV
     private String code;
@@ -20,6 +23,16 @@ public class ProductionLine {
     private Integer activationLevel;
     private FactoryController factory;
 
+    /**
+     *
+     * @param code Code de la ligne de production
+     * @param name Nom de la ligne de production
+     * @param inputs Entrées de la ligne de production
+     * @param outputs Sorties de la ligne de production
+     * @param time Temps que prends la  ligne de prodution pour transformer les inputs en outpouts
+     * @param staffAmountNOTqualified Nombre de personnel non qualifié nécessaire
+     * @param staffAmountQualified Nombre de personnel qualifié nécessaire
+     */
     public ProductionLine(String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
             Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified) {
         this.code = code;
@@ -33,31 +46,61 @@ public class ProductionLine {
         this.activationLevel = 1;
     }
 
+
     // Getters standards
+
+    /**
+     * Permet d'obtenir le code de la ligne de production
+     * @return le code
+     */
     public String getCode() {
         return this.code;
     }
 
+    /**
+     * Permet d'obtenir le nom de la ligne de production
+     * @return le nom
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Permet d'obtenir le temps d'execution de la ligne de production
+     * @return le temps que prends la chaine de production pour s'executer
+     */
     public Integer getTime() {
         return this.time;
     }
 
+    /**
+     * Permet d'obtenir le nombre de personnel non qualifié nécessaire à l'execution de la ligne de production
+     * @return Le nombre de personnel non qualifié necessaire
+     */
     public Integer getStaffAmountNOTqualified() {
         return this.staffAmountNOTqualified;
     }
 
+    /**
+     * Permet d'obtenir le nombre de personnel qualifié necessaire à l'execution de la ligne de production
+     * @return Le nombre de personnel qualifié necessaire
+     */
     public Integer getStaffAmountQualified() {
         return this.staffAmountQualified;
     }
 
+    /**
+     * Permet d'obtenir le niveau d'activation de la ligne de production
+     * @return le niveau d'activation de la ligne de production
+     */
     public Integer getActivationLevel() {
         return this.activationLevel;
     }
 
+    /**
+     * Permet d'obtenir la liste des produits nécessaire en entré de la ligne de production
+     * @return La liste des produits en entré necessaire
+     */
     public String[] getInputList() {
         String[] output = new String[this.inputs.size()];
         int i = 0;
@@ -67,6 +110,10 @@ public class ProductionLine {
         return output;
     }
 
+    /**
+     * Permet d'obtenir la liste des produits en sortie de la ligne de production
+     * @return La liste des produits en sortie necessaire
+     */
     public String[] getOutputList() {
         String[] output = new String[this.outputs.size()];
         int i = 0;
@@ -77,9 +124,14 @@ public class ProductionLine {
     }
 
     // Setter
+
+    /**
+     * @param factory
+     */
     public void setFactory(FactoryController factory) {
         this.factory = factory;
     }
+
 
     // Autres fonctions
     public HashMap<String, Integer> getMissingIngredients() {

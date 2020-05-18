@@ -1,7 +1,7 @@
 package org.antogautjean.model;
 
 /**
- * ProductionLineState
+ * ProductionLineState représentes les différents état d'une chaine de production
  */
 public enum ProductionLineState {
     POSSIBLE, IMPOSSIBLE, NONE
