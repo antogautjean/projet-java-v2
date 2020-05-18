@@ -121,7 +121,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
 
         Label order = new Label("Indicateur de commandes (Commande satisfaites)");
         Label value = new Label("Indicateur de valeurs (Valeur totale du stock vendable - achats)");
-        Label total = new Label("1500€");
+        Label total = new Label("0.0 € (valeur indisponible)");
 
         order.setFont(font);
         value.setFont(font);
@@ -231,7 +231,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
      * Permet de configurer l'affichage du panneau du stock
      */
     public void configStockPanel() {
-        configPanel(this.stockTable, this.stockTableModel, new StockMetaController(this.stockCtrl));
+        configPanel(this.stockTable, this.stockTableModel, new StockMetaController(this.stockCtrl, this.factoryCtrl));
     }
 
     /**

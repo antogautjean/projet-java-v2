@@ -3,25 +3,27 @@ package org.antogautjean.model;
 import java.util.HashMap;
 
 import org.antogautjean.controller.FactoryController;
+import org.antogautjean.controller.StockController;
 
 /**
  * Classe représentant une ligne de production
  */
 public class ProductionLine {
     // attributs CSV
-    private String code;
-    private String name;
-    private HashMap<String, Integer> inputs;
-    private HashMap<String, Integer> outputs;
+    protected String code;
+    protected String name;
+    protected HashMap<String, Integer> inputs;
+    protected HashMap<String, Integer> outputs;
 
     // attributs CSV non utilisés dans la version de base
-    private Integer time;
-    private Integer staffAmountNOTqualified;
-    private Integer staffAmountQualified;
+    protected Integer time;
+    protected Integer staffAmountNOTqualified;
+    protected Integer staffAmountQualified;
 
     // attributs supplémentaires
-    private Integer activationLevel;
-    private FactoryController factory;
+    protected Integer activationLevel;
+    protected FactoryController factory;
+    protected ProductionLineState state = ProductionLineState.NONE;
 
     /**
      *
@@ -167,18 +169,12 @@ public class ProductionLine {
         return quantitiesDemanded;
     }
 
+    public void setState(ProductionLineState state) {
+        this.state = state;
+    }
+
     public ProductionLineState getState() {
-        if (this.activationLevel > 0) {
-            HashMap<String, Integer> inputNeeds = this.getInputNeeds();
-            for (HashMap.Entry<String, Integer> produit : inputNeeds.entrySet()) {
-                if (this.factory.getStockController().getProduct(produit.getKey()).getQuantity() < produit.getValue()) {
-                    return ProductionLineState.IMPOSSIBLE;
-                }
-            }
-            return ProductionLineState.POSSIBLE;
-        } else {
-            return ProductionLineState.NONE;
-        }
+        return this.activationLevel > 0 ? this.state : ProductionLineState.NONE;
     }
 
     @Override
