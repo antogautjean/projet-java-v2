@@ -42,6 +42,10 @@ public class App {
         StockController stock = new StockController();
         FactoryController factory = new FactoryController();
         StaffController staff = new StaffController();
+        
+        FileImporter.fileToStock(stock);
+        FileImporter.fileToFactory(factory, stock);
+        FileImporter.fileToStaff(staff);
 
         if (isUIVisible) {
             try {
