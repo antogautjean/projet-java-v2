@@ -1,4 +1,4 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.spinnercell;
 
 import org.antogautjean.controller.ControllerFromFileInterface;
 import org.antogautjean.controller.StockController;

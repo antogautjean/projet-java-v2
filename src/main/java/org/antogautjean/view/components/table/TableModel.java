@@ -1,7 +1,7 @@
 package org.antogautjean.view.components.table;
 
 import org.antogautjean.view.components.CheckboxCell;
-import org.antogautjean.view.components.QuantityToBuySpinnerCell;
+import org.antogautjean.view.components.spinnercell.SpinnerCell;
 
 import java.util.Vector;
 
@@ -25,7 +25,7 @@ public class TableModel extends DefaultTableModel {
 
                 Integer val = (Integer) localObject;
 
-                ((QuantityToBuySpinnerCell) obj).getSpinner().setValue(val);
+                ((SpinnerCell) obj).getSpinner().setValue(val);
             } else if (localObject instanceof Boolean) {
 
                 Boolean val = (Boolean) localObject;

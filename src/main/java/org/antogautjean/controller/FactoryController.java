@@ -7,8 +7,7 @@ import javax.swing.SpinnerNumberModel;
 
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.ProductionLine;
-import org.antogautjean.view.components.ActivationLevelSpinnerCell;
-import org.antogautjean.view.components.QuantityToBuySpinnerCell;
+import org.antogautjean.view.components.spinnercell.ActivationLevelSpinnerCell;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class FactoryController implements TableRowFormatInterface, ControllerFromFileInterface {
@@ -100,7 +99,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             //MetaControllerInterface metaLines = (MetaControllerInterface) new FactoryMetaController();//TODO: mettre this.factory
 
             output[linesOrder] = new Object[] {
-                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel((linesOrder + 1), 1, Integer.MAX_VALUE, 1)), line.getCode()),
+                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), line.getCode()),
                     line.getCode(),
                     line.getName(),
                     String.join("\n", line.getOutputList()),
