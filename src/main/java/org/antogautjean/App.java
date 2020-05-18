@@ -31,10 +31,9 @@ public class App {
         System.out.println("starting : OK");
 
         // IMPORTANT
-        try{
+        try {
             ConfigController.setConfigFilePath("settings.properties");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("settings.properties is needed");
         }
 
@@ -44,24 +43,16 @@ public class App {
         FactoryController factory = new FactoryController();
         StaffController staff = new StaffController();
 
-        try {
-            FileImporter.fileToStock(stock);
-            FileImporter.fileToFactory(factory, stock);
-            FileImporter.fileToStaff(staff);
-
-            if (isUIVisible) {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    System.err.println("Attention: setLookAndFeel ne fonctionne pas");
-                }
-                new HomeView(stock, factory, staff);
-                System.out.println("Runing with UI");
-            } else {
-                System.out.println("Runing with NO UI");
+        if (isUIVisible) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                System.err.println("Attention: setLookAndFeel ne fonctionne pas");
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            new HomeView(stock, factory, staff);
+            System.out.println("Runing with UI");
+        } else {
+            System.out.println("Runing with NO UI");
         }
     }
 }

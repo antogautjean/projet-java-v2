@@ -27,13 +27,13 @@ public class ConfigController
             File f = new File(configFilePath);
             if (!f.exists()) {
                 if(f.createNewFile()){
-                    System.out.println("File created: " + f.getName());
                     FileWriter myWriter = new FileWriter(configFilePath);
                     myWriter.write("stockFile=\n");
                     myWriter.write("pricesFile=\n");
                     myWriter.write("linesFile=\n");
                     myWriter.write("staffFile=");
                     myWriter.close();
+                    System.out.println("File created: " + configFilePath);
                 }else {
                     System.out.println("File already exists.");
                 }

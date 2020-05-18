@@ -3,7 +3,6 @@ package org.antogautjean.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 
 import org.antogautjean.controller.ConfigController;
 import org.antogautjean.controller.FactoryController;
@@ -24,17 +23,18 @@ public class FileImporter {
 
     /**
      * Permet l'import d'un fichier csv vers un StockController
+     * 
      * @param stock Le StockController
      * @throws IOException Si l'import ne marche pas
      */
-    public static void fileToStock(StockController stock) throws IOException {
+    public static void fileToStock(StockController stock) {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         stock.setIfFileImportFailed(false);
         // Products
 
         String row;
-        try {
-            BufferedReader csvReader = new BufferedReader(new java.io.FileReader(ConfigController.getProperty("stockFile")));
+        try (BufferedReader csvReader = new BufferedReader(
+                new java.io.FileReader(ConfigController.getProperty("stockFile")))) {
 
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
@@ -60,10 +60,10 @@ public class FileImporter {
         }
 
         // If import didn't failed, then try with the second file
-        if (stock.getIfFileImportFailed()) {
+        if (!stock.getIfFileImportFailed()) {
             // Prices
-            BufferedReader csvReader = new BufferedReader(new java.io.FileReader(ConfigController.getProperty("pricesFile")));
-            try {
+            try (BufferedReader csvReader = new BufferedReader(
+                    new java.io.FileReader(ConfigController.getProperty("pricesFile")))) {
                 // Vérifier si la première ligne du fichier CSV est au bon format
                 row = csvReader.readLine();
                 if (!row.contains(prix_csv_header)) {
@@ -88,15 +88,13 @@ public class FileImporter {
             } catch (Exception e) {
                 System.err.println("fileToStock failed");
                 stock.setIfFileImportFailed(true);
-            } finally {
-                csvReader.close();
             }
-
         }
     }
 
     /**
      * Permet de passer une chaine de caractère de la forme csv vers une hashmap
+     * 
      * @param input
      * @return Une Hashmap
      * @throws IndexOutOfBoundsException
@@ -113,7 +111,9 @@ public class FileImporter {
     }
 
     /**
-     * Permet l'import d'un fichier csv vers un FactoryController et un StockController
+     * Permet l'import d'un fichier csv vers un FactoryController et un
+     * StockController
+     * 
      * @param factory
      * @param stockController
      */
@@ -148,6 +148,7 @@ public class FileImporter {
 
     /**
      * Permet l'import d'un fichier vers un StaffController
+     * 
      * @param staff
      */
     public static void fileToStaff(StaffController staff) {
