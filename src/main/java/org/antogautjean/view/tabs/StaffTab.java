@@ -1,25 +1,38 @@
 package org.antogautjean.view.tabs;
 
-import org.antogautjean.controller.StaffController;
-import org.antogautjean.view.components.table.CustomJTable;
-import org.antogautjean.view.components.table.StaffTableModel;
-import org.antogautjean.view.components.table.TableRowFormatInterface;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.Arrays;
+import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Vector;
+
+import org.antogautjean.controller.StaffController;
+import org.antogautjean.view.components.table.CustomJTable;
+import org.antogautjean.view.components.table.StaffTableCellRenderer;
+import org.antogautjean.view.components.table.StaffTableModel;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class StaffTab extends DefaultTab implements TabInterface {
 
     protected StaffController staffCtrl;
     protected CustomJTable staffTable;
     protected DefaultTableModel staffTableModel;
+    protected StaffTableCellRenderer staffCellRenderer;
 
     DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
         private static final long serialVersionUID = 1L;
@@ -42,8 +55,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
         if (isControllerFresh()) {
             final String[] staffColumns = new String[] { "Code", "Qualification", "0H", "1H", "2H", "3H", "4H", "5H",
                     "6H", "7H", "8H", "9H", "10H", "11H", "12H", "13H", "14H", "15H", "16H", "17H", "18H", "19H", "20H",
-                    "21H", "22H", "23H", "24H", "25H", "26H", "27H", "28H", "29H", "30H", "31H", "32H", "33H", "34H",
-                    "35H" };
+                    "21H", "22H", "23H", "24H", "25H", "26H", "27H", "28H", "29H", "30H", "31H", "32H", "33H", "34H" };
 
             JPanel staffPanel = new JPanel();
             configStaffTable(staffPanel, staffColumns);
@@ -66,6 +78,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
 
     // Stock Table
     private void configStaffTable(JPanel panel, String[] staffColumns) {
+        this.staffCellRenderer = new StaffTableCellRenderer(this.staffCtrl);
         configJPanel(panel);
 
         Font font = new Font("Arial", Font.BOLD, 14);
@@ -77,15 +90,18 @@ public class StaffTab extends DefaultTab implements TabInterface {
         this.staffTable = new CustomJTable(staffTableModel);
         this.staffTable.setRowHeight(30);
         this.staffTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         TableColumnModel columnModel = this.staffTable.getColumnModel();
-        this.staffTable.setDefaultRenderer(Object.class, this.cellRenderer);
+        this.staffTable.setDefaultRenderer(Object.class, this.staffCellRenderer);
 
         JScrollPane scrollPanel = new JScrollPane(this.staffTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         columnModel.getColumn(0).setMaxWidth(50);
         columnModel.getColumn(1).setPreferredWidth(100);
+
+        for (int nbCo = 2; nbCo < 37; nbCo++) {
+            columnModel.getColumn(nbCo).setMaxWidth(40);
+        }
 
         panel.add(scrollPanel);
     }
@@ -98,7 +114,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface staff) {
         cjt.getTableHeader().setReorderingAllowed(true);
         cjt.getSelectionModel().addListSelectionListener(arg0 -> {
-            int[] selectedRows;
+            int[] selectedRows = new int[0];
             if (cjt.getSelectedColumn() == 0) {
                 selectedRows = cjt.getSelectedRows();
                 System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
@@ -107,10 +123,14 @@ public class StaffTab extends DefaultTab implements TabInterface {
 
         final ListSelectionModel columnListSelectionModel = cjt.getColumnModel().getSelectionModel();
         columnListSelectionModel.addListSelectionListener(e -> {
+            int[] selectedRows = new int[0];
 
             if (cjt.getSelectedColumn() != 0) {
                 cjt.clearSelection();
                 System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
+                for (int selectedRow : selectedRows) {
+                    cjt.getSelectionModel().addSelectionInterval(selectedRow, selectedRow);
+                }
                 System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });

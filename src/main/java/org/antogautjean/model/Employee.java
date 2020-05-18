@@ -3,9 +3,9 @@ package org.antogautjean.model;
 import java.util.Arrays;
 
 public class Employee {
-    private String code;
-    private String qualification;
-    private String[] planning;
+	private String code;
+	private String qualification;
+	private String[] planning;
 
 	public Employee(String code, String qualification, String[] planning) {
 		this.code = code;
@@ -48,8 +48,8 @@ public class Employee {
 		return planning;
 	}
 
-	public String getPlanningOn(int i){
-		return planning[i];
+	public String getPlanningOn(int i) {
+		return this.planning[i];
 	}
 
 	/**
@@ -59,17 +59,13 @@ public class Employee {
 		this.planning = planning;
 	}
 
-	
 	public String toString() {
 		return "Employee [code=" + code + ", qualification=" + qualification + ", planning=" + Arrays.toString(planning)
 				+ "]";
 	}
-    
-    public Employee clone() throws CloneNotSupportedException {
-		return (Employee) super.clone();
-    }
-	
-    
 
-
+	public Employee clone() {
+		Employee e = new Employee(this.code, this.qualification, this.planning);
+		return e;
+	}
 }
