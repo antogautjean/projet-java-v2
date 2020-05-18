@@ -108,7 +108,11 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
                     employee.getPlanningOn(12), employee.getPlanningOn(13), employee.getPlanningOn(14),
                     employee.getPlanningOn(15), employee.getPlanningOn(16), employee.getPlanningOn(17),
                     employee.getPlanningOn(18), employee.getPlanningOn(19), employee.getPlanningOn(20),
-                    employee.getPlanningOn(21), employee.getPlanningOn(22), employee.getPlanningOn(23) };
+                    employee.getPlanningOn(21), employee.getPlanningOn(22), employee.getPlanningOn(23),
+                    employee.getPlanningOn(24), employee.getPlanningOn(25), employee.getPlanningOn(26),
+                    employee.getPlanningOn(27), employee.getPlanningOn(28), employee.getPlanningOn(29),
+                    employee.getPlanningOn(30), employee.getPlanningOn(31), employee.getPlanningOn(32),
+                    employee.getPlanningOn(33), employee.getPlanningOn(34)};
             employeeIndex++;
         }
 
