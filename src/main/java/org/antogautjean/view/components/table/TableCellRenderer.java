@@ -72,19 +72,19 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
         }
 
         // Dans le cas de la partie Factory on a un truc custom
-        if (this.factoryCtrl != null) {
-            if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString()
-                    .equals("Etat de la chaîne")
-                    && factoryCtrl.getProductionLine(this.orderedKeys[row])
-                            .getState() == ProductionLineState.IMPOSSIBLE) {
-                setForeground(Color.WHITE);
-                if (isSelected) {
-                    setBackground(Color.decode("#B30000"));
-                } else {
-                    setBackground(Color.decode("#FF3333"));
-                }
-            }
-        }
+        // if (this.factoryCtrl != null) {
+        //     if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString()
+        //             .equals("Etat de la chaîne")
+        //             && factoryCtrl.getProductionLine(this.orderedKeys[row])
+        //                     .getState() == ProductionLineState.IMPOSSIBLE) {
+        //         setForeground(Color.WHITE);
+        //         if (isSelected) {
+        //             setBackground(Color.decode("#B30000"));
+        //         } else {
+        //             setBackground(Color.decode("#FF3333"));
+        //         }
+        //     }
+        // }
 
         return this;
     }

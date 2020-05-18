@@ -92,7 +92,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             }
             switch (line.getState()) {
                 case IMPOSSIBLE:
-                    lineState = "<html>Production impossible<br>(il manque des ressources)</html>";
+                    lineState = "<html><span color=\"red\">Production impossible<br>(il manque des ressources)</span></html>";
                     break;
                 case POSSIBLE:
                     lineState = "Production possible";
