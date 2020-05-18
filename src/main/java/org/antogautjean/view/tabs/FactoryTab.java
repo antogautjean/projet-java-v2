@@ -72,7 +72,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
             configPanel(this.stockTable, this.stockTableModel, this.stockCtrl);
             configPanel(this.linesTable, this.linesTableModel, this.factoryCtrl);
 
-            JSplitPane SLsplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, stockPanel, linesPanel);
+            JSplitPane SLsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, stockPanel, linesPanel);
             SLsplitPane.setResizeWeight(.5);
 
             JSplitPane SLIsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SLsplitPane, indicatorsPanel);

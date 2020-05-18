@@ -1,7 +1,8 @@
-package org.antogautjean.controller.meta;
+package org.antogautjean.controller;
 
 import org.antogautjean.controller.StockController;
 import org.antogautjean.model.Product;
+import org.antogautjean.view.HomeView;
 
 /**
  * MetaStockController

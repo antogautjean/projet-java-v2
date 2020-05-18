@@ -1,8 +1,6 @@
 package org.antogautjean.view.components;
 
-import org.antogautjean.controller.meta.MetaControllerInterface;
-import org.antogautjean.controller.meta.StockMetaController;
-
+import org.antogautjean.controller.StockMetaController;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.EventObject;
@@ -21,13 +19,13 @@ public class SpinnerCell extends AbstractCellEditor implements TableCellEditor, 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
 
-    public SpinnerCell(JSpinner showSpinner, String code, String className, MetaControllerInterface metaController) {
+    public SpinnerCell(JSpinner showSpinner, String code, String className, StockMetaController metaController) {
 
         ChangeListener listener = new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 JSpinner s = (JSpinner) e.getSource();
                 System.out.println(className + " " + code + " " + s.getValue());
-                //metaController.getRealProduct(code).setQuantityToBuy(Integer.parseInt((String) s.getValue())); //TODO: à corriger avec l'interface
+                metaController.getProductAfterCalculation(code).setQuantityToBuy(Integer.parseInt(s.getValue().toString()));
             }
         };
 

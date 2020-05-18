@@ -7,8 +7,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-import org.antogautjean.controller.meta.MetaControllerInterface;
-import org.antogautjean.controller.meta.StockMetaController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
 import org.antogautjean.view.components.SpinnerCell;
@@ -120,7 +118,8 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
                 new SpinnerCell(new JSpinner(quantity2buy_spinnerModel), product.getCode(), this.getClass().getName(), metaStock),
                 prevision,
                 product.getQuantity() + product.getQuantityToBuy(),
-                product.getQuantity() - product.getQuantityToBuy() };
+                product.getQuantity() - product.getQuantityToBuy()
+            };
             productIndex++;
         }
 

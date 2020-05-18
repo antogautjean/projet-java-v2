@@ -5,9 +5,6 @@ import java.util.HashMap;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import org.antogautjean.controller.meta.FactoryMetaController;
-import org.antogautjean.controller.meta.MetaControllerInterface;
-import org.antogautjean.controller.meta.StockMetaController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.ProductionLine;
 import org.antogautjean.view.components.SpinnerCell;
