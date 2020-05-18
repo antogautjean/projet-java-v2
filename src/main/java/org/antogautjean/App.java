@@ -11,8 +11,14 @@ import org.antogautjean.controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
 
+/**
+ * Classe principale permettant le lancement de l'application
+ */
 public class App {
 
+    /**
+     * Fonction principale permettant le lancement de l'application
+     */
     public static void main(String[] args) throws Exception {
         // init depending of args
         boolean isUIVisible = true;
