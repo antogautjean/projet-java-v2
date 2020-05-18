@@ -1,18 +1,18 @@
-#Projet L3 MIAGE 
+
+Projet L3 MIAGE
 
 Etat d'avancement
---
+
 Ce programme à pour objectif de permet à un utilisateur possédant des données de production d'une usine de les visualiser sous forme de tableau.
 Il pourra ainsi 
 
 Fonctionnalitée manquantes
---
+
 * a
 * b
 * c
 
 Difficultées
--- 
 
 Gestion de projet
 * Répartition du travail
@@ -23,11 +23,11 @@ Technique
 * Gestion des conflis GitHub 
 
 Dossier technique
---
+
 > https://github.com/antogautjean/projet-java-v2
 
 Conception MVC
---
+
 Sources
 ```
 Structure du code (src)
@@ -76,7 +76,6 @@ Lancer l'application
 2) Dans l'onlget paramètre, ajouter les fichier CSV
 
 Architechture Utilisateur
---
 
 L'application est constituée de 3 onglets:
 * Le premier:    
