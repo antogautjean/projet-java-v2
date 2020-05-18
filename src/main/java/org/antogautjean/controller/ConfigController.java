@@ -9,12 +9,19 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+/**
+ * Classe permetant de modifier les différents parametre
+ */
 public class ConfigController
 {
     protected static String configFilePath = "";
     protected static OutputStream output;
     protected static Properties prop;
 
+    /**
+     * Permet de configurer le fichier settings.properties, afin d'avoir tout les chemins des différents fichiers
+     * @param configFilePath Le chemin ou se trouves settings.properties
+     */
     public static void setConfigFilePath(String configFilePath) {
         try {
             File f = new File(configFilePath);

@@ -7,9 +7,13 @@ import org.antogautjean.model.Employee;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
+/**
+ * Classe permettant de controler un groupe d'employer
+ */
 public class StaffController implements TableRowFormatInterface, ControllerFromFileInterface {
     protected HashMap<String, Employee> staff = new HashMap<>();
     protected boolean fileImportFailed = false;
+
 
     @Override
     public void setIfFileImportFailed(boolean b) {
@@ -21,8 +25,12 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
         return !this.fileImportFailed;
     }
 
+    /**
+     * Permet d'ajouter un employé à la base de donnée
+     * @param employee
+     */
     public void addEmployee(Employee employee) {
-        // tester si le produit existe deja dans la base de donnÃ©e
+        // tester si l'employé existe deja dans la base de donnÃ©e
         try {
             this.staff.put(employee.getCode(), employee);
         } catch (Exception e) {
@@ -30,6 +38,11 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
         }
     }
 
+    /**
+     * Permet de supprimé un employé de la base de donnée en fonction de son code
+     * @param code Le code de l'employé à supprimer
+     * @return TRUE si supprimer
+     */
     public boolean deleteEmployee(String code) {
         try {
             this.staff.remove(code);
@@ -39,6 +52,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
             return false;
         }
     }
+
 
     public boolean deleteEmployee(Employee employee) {
 
@@ -67,6 +81,11 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
         return output.toString();
     }
 
+    /**
+     * Permet de cloner un Staffcontroler
+     * @return Une autre instance du StaffControler
+     * @throws CloneNotSupportedException
+     */
     public StaffController clone() throws CloneNotSupportedException {
         StaffController s = new StaffController();
         for (Employee employee : this.staff.values()) {
@@ -78,6 +97,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
     public int getNbEmployee() {
         return this.staff.size();
     }
+
 
     public void debug() {
         System.out.println(this.staff);
@@ -93,6 +113,10 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
         }
     }
 
+    /**
+     * Permet de mettre sous la forme d'un tableau les données des employés.
+     * @return
+     */
     @Override
     public Object[][] getTableLineFormat() {
         Object[][] output = new Object[staff.size()][37]; // 37 = amount of columns
@@ -119,6 +143,9 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
         return output;
     }
 
+    /**
+     * Permet de reimporter le fichier
+     */
     @Override
     public void refreshFromFile() {
         this.staff = new HashMap<>();

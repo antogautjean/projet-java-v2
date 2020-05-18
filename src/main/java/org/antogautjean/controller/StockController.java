@@ -12,6 +12,9 @@ import org.antogautjean.model.Product;
 import org.antogautjean.view.components.spinnercell.QuantityToBuySpinnerCell;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
+/**
+ * Classe permettant de controler l'ensemble du stock
+ */
 public class StockController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, Product> stock = new HashMap<>();
     protected boolean fileImportFailed = false;
@@ -26,6 +29,10 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
         return !this.fileImportFailed;
     }
 
+    /**
+     * Ajoutes un produit à l'ensemble du stock
+     * @param product Produit à ajouter
+     */
     public void addProduct(Product product) {
         // tester si le produit existe deja dans la base de donnée
         try {
@@ -35,6 +42,11 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
         }
     }
 
+    /**
+     * Supprime un produit de l'ensemble du stock
+     * @param code Code du produit à supprimer
+     * @return
+     */
     public boolean deleteProduct(String code) {
         try {
             this.stock.remove(code);
@@ -51,6 +63,11 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
 
     }
 
+    /**
+     * Permet d'obtenir un produit en fonction de son code
+     * @param code Code du produit
+     * @return
+     */
     public Product getProduct(String code) {
         try {
             return this.stock.get(code);
@@ -68,6 +85,10 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
         return "Il y a " + this.stock.size() + " produits en stock (valeur <sum> €)" ;
     }
 
+    /**
+     * Permer de clonner un StockController
+     * @return Une copie du StockController en cours
+     */
     public StockController clone() {
         StockController s = new StockController();
         for (Product product : this.stock.values()) {
@@ -96,6 +117,10 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
         return output;
     }
 
+    /**
+     * Permet d'obtenir sous forme d'un tableau à deux entrée les valeurs contenue dans la base de donnée
+     * @return
+     */
     @Override
     public Object[][] getTableLineFormat() {
         Object[][] output = new Object[stock.size()][7]; // 7 = amount of columns

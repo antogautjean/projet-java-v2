@@ -58,6 +58,10 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
         return output.toString();
     }
 
+    /**
+     * Permet de mettre sous la forme d'un tableau les données de l'usine
+     * @return
+     */
     @Override
     public Object[][] getTableLineFormat() {
         int linesOrder = 0;
