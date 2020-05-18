@@ -1,9 +1,9 @@
 package org.antogautjean.view.tabs;
 
-import org.antogautjean.Controller.StaffController;
-import org.antogautjean.view.components.CustomJTable;
-import org.antogautjean.view.components.StaffTableModel;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import org.antogautjean.controller.StaffController;
+import org.antogautjean.view.components.table.CustomJTable;
+import org.antogautjean.view.components.table.StaffTableModel;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

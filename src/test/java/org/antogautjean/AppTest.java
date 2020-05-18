@@ -1,130 +1,157 @@
 package org.antogautjean;
-
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.*;
 
-public class AppTest {
+class JTableButtonRenderer implements TableCellRenderer {
+    private TableCellRenderer __defaultRenderer;
 
-    public AppTest() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public JTableButtonRenderer(TableCellRenderer renderer) {
+        __defaultRenderer = renderer;
+    }
 
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected,
+                                                   boolean hasFocus,
+                                                   int row, int column)
+    {
+        if(value instanceof Component)
+            return (Component)value;
+        return __defaultRenderer.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+    }
+}
 
-        JFrame frame = new JFrame("JButtonTable Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+class JTableButtonModel extends AbstractTableModel {
+    private Object[][] __rows = {
+            { "One", new JButton("Button One") },
+            { "Two", new JButton("Button Two") },
+            { "Three", new JButton("Button Three") },
+            { "Four", new JButton("Button Four") }
+    };
 
-        DefaultTableModel dm = new DefaultTableModel();
-        dm.setDataVector(new Object[][]{{"button 1", "foo"},
-                {"button 2", "bar"}}, new Object[]{"Button", "String"});
+    private String[] __columns = { "Numbers", "Buttons" };
 
-        JTable table = new JTable(dm);
-        table.getColumn("Button").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Button").setCellEditor(new ButtonEditor(new JCheckBox()));
+    public String getColumnName(int column) {
+        return __columns[column];
+    }
 
+    public int getRowCount() {
+        return __rows.length;
+    }
 
-        JScrollPane scroll = new JScrollPane(table);
+    public int getColumnCount() {
+        return __columns.length;
+    }
 
-        table.setPreferredScrollableViewportSize(table.getPreferredSize());//thanks mKorbel +1 http://stackoverflow.com/questions/10551995/how-to-set-jscrollpane-layout-to-be-the-same-as-jtable
+    public Object getValueAt(int row, int column) {
+        return __rows[row][column];
+    }
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);//so buttons will fit and not be shown butto..
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
 
-        frame.add(scroll);
+    public Class getColumnClass(int column) {
+        return getValueAt(0, column).getClass();
+    }
+}
 
-        frame.pack();
-        frame.setVisible(true);
+class JTableButtonMouseListener implements MouseListener {
+    private JTable __table;
+
+    private void __forwardEventToButton(MouseEvent e) {
+        TableColumnModel columnModel = __table.getColumnModel();
+        int column = columnModel.getColumnIndexAtX(e.getX());
+        int row    = e.getY() / __table.getRowHeight();
+        Object value;
+        JButton button;
+        MouseEvent buttonEvent;
+
+        if(row >= __table.getRowCount() || row < 0 ||
+                column >= __table.getColumnCount() || column < 0)
+            return;
+
+        value = __table.getValueAt(row, column);
+
+        if(!(value instanceof JButton))
+            return;
+
+        button = (JButton)value;
+
+        buttonEvent =
+                (MouseEvent)SwingUtilities.convertMouseEvent(__table, e, button);
+        button.dispatchEvent(buttonEvent);
+        // This is necessary so that when a button is pressed and released
+        // it gets rendered properly.  Otherwise, the button may still appear
+        // pressed down when it has been released.
+        __table.repaint();
+    }
+
+    public JTableButtonMouseListener(JTable table) {
+        __table = table;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        __forwardEventToButton(e);
+    }
+
+    public void mouseEntered(MouseEvent e) {
+        __forwardEventToButton(e);
+    }
+
+    public void mouseExited(MouseEvent e) {
+        __forwardEventToButton(e);
+    }
+
+    public void mousePressed(MouseEvent e) {
+        __forwardEventToButton(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        __forwardEventToButton(e);
+    }
+}
+
+final class JTableButton extends JFrame {
+    private JTable __table;
+    private JScrollPane __scrollPane;
+
+    public JTableButton() {
+        super("JTableButton Demo");
+        TableCellRenderer defaultRenderer;
+
+        __table = new JTable(new JTableButtonModel());
+        defaultRenderer = __table.getDefaultRenderer(JButton.class);
+        __table.setDefaultRenderer(JButton.class,
+                new JTableButtonRenderer(defaultRenderer));
+        __table.setPreferredScrollableViewportSize(new Dimension(400, 200));
+        __table.addMouseListener(new JTableButtonMouseListener(__table));
+
+        __scrollPane = new JScrollPane(__table);
+        setContentPane(__scrollPane);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new AppTest();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedLookAndFeelException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+        Frame frame;
+        WindowListener exitListener;
+
+        exitListener = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                Window window = e.getWindow();
+                window.setVisible(false);
+                window.dispose();
+                System.exit(0);
             }
-        });
+        };
 
+        frame = new JTableButton();
+        frame.addWindowListener(exitListener);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
 
-class ButtonRenderer extends JButton implements TableCellRenderer {
-
-    public ButtonRenderer() {
-        setOpaque(true);
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected, boolean hasFocus, int row, int column) {
-        if (isSelected) {
-            setForeground(table.getSelectionForeground());
-            setBackground(table.getSelectionBackground());
-        } else {
-            setForeground(table.getForeground());
-            setBackground(UIManager.getColor("Button.background"));
-        }
-        setText((value == null) ? "" : value.toString());
-        return this;
-    }
-}
-
-class ButtonEditor extends DefaultCellEditor {
-
-    protected JButton button;
-    private String label;
-    private boolean isPushed;
-
-    public ButtonEditor(JCheckBox checkBox) {
-        super(checkBox);
-        button = new JButton();
-        button.setOpaque(true);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-            }
-        });
-    }
-
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value,
-                                                 boolean isSelected, int row, int column) {
-        if (isSelected) {
-            button.setForeground(table.getSelectionForeground());
-            button.setBackground(table.getSelectionBackground());
-        } else {
-            button.setForeground(table.getForeground());
-            button.setBackground(table.getBackground());
-        }
-        label = (value == null) ? "" : value.toString();
-        button.setText(label);
-        isPushed = true;
-        return button;
-    }
-
-    @Override
-    public Object getCellEditorValue() {
-        if (isPushed) {
-            JOptionPane.showMessageDialog(button, label + ": Ouch!");
-        }
-        isPushed = false;
-        return label;
-    }
-
-    @Override
-    public boolean stopCellEditing() {
-        isPushed = false;
-        return super.stopCellEditing();
-    }
-}

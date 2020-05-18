@@ -1,4 +1,4 @@
-package org.antogautjean.Controller;
+package org.antogautjean.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,10 +7,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+import org.antogautjean.controller.meta.MetaControllerInterface;
+import org.antogautjean.controller.meta.StockMetaController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.Product;
 import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class StockController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, Product> stock = new HashMap<>();
@@ -109,11 +111,13 @@ public class StockController implements TableRowFormatInterface, ControllerFromF
             SpinnerModel quantity2buy_spinnerModel = new SpinnerNumberModel(product.getQuantityToBuy().intValue(), 0, 9,
                     1);
 
+            StockMetaController metaStock = new StockMetaController(this); //TODO: passer : this.stock
+
             output[productIndex] = new Object[] {
                 product.getCode(),
                 product.getName(),
                 product.getQuantity(),
-                new SpinnerCell(new JSpinner(quantity2buy_spinnerModel)),
+                new SpinnerCell(new JSpinner(quantity2buy_spinnerModel), product.getCode(), this.getClass().getName(), metaStock),
                 prevision,
                 product.getQuantity() + product.getQuantityToBuy(),
                 product.getQuantity() - product.getQuantityToBuy() };

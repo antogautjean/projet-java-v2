@@ -1,13 +1,12 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.table;
 
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.BorderFactory;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.antogautjean.Controller.FactoryController;
+import org.antogautjean.controller.FactoryController;
 import org.antogautjean.model.ProductionLineState;
 
 public class TableCellRenderer extends DefaultTableCellRenderer {
@@ -15,6 +14,7 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 1L;
     protected FactoryController factoryCtrl;
     protected String[] orderedKeys;
+    protected JButton button = new JButton();
 
     public TableCellRenderer(FactoryController factoryCtrl) {
         this.factoryCtrl = factoryCtrl;
@@ -53,10 +53,8 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
 
         // Dans le cas de la partie Factory on a un truc custom
         if (this.factoryCtrl != null) {
-            if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue()
-                    .toString().equals("Etat de la chaîne")
-                    && factoryCtrl.getProductionLine(this.orderedKeys[row])
-                            .getState() == ProductionLineState.IMPOSSIBLE) {
+            if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString().equals("Etat de la chaîne") &&
+                    factoryCtrl.getProductionLine(this.orderedKeys[row]).getState() == ProductionLineState.IMPOSSIBLE) {
                 setForeground(Color.WHITE);
                 if (isSelected) {
                     setBackground(Color.decode("#B30000"));

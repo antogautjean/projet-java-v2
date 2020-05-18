@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
-import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StaffController;
-import org.antogautjean.Controller.StockController;
+import org.antogautjean.controller.FactoryController;
+import org.antogautjean.controller.StaffController;
+import org.antogautjean.controller.StockController;
 import org.antogautjean.view.tabs.FactoryTab;
 import org.antogautjean.view.tabs.SettingsTab;
 import org.antogautjean.view.tabs.StaffTab;

@@ -1,4 +1,4 @@
-package org.antogautjean.Controller;
+package org.antogautjean.controller;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -16,9 +16,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StockController;
-import org.antogautjean.view.components.*;
+import org.antogautjean.controller.FactoryController;
+import org.antogautjean.controller.StockController;
+import org.antogautjean.view.components.table.CustomJTable;
+import org.antogautjean.view.components.table.TableCellRenderer;
+import org.antogautjean.view.components.table.TableModel;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class FactoryTab extends DefaultTab implements TabInterface {
     protected StockController stockCtrl;
@@ -49,7 +52,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
                     "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
             final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom",
                     "Code éléments en sortie", "Niveau d'activation", "Etat de la chaîne",
-                    "Quantité produite / quantité demandée" };
+                    "Quantité produite / quantité demandée"};
 
             // Test à destination des développeurs
             if (!Arrays.asList(linesColumns).contains("Etat de la chaîne")) {
@@ -154,8 +157,12 @@ public class FactoryTab extends DefaultTab implements TabInterface {
 
         TableColumnModel columnModel = this.stockTable.getColumnModel();
         columnModel.getColumn(0).setMaxWidth(50);
-        columnModel.getColumn(1).setPreferredWidth(300);
-        columnModel.getColumn(3).setPreferredWidth(100);
+        columnModel.getColumn(1).setMinWidth(100);
+        columnModel.getColumn(2).setPreferredWidth(100);
+        columnModel.getColumn(2).setMaxWidth(150);
+        columnModel.getColumn(3).setPreferredWidth(80);
+        columnModel.getColumn(5).setPreferredWidth(100);
+        columnModel.getColumn(6).setPreferredWidth(100);
 
         topPanel.add(new JScrollPane(this.stockTable));
     }
@@ -175,12 +182,16 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         this.linesTable.setRowHeight(30);
         this.linesTable.setDefaultRenderer(Object.class, this.factoryCellRenderer);
 
+        //ButtonColumn buttonColumn = new ButtonColumn(this.linesTable, delete, 5);
+        //buttonColumn.setMnemonic(KeyEvent.VK_D);
+
         TableColumnModel columnModel = this.linesTable.getColumnModel();
         columnModel.getColumn(0).setMinWidth(120);
         columnModel.getColumn(0).setMaxWidth(120);
         columnModel.getColumn(1).setMaxWidth(50);
         columnModel.getColumn(4).setMinWidth(110);
         columnModel.getColumn(4).setMaxWidth(100);
+        columnModel.getColumn(6).setPreferredWidth(150);
 
         bottomPanel.add(new JScrollPane(this.linesTable));
     }

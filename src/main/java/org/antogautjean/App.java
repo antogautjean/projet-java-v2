@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import javax.swing.UIManager;
 
-import org.antogautjean.Controller.ConfigController;
-import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StaffController;
-import org.antogautjean.Controller.StockController;
+import org.antogautjean.controller.ConfigController;
+import org.antogautjean.controller.FactoryController;
+import org.antogautjean.controller.StaffController;
+import org.antogautjean.controller.StockController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.view.HomeView;
 

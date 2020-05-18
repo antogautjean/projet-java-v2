@@ -1,4 +1,4 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.table;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;

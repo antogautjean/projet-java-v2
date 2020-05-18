@@ -2,7 +2,7 @@ package org.antogautjean.model;
 
 import java.util.HashMap;
 
-import org.antogautjean.Controller.FactoryController;
+import org.antogautjean.controller.FactoryController;
 
 public class ProductionLine {
     // attributs CSV
@@ -17,12 +17,11 @@ public class ProductionLine {
     private Integer staffAmountQualified;
 
     // attributs supplémentaires
-    private Integer verificationOrder;
     private Integer activationLevel;
     private FactoryController factory;
 
     public ProductionLine(String code, String name, HashMap<String, Integer> inputs, HashMap<String, Integer> outputs,
-            Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified, Integer verificationOrder) {
+            Integer time, Integer staffAmountNOTqualified, Integer staffAmountQualified) {
         this.code = code;
         this.name = name;
         this.inputs = inputs;
@@ -30,7 +29,6 @@ public class ProductionLine {
         this.time = time;
         this.staffAmountNOTqualified = staffAmountNOTqualified;
         this.staffAmountQualified = staffAmountQualified;
-        this.verificationOrder = verificationOrder;
 
         this.activationLevel = 1;
     }
@@ -54,10 +52,6 @@ public class ProductionLine {
 
     public Integer getStaffAmountQualified() {
         return this.staffAmountQualified;
-    }
-
-    public Integer getVerificationOrder() {
-        return this.verificationOrder;
     }
 
     public Integer getActivationLevel() {
@@ -91,16 +85,6 @@ public class ProductionLine {
     public HashMap<String, Integer> getMissingIngredients() {
         // TODO
         return this.inputs;
-    }
-
-    public void incrementVerificationOrder() {
-        // TODO
-        this.verificationOrder++;
-    }
-
-    public void decrementVerificationOrder() {
-        // TODO
-        this.verificationOrder--;
     }
 
     public HashMap<String, Integer> getInputNeeds() {

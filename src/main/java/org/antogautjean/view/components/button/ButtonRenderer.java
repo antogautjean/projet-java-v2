@@ -1,4 +1,4 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.button;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

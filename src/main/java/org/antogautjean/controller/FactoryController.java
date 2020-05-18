@@ -1,15 +1,17 @@
-package org.antogautjean.Controller;
+package org.antogautjean.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import org.antogautjean.controller.meta.FactoryMetaController;
+import org.antogautjean.controller.meta.MetaControllerInterface;
+import org.antogautjean.controller.meta.StockMetaController;
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.ProductionLine;
 import org.antogautjean.view.components.SpinnerCell;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class FactoryController implements TableRowFormatInterface, ControllerFromFileInterface {
     private HashMap<String, ProductionLine> productionLines = new HashMap<>();
@@ -61,7 +63,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
 
     @Override
     public Object[][] getTableLineFormat() {
-        int verifOrder = 0;
+        int linesOrder = 0;
         Object[][] output = new Object[productionLines.size()][7]; // 7 = amount of columns
         for (String key : productionLines.keySet()) {
             ProductionLine line = productionLines.get(key);
@@ -97,13 +99,30 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             }
             String ratioQuantiteProduiteDemandee = percent + " (" + outputQty + " / " + outputQtyDemanded + ")";
 
+            //MetaControllerInterface metaLines = (MetaControllerInterface) new FactoryMetaController();//TODO: mettre this.factory
+
+            output[linesOrder] = new Object[] {
+                    linesOrder,
+                    line.getCode(),
+                    line.getName(),
+                    String.join("\n", line.getOutputList()),
+                    new SpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), line.getCode(), this.getClass().getName(), null),
+                    lineState,
+                    ratioQuantiteProduiteDemandee };
+            linesOrder++;
+
+            /*
             output[verifOrder] = new Object[] {
-                    new SpinnerCell(new JSpinner(new SpinnerNumberModel((verifOrder + 1), 1, Integer.MAX_VALUE, 1))),
-                    line.getCode(), line.getName(), String.join("\n", line.getOutputList()),
-                    new SpinnerCell(
-                            new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1))),
-                    lineState, ratioQuantiteProduiteDemandee };
+                    new SpinnerCell(new JSpinner(new SpinnerNumberModel((verifOrder + 1), 1, Integer.MAX_VALUE, 1)), verifOrder, this.getClass().getName()),
+                    line.getCode(),
+                    line.getName(),
+                    String.join("\n", line.getOutputList()),
+                    new SpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), verifOrder,this.getClass().getName()),
+                    lineState,
+                    ratioQuantiteProduiteDemandee };
             verifOrder++;
+            verifOrder++;
+             */
         }
         return output;
     }

@@ -1,16 +1,17 @@
-package org.antogautjean.Controller;
+package org.antogautjean.controller.meta;
 
+import org.antogautjean.controller.StockController;
 import org.antogautjean.model.Product;
 
 /**
  * MetaStockController
  */
-public class MetaStockController {
+public class StockMetaController {
     // TODO: transformer realStock en IMMUTABLE
     StockController realStock;
     StockController simulationStock;
 
-    public MetaStockController(StockController stock) {
+    public StockMetaController(StockController stock) {
         this.realStock = stock;
         this.simulationStock = stock.clone();
     }

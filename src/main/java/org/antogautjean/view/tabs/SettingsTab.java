@@ -1,6 +1,6 @@
 package org.antogautjean.view.tabs;
 
-import org.antogautjean.Controller.ConfigController;
+import org.antogautjean.controller.ConfigController;
 import org.antogautjean.view.HomeView;
 
 import javax.swing.*;

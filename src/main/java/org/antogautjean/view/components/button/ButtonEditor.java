@@ -1,4 +1,4 @@
-package org.antogautjean.view.components;
+package org.antogautjean.view.components.button;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (isPushed) {
-            JOptionPane.showMessageDialog(button, label + ": Ouch!");
+            JOptionPane.showMessageDialog(null, label + ": Ouch!");
         }
         isPushed = false;
         return label;

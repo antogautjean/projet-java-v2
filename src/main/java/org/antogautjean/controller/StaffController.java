@@ -1,11 +1,11 @@
-package org.antogautjean.Controller;
+package org.antogautjean.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.antogautjean.model.Employee;
 import org.antogautjean.model.FileImporter;
-import org.antogautjean.view.components.TableRowFormatInterface;
+import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class StaffController implements TableRowFormatInterface, ControllerFromFileInterface {
     protected HashMap<String, Employee> staff = new HashMap<>();

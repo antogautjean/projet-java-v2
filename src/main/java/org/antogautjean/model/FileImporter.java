@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
-import org.antogautjean.Controller.ConfigController;
-import org.antogautjean.Controller.FactoryController;
-import org.antogautjean.Controller.StaffController;
-import org.antogautjean.Controller.StockController;
+import org.antogautjean.controller.ConfigController;
+import org.antogautjean.controller.FactoryController;
+import org.antogautjean.controller.StaffController;
+import org.antogautjean.controller.StockController;
 
 public class FileImporter {
     protected static final String elements_csv_header = "Code;Nom;Quantite;unite";
@@ -117,8 +117,7 @@ public class FileImporter {
 
                     factoryLines.put(line[0],
                             new ProductionLine(line[0], line[1], stringToHashMap(line[2]), stringToHashMap(line[3]),
-                                    Integer.parseInt(line[4]), Integer.parseInt(line[5]), Integer.parseInt(line[6]),
-                                    i));
+                                    Integer.parseInt(line[4]), Integer.parseInt(line[5]), Integer.parseInt(line[6])));
                 }
                 factory.setStockController(stockController);
                 factory.setProductionLines(factoryLines);

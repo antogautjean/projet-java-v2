@@ -1,5 +1,8 @@
 package org.antogautjean.view.components;
 
+import org.antogautjean.controller.meta.MetaControllerInterface;
+import org.antogautjean.controller.meta.StockMetaController;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.util.EventObject;
@@ -8,6 +11,8 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
@@ -16,16 +21,18 @@ public class SpinnerCell extends AbstractCellEditor implements TableCellEditor, 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
 
-    public SpinnerCell() {
-        editSpinner = new JSpinner();
-        JTextField tf = ((JSpinner.DefaultEditor) editSpinner.getEditor()).getTextField();
-        tf.setForeground(Color.black);
-        renderSpinner = new JSpinner();
-        JTextField tf2 = ((JSpinner.DefaultEditor) renderSpinner.getEditor()).getTextField();
-        tf2.setForeground(Color.black);
-    }
+    public SpinnerCell(JSpinner showSpinner, String code, String className, MetaControllerInterface metaController) {
 
-    public SpinnerCell(JSpinner showSpinner) {
+        ChangeListener listener = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSpinner s = (JSpinner) e.getSource();
+                System.out.println(className + " " + code + " " + s.getValue());
+                //metaController.getRealProduct(code).setQuantityToBuy(Integer.parseInt((String) s.getValue())); //TODO: à corriger avec l'interface
+            }
+        };
+
+        showSpinner.addChangeListener(listener);
+
         editSpinner = showSpinner;
         JTextField tf = ((JSpinner.DefaultEditor) editSpinner.getEditor()).getTextField();
         tf.setForeground(Color.black);
