@@ -103,4 +103,9 @@ public class HomeView {
     public void refreshStockPanel() {
         ((FactoryTab) this.tabsContent.get(0)).configStockPanel();
     }
+
+    public void refreshProdLinesPanel() {
+        ((FactoryTab) this.tabsContent.get(0)).configProdLinesPanel();
+        refreshStockPanel();
+    }
 }

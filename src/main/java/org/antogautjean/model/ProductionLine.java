@@ -99,6 +99,10 @@ public class ProductionLine {
         return this.activationLevel;
     }
 
+    public void setActivationLevel(int activationLevel) {
+        this.activationLevel = activationLevel;
+    }
+
     /**
      * Permet d'obtenir la liste des produits nécessaire en entré de la ligne de production
      * @return La liste des produits en entré necessaire

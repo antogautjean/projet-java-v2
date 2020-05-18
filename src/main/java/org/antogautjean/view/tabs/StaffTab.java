@@ -123,7 +123,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
             int[] selectedRows = new int[0];
             if (cjt.getSelectedColumn() == 0) {
                 selectedRows = cjt.getSelectedRows();
-                System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
+                // System.out.println("Selected Rows before " + Arrays.toString(selectedRows));
             }
         });
 
@@ -133,11 +133,11 @@ public class StaffTab extends DefaultTab implements TabInterface {
 
             if (cjt.getSelectedColumn() != 0) {
                 cjt.clearSelection();
-                System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
+                // System.out.println("Selected Rows during " + Arrays.toString(cjt.getSelectedRows()));
                 for (int selectedRow : selectedRows) {
                     cjt.getSelectionModel().addSelectionInterval(selectedRow, selectedRow);
                 }
-                System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
+                // System.out.println("Selected Rows after " + Arrays.toString(cjt.getSelectedRows()));
             }
         });
 

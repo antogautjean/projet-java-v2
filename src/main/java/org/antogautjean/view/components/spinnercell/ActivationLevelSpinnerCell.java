@@ -1,6 +1,7 @@
 package org.antogautjean.view.components.spinnercell;
 
 import org.antogautjean.controller.ControllerFromFileInterface;
+import org.antogautjean.controller.FactoryController;
 import org.antogautjean.controller.StockController;
 import org.antogautjean.controller.StockMetaController;
 import org.antogautjean.view.HomeView;
@@ -17,17 +18,19 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-public class ActivationLevelSpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer, Comparable<ActivationLevelSpinnerCell> {
+public class ActivationLevelSpinnerCell extends AbstractCellEditor
+        implements TableCellEditor, TableCellRenderer, Comparable<ActivationLevelSpinnerCell> {
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
     protected HomeView parentComponent;
 
-    public ActivationLevelSpinnerCell(JSpinner showSpinner, String code, HomeView parentComponent) {
+    public ActivationLevelSpinnerCell(JSpinner showSpinner, String code, FactoryController factoryCtrl, HomeView parentComponent) {
 
         ChangeListener listener = e -> {
             JSpinner s = (JSpinner) e.getSource();
-            parentComponent.refreshTabs(false);
+            factoryCtrl.getProductionLine(code).setActivationLevel(Integer.parseInt(s.getValue().toString()));
+            parentComponent.refreshProdLinesPanel();
             System.out.println("Activation level: " + code + " -> " + s.getValue());
         };
 
@@ -53,7 +56,8 @@ public class ActivationLevelSpinnerCell extends AbstractCellEditor implements Ta
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
         return renderSpinner;
     }
 
@@ -72,14 +76,16 @@ public class ActivationLevelSpinnerCell extends AbstractCellEditor implements Ta
 
     @Override
     public int compareTo(ActivationLevelSpinnerCell o) {
-        //System.out.println(o.getSpinner().getValue() + " " + this.getSpinner().getValue());
-        if(Integer.parseInt(o.getSpinner().getValue().toString()) <= Integer.parseInt(this.getSpinner().getValue().toString())){
+        // System.out.println(o.getSpinner().getValue() + " " +
+        // this.getSpinner().getValue());
+        if (Integer.parseInt(o.getSpinner().getValue().toString()) <= Integer
+                .parseInt(this.getSpinner().getValue().toString())) {
             return 0;
         }
-        if(Integer.parseInt(o.getSpinner().getValue().toString()) > Integer.parseInt(this.getSpinner().getValue().toString())){
+        if (Integer.parseInt(o.getSpinner().getValue().toString()) > Integer
+                .parseInt(this.getSpinner().getValue().toString())) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }

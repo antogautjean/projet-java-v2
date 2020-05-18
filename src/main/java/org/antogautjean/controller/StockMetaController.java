@@ -49,7 +49,7 @@ public class StockMetaController implements TableRowFormatInterface {
      * @param code du produit à récupérer
      * @return le produit en question
      */
-    public Product getProductAfterCalculation(String code) {
+    public Product getSimulatedProduct(String code) {
         return this.simulationStock.getProduct(code);
     }
 
@@ -61,7 +61,7 @@ public class StockMetaController implements TableRowFormatInterface {
         for (ProductionLine prodLine : this.factoryCtrl.getProductionLines().values()) {
             HashMap<String, Integer> inputNeeded = prodLine.getInputNeeds();
             for (String productCode : inputNeeded.keySet()) {
-                Product currProduct = this.simulationStock.getProduct(productCode);
+                Product currProduct = this.getSimulatedProduct(productCode);
                 if (currProduct.getQuantity() >= inputNeeded.get(productCode)) {
                     // si les besoins de la ligne de production peuvent êtres satisfait
                     currProduct.setQuantity(currProduct.getQuantity() - inputNeeded.get(productCode));
@@ -88,7 +88,7 @@ public class StockMetaController implements TableRowFormatInterface {
             String prevision = product.getBuyPrice() == null ? "N/A"
                     : (product.getBuyPrice() * product.getQuantityToBuy()) + " €";
 
-            SpinnerModel quantity2buy_spinnerModel = new SpinnerNumberModel(product.getQuantityToBuy().intValue(), 0, 9,
+            SpinnerModel quantity2buy_spinnerModel = new SpinnerNumberModel(product.getQuantityToBuy().intValue(), 0, Integer.MAX_VALUE,
                     1);
 
             output[productIndex] = new Object[] { product.getCode(), product.getName(), product.getQuantity(),

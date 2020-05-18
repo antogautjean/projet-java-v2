@@ -110,7 +110,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
                     line.getCode(),
                     line.getName(),
                     String.join("\n", line.getOutputList()),
-                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 100, 1)),  line.getCode(), parentComponent),
+                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, Integer.MAX_VALUE, 1)),  line.getCode(), this, parentComponent),
                     lineState,
                     ratioQuantiteProduiteDemandee };
             linesOrder++;
