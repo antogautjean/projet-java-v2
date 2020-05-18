@@ -1,8 +1,5 @@
 package org.antogautjean.view.components.spinnercell;
 
-import org.antogautjean.controller.ControllerFromFileInterface;
-import org.antogautjean.controller.StockController;
-import org.antogautjean.controller.StockMetaController;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.EventObject;
@@ -15,21 +12,25 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import org.antogautjean.controller.StockMetaController;
+import org.antogautjean.view.HomeView;
+
 public class QuantityToBuySpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
 
-    public QuantityToBuySpinnerCell(JSpinner showSpinner, String code, StockMetaController metaStock) {
-
+    public QuantityToBuySpinnerCell(JSpinner showSpinner, String code, StockMetaController metaStock,
+            HomeView parentComponent) {
 
         JSpinner.NumberEditor numberEditor = new JSpinner.NumberEditor(showSpinner, "00");
         showSpinner.setEditor(numberEditor);
 
         ChangeListener listener = e -> {
             JSpinner s = (JSpinner) e.getSource();
+            metaStock.getRealProduct(code).setQuantityToBuy(Integer.parseInt(s.getValue().toString()));
+            parentComponent.refreshStockPanel();
             System.out.println("Quantity to buy : " + code + " -> " + s.getValue());
-            metaStock.getProductAfterCalculation(code).setQuantityToBuy(Integer.parseInt(s.getValue().toString()));
         };
 
         showSpinner.addChangeListener(listener);
@@ -54,7 +55,8 @@ public class QuantityToBuySpinnerCell extends AbstractCellEditor implements Tabl
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
         return renderSpinner;
     }
 

@@ -3,11 +3,14 @@ package org.antogautjean.view.components.table;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.antogautjean.controller.FactoryController;
 import org.antogautjean.model.ProductionLineState;
+import org.antogautjean.view.HomeView;
 
 /**
  * Cette classe permet de gérer le rendu du tableau Factory
@@ -23,11 +26,11 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
      * Construit de TableCellRenderer et initialise orderedKeys
      * @param factoryCtrl
      */
-    public TableCellRenderer(FactoryController factoryCtrl) {
+    public TableCellRenderer(FactoryController factoryCtrl, HomeView parentComponent) {
         this.factoryCtrl = factoryCtrl;
 
         // factory.getTableLineFormat() => Object[][] => Object[i][1]
-        Object[][] tblLineFormat = factoryCtrl.getTableLineFormat();
+        Object[][] tblLineFormat = factoryCtrl.getTableLineFormat(parentComponent);
         this.orderedKeys = new String[tblLineFormat.length];
         for (int i = 0; i < tblLineFormat.length; i++) {
             Object[] line = tblLineFormat[i];
@@ -70,8 +73,10 @@ public class TableCellRenderer extends DefaultTableCellRenderer {
 
         // Dans le cas de la partie Factory on a un truc custom
         if (this.factoryCtrl != null) {
-            if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString().equals("Etat de la chaîne") &&
-                    factoryCtrl.getProductionLine(this.orderedKeys[row]).getState() == ProductionLineState.IMPOSSIBLE) {
+            if (table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString()
+                    .equals("Etat de la chaîne")
+                    && factoryCtrl.getProductionLine(this.orderedKeys[row])
+                            .getState() == ProductionLineState.IMPOSSIBLE) {
                 setForeground(Color.WHITE);
                 if (isSelected) {
                     setBackground(Color.decode("#B30000"));

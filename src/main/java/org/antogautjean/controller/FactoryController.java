@@ -7,6 +7,7 @@ import javax.swing.SpinnerNumberModel;
 
 import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.ProductionLine;
+import org.antogautjean.view.HomeView;
 import org.antogautjean.view.components.spinnercell.ActivationLevelSpinnerCell;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
@@ -22,7 +23,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
 
     @Override
     public boolean getIfFileImportFailed() {
-        return !this.fileImportFailed;
+        return this.fileImportFailed;
     }
 
     public void setStockController(StockController stockCtrl) {
@@ -63,7 +64,7 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
      * @return
      */
     @Override
-    public Object[][] getTableLineFormat() {
+    public Object[][] getTableLineFormat(HomeView parentComponent) {
         int linesOrder = 0;
         Object[][] output = new Object[productionLines.size()][7]; // 7 = amount of columns
         for (String key : productionLines.keySet()) {
@@ -100,29 +101,28 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             }
             String ratioQuantiteProduiteDemandee = percent + " (" + outputQty + " / " + outputQtyDemanded + ")";
 
-            //MetaControllerInterface metaLines = (MetaControllerInterface) new FactoryMetaController();//TODO: mettre this.factory
+            // MetaControllerInterface metaLines = (MetaControllerInterface) new
+            // FactoryMetaController();//TODO: mettre this.factory
 
             output[linesOrder] = new Object[] {
-                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), line.getCode()),
-                    line.getCode(),
-                    line.getName(),
-                    String.join("\n", line.getOutputList()),
-                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), line.getCode()),
-                    lineState,
-                    ratioQuantiteProduiteDemandee };
+                    new ActivationLevelSpinnerCell(
+                            new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)),
+                            line.getCode(), parentComponent),
+                    line.getCode(), line.getName(), String.join("\n", line.getOutputList()),
+                    new ActivationLevelSpinnerCell(
+                            new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)),
+                            line.getCode(), parentComponent),
+                    lineState, ratioQuantiteProduiteDemandee };
             linesOrder++;
 
             /*
-            output[verifOrder] = new Object[] {
-                    new SpinnerCell(new JSpinner(new SpinnerNumberModel((verifOrder + 1), 1, Integer.MAX_VALUE, 1)), verifOrder, this.getClass().getName()),
-                    line.getCode(),
-                    line.getName(),
-                    String.join("\n", line.getOutputList()),
-                    new SpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)), verifOrder,this.getClass().getName()),
-                    lineState,
-                    ratioQuantiteProduiteDemandee };
-            verifOrder++;
-            verifOrder++;
+             * output[verifOrder] = new Object[] { new SpinnerCell(new JSpinner(new
+             * SpinnerNumberModel((verifOrder + 1), 1, Integer.MAX_VALUE, 1)), verifOrder,
+             * this.getClass().getName()), line.getCode(), line.getName(), String.join("\n",
+             * line.getOutputList()), new SpinnerCell(new JSpinner(new
+             * SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)),
+             * verifOrder,this.getClass().getName()), lineState,
+             * ratioQuantiteProduiteDemandee }; verifOrder++; verifOrder++;
              */
         }
         return output;

@@ -31,8 +31,8 @@ public class HomeView {
     public HomeView(StockController stockCtrl, FactoryController factoryCtrl, StaffController staffCtrl) {
         frameInit();
 
-        this.tabsContent.add(new FactoryTab(stockCtrl, factoryCtrl));
-        this.tabsContent.add(new StaffTab(staffCtrl));
+        this.tabsContent.add(new FactoryTab(stockCtrl, factoryCtrl, this));
+        this.tabsContent.add(new StaffTab(staffCtrl, this));
         this.tabsContent.add(new SettingsTab(this));
 
         this.init();
@@ -51,13 +51,13 @@ public class HomeView {
         this.mainFrame.setIconImage(new ImageIcon("./src/main/java/org/antogautjean/data/factory_icon.png").getImage());
     }
 
-    public void refreshTabs() {
+    public void refreshTabs(boolean refreshFromFiles) {
         // refresh controllers from file
         ArrayList<String> failedTabLoading = new ArrayList<>();
         int cursor = 0;
         for (TabInterface tab : this.tabsContent) {
             if (!(tab instanceof SettingsTab)) {
-                this.tabsContainer.setComponentAt(cursor, tab.getComponent());
+                this.tabsContainer.setComponentAt(cursor, tab.getComponent(refreshFromFiles));
                 if (tab.getIfRenderedCorrectly()) {
                     failedTabLoading.add(tab.getTabTitle());
                 }
@@ -74,7 +74,7 @@ public class HomeView {
         int cursor = 0;
         ArrayList<String> failedTabLoading = new ArrayList<>();
         for (TabInterface tab : this.tabsContent) {
-            this.tabsContainer.add(tab.getTabTitle(), tab.getComponent());
+            this.tabsContainer.add(tab.getTabTitle(), tab.getComponent(true));
             JLabel tabLabel = new JLabel(tab.getTabTitle());
             tabLabel.setFont(font);
             tabLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -87,7 +87,6 @@ public class HomeView {
         this.mainFrame.getContentPane().add(this.tabsContainer);
         this.mainFrame.setVisible(true);
 
-
         displayFailedTabs(failedTabLoading);
     }
 
@@ -99,5 +98,9 @@ public class HomeView {
             JOptionPane.showMessageDialog(null, "Les onglets suivant n'ont pas pu être chargés correctement :\n- "
                     + String.join("\n- ", failedTabLoading), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void refreshStockPanel() {
+        ((FactoryTab) this.tabsContent.get(0)).configStockPanel();
     }
 }

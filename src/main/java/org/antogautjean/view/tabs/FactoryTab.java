@@ -19,8 +19,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
+import org.antogautjean.controller.ControllerFromFileInterface;
 import org.antogautjean.controller.FactoryController;
 import org.antogautjean.controller.StockController;
+import org.antogautjean.controller.StockMetaController;
+import org.antogautjean.view.HomeView;
 import org.antogautjean.view.components.table.CustomJTable;
 import org.antogautjean.view.components.table.TableCellRenderer;
 import org.antogautjean.view.components.table.TableModel;
@@ -39,23 +42,28 @@ public class FactoryTab extends DefaultTab implements TabInterface {
     protected TableCellRenderer factoryCellRenderer;
     protected TableCellRenderer stockCellRenderer;
 
-    public FactoryTab(StockController stockCtrl, FactoryController factoryCtrl) {
+    protected HomeView parentComponent;
+
+    public FactoryTab(StockController stockCtrl, FactoryController factoryCtrl, HomeView parentComponent) {
         this.stockCtrl = stockCtrl;
         this.factoryCtrl = factoryCtrl;
+        this.parentComponent = parentComponent;
 
-        factoryCellRenderer = new TableCellRenderer(factoryCtrl);
+        setControllers(new ControllerFromFileInterface[] { stockCtrl, factoryCtrl });
+
+        factoryCellRenderer = new TableCellRenderer(factoryCtrl, parentComponent);
         stockCellRenderer = new TableCellRenderer();
     }
 
     @Override
-    public JComponent getComponent() {
-        if (areControllersFresh()) {
+    public JComponent getComponent(boolean refreshFromFile) {
+        if (areControllersFresh(refreshFromFile)) {
 
             final String[] stockColumns = new String[] { "Code", "Nom", "Quantité actuelle", "Quantité à acheter",
                     "Coût d'achat prévisionnel", "Nouvelle quantité après achat", "Quantité simulée après calcul" };
             final String[] linesColumns = new String[] { "Ordre de vérification", "Code", "Nom",
                     "Code éléments en sortie", "Niveau d'activation", "Etat de la chaîne",
-                    "Quantité produite / quantité demandée"};
+                    "Quantité produite / quantité demandée" };
 
             // Test à destination des développeurs
             if (!Arrays.asList(linesColumns).contains("Etat de la chaîne")) {
@@ -70,10 +78,10 @@ public class FactoryTab extends DefaultTab implements TabInterface {
             configLinesTable(linesPanel, linesColumns);
 
             JPanel indicatorsPanel = new JPanel();
-            configIndicatiorsTable(indicatorsPanel);
+            configIndicatorsTable(indicatorsPanel);
 
-            configPanel(this.stockTable, this.stockTableModel, this.stockCtrl);
-            configPanel(this.linesTable, this.linesTableModel, this.factoryCtrl);
+            configStockPanel();
+            configProdLinesPanel();
 
             JSplitPane SLsplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, stockPanel, linesPanel);
             SLsplitPane.setResizeWeight(.5);
@@ -89,7 +97,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         }
     }
 
-    private void configIndicatiorsTable(JPanel indicatorsPanel) {
+    private void configIndicatorsTable(JPanel indicatorsPanel) {
 
         String[][] table_data = { { "1001", "Cherry" } };
         String[] table_column = { "Indicateur de valeur (Commande satisfaites)",
@@ -153,7 +161,8 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)), new int[] { 3 });
+        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)),
+                new int[] { 3 });
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
         this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
@@ -198,9 +207,6 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         this.linesTable.setRowHeight(30);
         this.linesTable.setDefaultRenderer(Object.class, this.factoryCellRenderer);
 
-        //ButtonColumn buttonColumn = new ButtonColumn(this.linesTable, delete, 5);
-        //buttonColumn.setMnemonic(KeyEvent.VK_D);
-
         TableColumnModel columnModel = this.linesTable.getColumnModel();
         columnModel.getColumn(0).setMinWidth(120);
         columnModel.getColumn(0).setMaxWidth(120);
@@ -215,20 +221,24 @@ public class FactoryTab extends DefaultTab implements TabInterface {
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface factory) {
         cjt.getTableHeader().setReorderingAllowed(true);
 
-        // Load data
-        for (Object[] line : factory.getTableLineFormat()) {
-
+        ctm.setRowCount(0); // "If the new size is less than the current size, all rows at index rowCount
+                            // and greater are discarded"
+        for (Object[] line : factory.getTableLineFormat(this.parentComponent)) {
             ctm.addRow(line);
         }
     }
 
-    public boolean areControllersFresh() {
-        try {
-            this.factoryCtrl.refreshFromFile();
-            this.stockCtrl.refreshFromFile();
-        } catch (IOException e) {
-            return false;
-        }
-        return this.factoryCtrl.getIfFileImportFailed() && this.stockCtrl.getIfFileImportFailed();
+    /**
+     * Permet de configurer l'affichage du panneau du stock
+     */
+    public void configStockPanel() {
+        configPanel(this.stockTable, this.stockTableModel, new StockMetaController(this.stockCtrl));
+    }
+
+    /**
+     * Permet de configurer l'affichage du panneau des chaînes de production
+     */
+    public void configProdLinesPanel() {
+        configPanel(this.linesTable, this.linesTableModel, this.factoryCtrl);
     }
 }

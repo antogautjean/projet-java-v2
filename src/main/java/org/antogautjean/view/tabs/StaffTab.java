@@ -21,7 +21,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import org.antogautjean.controller.ControllerFromFileInterface;
 import org.antogautjean.controller.StaffController;
+import org.antogautjean.view.HomeView;
 import org.antogautjean.view.components.table.CustomJTable;
 import org.antogautjean.view.components.table.StaffTableCellRenderer;
 import org.antogautjean.view.components.table.StaffTableModel;
@@ -33,6 +35,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
     protected CustomJTable staffTable;
     protected DefaultTableModel staffTableModel;
     protected StaffTableCellRenderer staffCellRenderer;
+    protected HomeView parentComponent;
 
     DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
         private static final long serialVersionUID = 1L;
@@ -46,13 +49,16 @@ public class StaffTab extends DefaultTab implements TabInterface {
         }
     };
 
-    public StaffTab(StaffController staffCtrl) {
+    public StaffTab(StaffController staffCtrl, HomeView parentComponent) {
         this.staffCtrl = staffCtrl;
+        this.parentComponent = parentComponent;
+
+        setControllers(new ControllerFromFileInterface[] { staffCtrl });
     }
 
     @Override
-    public JComponent getComponent() {
-        if (isControllerFresh()) {
+    public JComponent getComponent(boolean refreshFromFile) {
+        if (areControllersFresh(refreshFromFile)) {
             final String[] staffColumns = new String[] { "Code", "Qualification", "0H", "1H", "2H", "3H", "4H", "5H",
                     "6H", "7H", "8H", "9H", "10H", "11H", "12H", "13H", "14H", "15H", "16H", "17H", "18H", "19H", "20H",
                     "21H", "22H", "23H", "24H", "25H", "26H", "27H", "28H", "29H", "30H", "31H", "32H", "33H", "34H" };
@@ -78,7 +84,7 @@ public class StaffTab extends DefaultTab implements TabInterface {
 
     // Stock Table
     private void configStaffTable(JPanel panel, String[] staffColumns) {
-        this.staffCellRenderer = new StaffTableCellRenderer(this.staffCtrl);
+        this.staffCellRenderer = new StaffTableCellRenderer(this.staffCtrl, this.parentComponent);
         configJPanel(panel);
 
         Font font = new Font("Arial", Font.BOLD, 14);
@@ -136,13 +142,8 @@ public class StaffTab extends DefaultTab implements TabInterface {
         });
 
         // Load data
-        for (Object[] line : staff.getTableLineFormat()) {
+        for (Object[] line : staff.getTableLineFormat(this.parentComponent)) {
             ctm.addRow(line);
         }
-    }
-
-    public boolean isControllerFresh() {
-        this.staffCtrl.refreshFromFile();
-        return this.staffCtrl.getIfFileImportFailed();
     }
 }

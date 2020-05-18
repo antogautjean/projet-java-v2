@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.antogautjean.model.Employee;
 import org.antogautjean.model.FileImporter;
+import org.antogautjean.view.HomeView;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 /**
@@ -22,7 +23,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
 
     @Override
     public boolean getIfFileImportFailed() {
-        return !this.fileImportFailed;
+        return this.fileImportFailed;
     }
 
     /**
@@ -74,7 +75,8 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
     }
 
     public String toString() {
-        StringBuilder output = new StringBuilder("Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)\n");
+        StringBuilder output = new StringBuilder(
+                "Il y a " + this.staff.size() + " employes parmit le staff (valeur <sum>)\n");
         for (Employee e : this.staff.values()) {
             output.append(e.toString());
         }
@@ -118,7 +120,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
      * @return
      */
     @Override
-    public Object[][] getTableLineFormat() {
+    public Object[][] getTableLineFormat(HomeView parentComponent) {
         Object[][] output = new Object[staff.size()][37]; // 37 = amount of columns
         int employeeIndex = 0;
         for (String key : staff.keySet()) {
@@ -136,7 +138,7 @@ public class StaffController implements TableRowFormatInterface, ControllerFromF
                     employee.getPlanningOn(24), employee.getPlanningOn(25), employee.getPlanningOn(26),
                     employee.getPlanningOn(27), employee.getPlanningOn(28), employee.getPlanningOn(29),
                     employee.getPlanningOn(30), employee.getPlanningOn(31), employee.getPlanningOn(32),
-                    employee.getPlanningOn(33), employee.getPlanningOn(34)};
+                    employee.getPlanningOn(33), employee.getPlanningOn(34) };
             employeeIndex++;
         }
 

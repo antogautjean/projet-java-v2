@@ -5,10 +5,14 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.antogautjean.controller.ControllerFromFileInterface;
+
 import java.awt.FlowLayout;
+import java.io.IOException;
 
 public class DefaultTab {
     protected boolean ifRenderedCorrectly = false;
+    protected ControllerFromFileInterface[] ctrls;
 
     public void setIfRenderedCorrectly(boolean ifRendered) {
         this.ifRenderedCorrectly = ifRendered;
@@ -26,5 +30,34 @@ public class DefaultTab {
         text.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
         output.add(text);
         return output;
+    }
+
+    protected void setControllers(ControllerFromFileInterface[] ctrls) {
+        this.ctrls = ctrls;
+    }
+
+    public boolean areControllersFresh(boolean refreshFromFile) {
+        // Refresh controllers from files
+        if (refreshFromFile) {
+            try {
+                for (ControllerFromFileInterface ctrl : ctrls) {
+                    ctrl.refreshFromFile();
+                }
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        // Check if a controller failed
+        for (ControllerFromFileInterface ctrl : ctrls) {
+            if (ctrl.getIfFileImportFailed()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public JComponent getComponent(boolean refreshFromFile) {
+        (new Exception("This method should be implemented")).printStackTrace();
+        return null;
     }
 }

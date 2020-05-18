@@ -30,7 +30,7 @@ public class SettingsTab extends DefaultTab implements TabInterface, ActionListe
     }
 
     @Override
-    public JComponent getComponent() {
+    public JComponent getComponent(boolean refreshFromFile) {
         container = new JPanel();
         container.setBorder(BorderFactory.createTitledBorder("Configuration des fichiers source (CSV)"));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -144,7 +144,7 @@ public class SettingsTab extends DefaultTab implements TabInterface, ActionListe
                     ConfigController.commit();
                 }
                 try {
-                    this.parentComponent.refreshTabs();
+                    this.parentComponent.refreshTabs(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

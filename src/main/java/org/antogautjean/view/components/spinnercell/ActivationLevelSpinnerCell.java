@@ -3,6 +3,8 @@ package org.antogautjean.view.components.spinnercell;
 import org.antogautjean.controller.ControllerFromFileInterface;
 import org.antogautjean.controller.StockController;
 import org.antogautjean.controller.StockMetaController;
+import org.antogautjean.view.HomeView;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.util.EventObject;
@@ -19,8 +21,9 @@ public class ActivationLevelSpinnerCell extends AbstractCellEditor implements Ta
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
+    protected HomeView parentComponent;
 
-    public ActivationLevelSpinnerCell(JSpinner showSpinner, String code) {
+    public ActivationLevelSpinnerCell(JSpinner showSpinner, String code, HomeView parentComponent) {
 
 
         JSpinner.NumberEditor numberEditor = new JSpinner.NumberEditor(showSpinner, "00");
@@ -28,6 +31,7 @@ public class ActivationLevelSpinnerCell extends AbstractCellEditor implements Ta
 
         ChangeListener listener = e -> {
             JSpinner s = (JSpinner) e.getSource();
+            parentComponent.refreshTabs(false);
             System.out.println("Activation level: " + code + " -> " + s.getValue());
         };
 

@@ -3,7 +3,7 @@ package org.antogautjean.view.tabs;
 import javax.swing.JComponent;
 
 public interface TabInterface {
-    JComponent getComponent();
+    JComponent getComponent(boolean refreshFromFile);
 
     String getTabTitle();
 

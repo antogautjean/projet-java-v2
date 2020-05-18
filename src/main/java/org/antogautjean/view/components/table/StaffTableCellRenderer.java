@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.antogautjean.controller.StaffController;
+import org.antogautjean.view.HomeView;
 
 /**
  * Classe permettant de gerer les cellules du tableau staff
@@ -22,11 +23,11 @@ public class StaffTableCellRenderer extends DefaultTableCellRenderer {
      * Constructeur du StaffTableCellRenderer
      * @param staffCtrl
      */
-    public StaffTableCellRenderer(StaffController staffCtrl) {
+    public StaffTableCellRenderer(StaffController staffCtrl, HomeView parentComponent) {
         this.staffCtrl = staffCtrl;
 
         // factory.getTableLineFormat() => Object[][] => Object[i][1]
-        Object[][] tblLineFormat = staffCtrl.getTableLineFormat();
+        Object[][] tblLineFormat = staffCtrl.getTableLineFormat(parentComponent);
         this.orderedKeys = new String[tblLineFormat.length];
         for (int i = 0; i < tblLineFormat.length; i++) {
             Object[] line = tblLineFormat[i];
