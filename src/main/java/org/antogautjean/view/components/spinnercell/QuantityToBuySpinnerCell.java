@@ -20,11 +20,7 @@ public class QuantityToBuySpinnerCell extends AbstractCellEditor implements Tabl
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
 
-    public QuantityToBuySpinnerCell(JSpinner showSpinner, String code, StockMetaController metaStock,
-            HomeView parentComponent) {
-
-        JSpinner.NumberEditor numberEditor = new JSpinner.NumberEditor(showSpinner, "00");
-        showSpinner.setEditor(numberEditor);
+    public QuantityToBuySpinnerCell(JSpinner showSpinner, String code, StockMetaController metaStock, HomeView parentComponent) {
 
         ChangeListener listener = e -> {
             JSpinner s = (JSpinner) e.getSource();

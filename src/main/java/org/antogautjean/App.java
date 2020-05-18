@@ -31,7 +31,12 @@ public class App {
         System.out.println("starting : OK");
 
         // IMPORTANT
-        ConfigController.setConfigFilePath("src/main/java/org/antogautjean/settings.properties");
+        try{
+            ConfigController.setConfigFilePath("settings.properties");
+        }
+        catch (Exception e){
+            System.out.println("settings.properties is needed");
+        }
 
         System.out.println("FileImporter : Reading CSV Stock file");
         // Stock controller

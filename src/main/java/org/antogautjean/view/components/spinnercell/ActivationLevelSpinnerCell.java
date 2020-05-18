@@ -17,17 +17,13 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-public class ActivationLevelSpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+public class ActivationLevelSpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer, Comparable<ActivationLevelSpinnerCell> {
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
     protected HomeView parentComponent;
 
     public ActivationLevelSpinnerCell(JSpinner showSpinner, String code, HomeView parentComponent) {
-
-
-        JSpinner.NumberEditor numberEditor = new JSpinner.NumberEditor(showSpinner, "00");
-        showSpinner.setEditor(numberEditor);
 
         ChangeListener listener = e -> {
             JSpinner s = (JSpinner) e.getSource();
@@ -72,5 +68,19 @@ public class ActivationLevelSpinnerCell extends AbstractCellEditor implements Ta
     @Override
     public boolean isCellEditable(EventObject evt) {
         return true;
+    }
+
+    @Override
+    public int compareTo(ActivationLevelSpinnerCell o) {
+        //System.out.println(o.getSpinner().getValue() + " " + this.getSpinner().getValue());
+        if(Integer.parseInt(o.getSpinner().getValue().toString()) <= Integer.parseInt(this.getSpinner().getValue().toString())){
+            return 0;
+        }
+        if(Integer.parseInt(o.getSpinner().getValue().toString()) > Integer.parseInt(this.getSpinner().getValue().toString())){
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }

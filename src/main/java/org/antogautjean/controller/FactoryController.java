@@ -9,6 +9,7 @@ import org.antogautjean.model.FileImporter;
 import org.antogautjean.model.ProductionLine;
 import org.antogautjean.view.HomeView;
 import org.antogautjean.view.components.spinnercell.ActivationLevelSpinnerCell;
+import org.antogautjean.view.components.spinnercell.OrderSpinnerCell;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class FactoryController implements TableRowFormatInterface, ControllerFromFileInterface {
@@ -105,14 +106,13 @@ public class FactoryController implements TableRowFormatInterface, ControllerFro
             // FactoryMetaController();//TODO: mettre this.factory
 
             output[linesOrder] = new Object[] {
-                    new ActivationLevelSpinnerCell(
-                            new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)),
-                            line.getCode(), parentComponent),
-                    line.getCode(), line.getName(), String.join("\n", line.getOutputList()),
-                    new ActivationLevelSpinnerCell(
-                            new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 9, 1)),
-                            line.getCode(), parentComponent),
-                    lineState, ratioQuantiteProduiteDemandee };
+                    new OrderSpinnerCell(new JSpinner(new SpinnerNumberModel(linesOrder + 1, 1, 1000, 1)), line.getCode(), parentComponent),
+                    line.getCode(),
+                    line.getName(),
+                    String.join("\n", line.getOutputList()),
+                    new ActivationLevelSpinnerCell(new JSpinner(new SpinnerNumberModel(line.getActivationLevel().intValue(), 0, 100, 1)),  line.getCode(), parentComponent),
+                    lineState,
+                    ratioQuantiteProduiteDemandee };
             linesOrder++;
 
             /*

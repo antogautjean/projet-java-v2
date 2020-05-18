@@ -30,6 +30,7 @@ import org.antogautjean.view.components.table.TableModel;
 import org.antogautjean.view.components.table.TableRowFormatInterface;
 
 public class FactoryTab extends DefaultTab implements TabInterface {
+
     protected StockController stockCtrl;
     protected FactoryController factoryCtrl;
 
@@ -153,16 +154,15 @@ public class FactoryTab extends DefaultTab implements TabInterface {
     }
 
     // Stock Table
-    private void configStockTable(JPanel topPanel, String[] stockColumns) {
-        configJPanel(topPanel);
+    private void configStockTable(JPanel stockPanel, String[] stockColumns) {
+        configJPanel(stockPanel);
 
         Font font = new Font("Arial", Font.BOLD, 14);
         Color color = Color.BLACK;
-        topPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
+        stockPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Stock",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)),
-                new int[] { 3 });
+        this.stockTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(stockColumns)), "stockPanel");
         this.stockTable = new CustomJTable(stockTableModel);
         this.stockTable.setRowHeight(30);
         this.stockTable.setDefaultRenderer(Object.class, this.stockCellRenderer);
@@ -182,20 +182,19 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         columnModel.getColumn(5).setPreferredWidth(100);
         columnModel.getColumn(6).setPreferredWidth(100);
 
-        topPanel.add(new JScrollPane(this.stockTable));
+        stockPanel.add(new JScrollPane(this.stockTable));
     }
 
     // Lines Table
-    private void configLinesTable(JPanel bottomPanel, String[] linesColumns) {
-        configJPanel(bottomPanel);
+    private void configLinesTable(JPanel linesPanel, String[] linesColumns) {
+        configJPanel(linesPanel);
 
         Font font = new Font("Arial", Font.BOLD, 14);
         Color color = Color.BLACK;
-        bottomPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production",
+        linesPanel.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(30, 10, 10, 10), "Chaînes de production",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color));
 
-        this.linesTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)),
-                new int[] { 0, 4 });
+        this.linesTableModel = new TableModel(new Vector<>(), new Vector<>(Arrays.asList(linesColumns)),"linesPanel");
         this.linesTable = new CustomJTable(linesTableModel);
 
         RowSorter<TableModel> sorter = new TableRowSorter<>((TableModel) this.linesTable.getModel());
@@ -215,7 +214,7 @@ public class FactoryTab extends DefaultTab implements TabInterface {
         columnModel.getColumn(4).setMaxWidth(100);
         columnModel.getColumn(6).setPreferredWidth(150);
 
-        bottomPanel.add(new JScrollPane(this.linesTable));
+        linesPanel.add(new JScrollPane(this.linesTable));
     }
 
     private void configPanel(CustomJTable cjt, DefaultTableModel ctm, TableRowFormatInterface factory) {

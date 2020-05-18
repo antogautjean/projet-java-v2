@@ -12,11 +12,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
-    protected int[] concernedIndexes;
+    protected Object concernedIndex;
 
-    public TableModel(Vector<? extends Vector> v1, Vector<?> v2, int[] concernedIndexes){
+    public TableModel(Vector<? extends Vector> v1, Vector<?> v2, Object concernedIndex){
         super(v1, v2);
-        this.concernedIndexes = concernedIndexes;
+        this.concernedIndex = concernedIndex;
     }
 
     /**
@@ -58,11 +58,45 @@ public class TableModel extends DefaultTableModel {
     public boolean isCellEditable(int rowIndex, int colIndex) {
         // [0, 4] pour Factory
         // [3] pour Stock
-        boolean res = false;
-        for (int i = 0; i < this.concernedIndexes.length && !res; i++) {
-            res = this.concernedIndexes[i] == colIndex;
+        if(this.concernedIndex.equals("stockPanel") ){
+            return colIndex == 3;
         }
-        return res;
+        if(this.concernedIndex.equals("linesPanel") ){
+            return colIndex == 0 || colIndex == 4;
+        }
+        else {
+            System.err.println("Erreur d'appel à TableModel");
+            return false;
+        }
+
+    }
+
+    @Override
+    public Class getColumnClass(int column) {
+
+        if(this.concernedIndex.equals("stockPanel") ){
+            switch (column) {
+                case 0:
+                case 3:
+                    return Integer.class;
+                default:
+                    return String.class;
+            }
+        }
+
+        if(this.concernedIndex.equals("linesPanel") ){
+            switch (column) {
+                case 0:
+                    return Integer.class;
+                case 4:
+                    return Integer.class;
+                default:
+                    return String.class;
+            }
+        }
+
+        return String.class;
+
     }
 
 }

@@ -31,10 +31,11 @@ public class FileImporter {
         // initialiser cette valeur (peut être modifié dans le cas d'une erreur)
         stock.setIfFileImportFailed(false);
         // Products
-        BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("stockFile"))));
+
         String row;
         try {
+            BufferedReader csvReader = new BufferedReader(new java.io.FileReader(ConfigController.getProperty("stockFile")));
+
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
             if (!row.contains(elements_csv_header)) {
@@ -56,14 +57,12 @@ public class FileImporter {
         } catch (Exception e) {
             System.err.println("fileToStock failed");
             stock.setIfFileImportFailed(true);
-        } finally {
-            csvReader.close();
         }
 
         // If import didn't failed, then try with the second file
         if (stock.getIfFileImportFailed()) {
             // Prices
-            csvReader = new BufferedReader(new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("pricesFile"))));
+            BufferedReader csvReader = new BufferedReader(new java.io.FileReader(ConfigController.getProperty("pricesFile")));
             try {
                 // Vérifier si la première ligne du fichier CSV est au bon format
                 row = csvReader.readLine();
@@ -123,7 +122,7 @@ public class FileImporter {
         factory.setIfFileImportFailed(false);
 
         try (BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("linesFile"))))) {
+                new java.io.FileReader(ConfigController.getProperty("linesFile")))) {
             String row;
             HashMap<String, ProductionLine> factoryLines = new HashMap<>();
             // Vérifier si la première ligne du fichier CSV est au bon format
@@ -156,7 +155,7 @@ public class FileImporter {
         staff.setIfFileImportFailed(false);
 
         try (BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("staffFile"))))) {
+                new java.io.FileReader(ConfigController.getProperty("staffFile")))) {
             String row;
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();

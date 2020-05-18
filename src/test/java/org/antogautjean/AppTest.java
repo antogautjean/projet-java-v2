@@ -19,14 +19,14 @@ public class AppTest extends JPanel
             "Letter", "Number", "Color"
     };
     static Object[][] data = {
-            {"A", new Integer(2), Color.gray.darker().darker()},
-            {"B", new Integer (3), Color.gray},
-            {"C", new Integer (1), Color.gray.darker()},
+            {"A", 2, Color.gray.darker().darker()},
+            {"B", 3, Color.gray},
+            {"C", 1, Color.gray.darker()},
     };
 
     static Object[] bonusData = {
             // "D", "0", Color.red  // this is the (buggy) book version
-            "D", new Integer(0), Color.red
+            "D", 0, Color.red
     };
 
     public AppTest (DefaultTableModel m) {
