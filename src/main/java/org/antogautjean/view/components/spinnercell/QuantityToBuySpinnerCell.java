@@ -26,7 +26,6 @@ public class QuantityToBuySpinnerCell extends AbstractCellEditor implements Tabl
             JSpinner s = (JSpinner) e.getSource();
             metaStock.getRealProduct(code).setQuantityToBuy(Integer.parseInt(s.getValue().toString()));
             parentComponent.refreshStockPanel();
-            parentComponent.refreshIndicPanel();
             System.out.println("Quantity to buy : " + code + " -> " + s.getValue());
         };
 
