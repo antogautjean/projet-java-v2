@@ -5,7 +5,7 @@ Etat d'avancement
 --
 
 Ce programme à pour objectif de permet à un utilisateur possédant des données de production d'une usine de les visualiser sous forme de tableau.
-Il pourra ainsi 
+Il pourra ainsi obtenir des indicateurs pour optimiser la production de son usine et l'emplois du temps des
 
 Fonctionnalitée manquantes
 --
