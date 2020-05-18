@@ -3,6 +3,7 @@ package org.antogautjean.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.antogautjean.controller.ConfigController;
 import org.antogautjean.controller.FactoryController;
@@ -34,7 +35,7 @@ public class FileImporter {
 
         String row;
         try (BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(ConfigController.getProperty("stockFile")))) {
+                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("stockFile"))))) {
 
             // Vérifier si la première ligne du fichier CSV est au bon format
             row = csvReader.readLine();
@@ -63,7 +64,7 @@ public class FileImporter {
         if (!stock.getIfFileImportFailed()) {
             // Prices
             try (BufferedReader csvReader = new BufferedReader(
-                    new java.io.FileReader(ConfigController.getProperty("pricesFile")))) {
+                    new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("pricesFile"))))) {
                 // Vérifier si la première ligne du fichier CSV est au bon format
                 row = csvReader.readLine();
                 if (!row.contains(prix_csv_header)) {
@@ -122,7 +123,7 @@ public class FileImporter {
         factory.setIfFileImportFailed(false);
 
         try (BufferedReader csvReader = new BufferedReader(
-                new java.io.FileReader(ConfigController.getProperty("linesFile")))) {
+                new java.io.FileReader(Objects.requireNonNull(ConfigController.getProperty("linesFile"))))) {
             String row;
             HashMap<String, ProductionLine> factoryLines = new HashMap<>();
             // Vérifier si la première ligne du fichier CSV est au bon format

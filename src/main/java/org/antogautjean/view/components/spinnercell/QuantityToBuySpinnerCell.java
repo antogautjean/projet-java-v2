@@ -15,7 +15,7 @@ import javax.swing.table.TableCellRenderer;
 import org.antogautjean.controller.StockMetaController;
 import org.antogautjean.view.HomeView;
 
-public class QuantityToBuySpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+public class QuantityToBuySpinnerCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer{
 
     private static final long serialVersionUID = 1L;
     private JSpinner editSpinner, renderSpinner;
