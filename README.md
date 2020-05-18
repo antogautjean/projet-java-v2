@@ -13,15 +13,17 @@ Fonctionnalitée manquantes
 
 Difficultées
 -- 
-##Gestion de projet
+
+Gestion de projet
 * Répartition du travail
 * Organisation
 
-##Technique
+Technique
 * Apprentisage et compréhension de Java Swing
 * Gestion des conflis GitHub 
 
-#Dossier technique
+Dossier technique
+--
 
 Conception MVC
 --
@@ -71,8 +73,8 @@ Lancer l'application
 ```
 java -jar projet-java-v2.jar
 ```
-##Architechture
 
+Architechture
 
 L'application est constituée de 3 onglets:
 * Le premier:    
